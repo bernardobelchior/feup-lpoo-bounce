@@ -31,7 +31,7 @@
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
 </data>
  </layer>
- <objectgroup name="Bounds">
+ <objectgroup name="Walls">
   <object id="1" x="0" y="0" width="3840" height="64"/>
   <object id="2" x="3840" y="0" width="2624" height="64"/>
   <object id="3" x="6336" y="128" width="64" height="512"/>
@@ -45,5 +45,4 @@
   <object id="11" x="64" y="576" width="3456" height="64"/>
   <object id="12" x="3520" y="576" width="2816" height="64"/>
  </objectgroup>
- <objectgroup name="Ball"/>
 </map>
