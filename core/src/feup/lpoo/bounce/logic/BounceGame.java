@@ -45,8 +45,8 @@ public class BounceGame extends Game {
     @Override
     public void create() {
         map = new TmxMapLoader().load("level" + level + ".tmx");
-        mapWidth = map.getProperties().get("width", Integer.class)*map.getProperties().get("tilewidth", Integer.class);
-        mapHeight = map.getProperties().get("height", Integer.class)*map.getProperties().get("tileheight", Integer.class);
+        mapWidth = map.getProperties().get("width", Integer.class).intValue()*map.getProperties().get("tilewidth", Integer.class).intValue();
+        mapHeight = map.getProperties().get("height", Integer.class).intValue()*map.getProperties().get("tileheight", Integer.class).intValue();
 
         world = new World(GRAVITY, true);
         loadWorld();
@@ -69,7 +69,7 @@ public class BounceGame extends Game {
 
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         //bodyDef.position.set(100, mapHeight/2/PIXELS_PER_METER);
-        bodyDef.position.set(64, 64);
+        bodyDef.position.set(128, 128);
 
         CircleShape ballShape = new CircleShape();
         ballShape.setRadius(PIXELS_PER_METER/2);
