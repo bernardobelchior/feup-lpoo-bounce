@@ -6,12 +6,15 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import feup.lpoo.bounce.GUI.GameScreen;
 import feup.lpoo.bounce.logic.BounceGame;
 
 public class Bounce extends ApplicationAdapter {
 	private Screen currentScreen;
+
+	private long lastUpdateTime = TimeUtils.millis();
 
 	@Override
 	public void create () {
@@ -22,7 +25,8 @@ public class Bounce extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		//FIXME: get delta
-		currentScreen.render(0.33f);
+		long currentTime = TimeUtils.millis();
+		currentScreen.render(lastUpdateTime - currentTime);
+		lastUpdateTime = currentTime;
 	}
 }
