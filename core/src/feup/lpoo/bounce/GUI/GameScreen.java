@@ -48,16 +48,16 @@ public class GameScreen implements Screen, InputProcessor, Runnable {
     public void run() {
         game.setScreen(this);
 
-        synchronized (game.getGameState()) {
-            try {
-                while (game.getGameState() == BounceGame.GameState.RUNNING) {
-                    game.getGameState().wait();
+            /*try {
+                synchronized (game.getGameState()) {
+                    while (game.getGameState() == BounceGame.GameState.RUNNING) {
+                        game.getGameState().wait();
+                    }
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
         }
-    }
 
 
     @Override

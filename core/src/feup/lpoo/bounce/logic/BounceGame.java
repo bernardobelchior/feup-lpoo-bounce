@@ -76,20 +76,19 @@ public class BounceGame extends Game implements Runnable {
 
         Gdx.app.log("Wait", "Before");
 
-        try {
+        /*try {
             synchronized (gameState) {
                 while (gameState == GameState.RUNNING)
                     gameState.wait();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
         Gdx.app.log("Wait", "After");
     }
 
     public void update(float deltaTime) {
-        Gdx.app.log("Update", "done");
         if(!isRunning())
             return;
 
