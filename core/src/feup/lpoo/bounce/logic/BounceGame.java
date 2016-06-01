@@ -2,29 +2,19 @@ package feup.lpoo.bounce.logic;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
-
-import feup.lpoo.bounce.GUI.GameScreen;
 
 /**
  * Created by Bernardo on 30-05-2016.
  */
 
 enum GameState { PAUSED, RUNNING}
+enum EntityType { WALL, BALL, SPIKE }
 
 public class BounceGame extends Game {
     public static final float PIXELS_PER_METER = 64;
@@ -64,10 +54,15 @@ public class BounceGame extends Game {
         }, 0, SECONDS_BETWEEN_TICKS);
         gameTimer.start();
 
+        world.setContactListener(new BounceContactListener(this));
+
         this.gameState = GameState.RUNNING;
     }
 
     public void update(float deltaTime) {
+        if(!isRunning())
+            return;
+
         float horizontalAcceleration = Gdx.input.getAccelerometerY();
 
         //Moves the ball depending on the accelerometer
@@ -92,12 +87,28 @@ public class BounceGame extends Game {
         return ball;
     }
 
-    public void ballJump() {
+    public boolean ballJump() {
+        if(!isRunning())
+            return false;
+
         ball.applyForceToCenter(-GRAVITY.x, JUMP_HEIGHT_MODIFIER *-GRAVITY.y, true);
+
+        return true;
     }
 
     @Override
     public void create() {
 
+    }
+
+    public boolean over() {
+        this.gameState = GameState.PAUSED;
+        gameTimer.stop();
+
+        return true;
+    }
+
+    public boolean isRunning() {
+        return gameState == GameState.RUNNING;
     }
 }
