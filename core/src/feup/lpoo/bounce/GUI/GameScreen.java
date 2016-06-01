@@ -12,10 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-//import feup.lpoo.bounce.logic.BounceGame;
 import feup.lpoo.bounce.logic.BounceGame;
-import feup.lpoo.bounce.logic.BounceGame.*;
 
 /**
  * Created by Bernardo on 30-05-2016.
@@ -31,14 +28,8 @@ public class GameScreen implements Screen, InputProcessor {
     private Texture ballTexture;
     private SpriteBatch spriteBatch;
 
-    private int mapWidth;
-    private int mapHeight;
-
     public GameScreen (BounceGame game) {
         this.game = game;
-
-        mapWidth = game.getMap().getProperties().get("width", Integer.class).intValue()*game.getMap().getProperties().get("tilewidth", Integer.class).intValue();
-        mapHeight = game.getMap().getProperties().get("height", Integer.class).intValue()*game.getMap().getProperties().get("tileheight", Integer.class).intValue();
 
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
@@ -63,12 +54,17 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        float cameraX = game.getBall().getPosition().x - game.getBall().getFixtureList().get(0).getShape().getRadius();
+        Shape ballShape = game.getBall().getFixtureList().get(0).getShape();
+
+        //Sets the camera x coordinate so it follows the ball
+        //The below if statements are to make sure that no black
+        //bars appear on the right nor on the left.'
+        float cameraX = game.getBall().getPosition().x - ballShape.getRadius();
 
         if(cameraX < viewport.getWorldWidth()/2)
             cameraX = viewport.getWorldWidth()/2;
-        else if(cameraX > mapWidth - viewport.getWorldWidth()/2)
-            cameraX = mapWidth - viewport.getWorldWidth()/2;
+        else if(cameraX > game.mapWidth - viewport.getWorldWidth()/2)
+            cameraX = game.mapWidth - viewport.getWorldWidth()/2;
 
         camera.position.set(cameraX, viewport.getWorldHeight()/2, 0);
         
@@ -78,8 +74,7 @@ public class GameScreen implements Screen, InputProcessor {
         renderer.render();
         b2dr.render(game.getWorld(), camera.combined);
 
-        Shape ballShape = game.getBall().getFixtureList().get(0).getShape();
-
+        //Draws the ball on its position
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
         spriteBatch.draw(new Sprite(ballTexture), game.getBall().getPosition().x - ballShape.getRadius(),

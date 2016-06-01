@@ -17,14 +17,23 @@ enum GameState { PAUSED, RUNNING}
 enum EntityType { WALL, BALL, SPIKE }
 
 public class BounceGame extends Game {
+    //World gravity
     public final static Vector2 GRAVITY = new Vector2(0, -576);
-    private final static float SECONDS_BETWEEN_TICKS = 1/300f;
+
+    //Game update rate in seconds
+    private final static float GAME_UPDATE_RATE = 1/300f;
+
+    //Used to check if the phone is relatively standing still
     private final static float HORIZONTAL_ACCELERATION_TOLERANCE = 1f;
 
     //Movement modifiers
     private final static int HORIZONTAL_MOVEMENT_MODIFIER = 1000000;
     private final static int ATTRITION_MODIFIER = 10000;
     private final static int JUMP_HEIGHT_MODIFIER = 700000;
+
+    //Map dimensions
+    public final int mapWidth;
+    public final int mapHeight;
 
     private TiledMap map;
     private World world;
@@ -38,6 +47,9 @@ public class BounceGame extends Game {
 
         map = new TmxMapLoader().load("level" + level + ".tmx");
 
+        mapWidth = map.getProperties().get("width", Integer.class).intValue()*map.getProperties().get("tilewidth", Integer.class).intValue();
+        mapHeight = map.getProperties().get("height", Integer.class).intValue()*map.getProperties().get("tileheight", Integer.class).intValue();
+
         world = new World(GRAVITY, true);
         ball = new LevelLoader().load(map, world);
 
@@ -46,9 +58,9 @@ public class BounceGame extends Game {
             @Override
             public void run() {
                 //FIXME: Actually use the elapsed time
-                update(SECONDS_BETWEEN_TICKS);
+                update(GAME_UPDATE_RATE);
             }
-        }, 0, SECONDS_BETWEEN_TICKS);
+        }, 0, GAME_UPDATE_RATE);
 
         world.setContactListener(new BounceContactListener(this));
     }
