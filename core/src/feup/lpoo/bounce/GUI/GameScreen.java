@@ -12,6 +12,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+
 import feup.lpoo.bounce.logic.BounceGame;
 
 /**
@@ -21,18 +23,21 @@ public class GameScreen implements Screen, InputProcessor {
     private BounceGame game;
 
     private OrthographicCamera camera;
-    private FillViewport viewport;
+    private FitViewport viewport;
     private OrthogonalTiledMapRenderer renderer;
     private Box2DDebugRenderer b2dr;
 
     private Texture ballTexture;
     private SpriteBatch spriteBatch;
+    private float aspectRatio;
 
     public GameScreen (BounceGame game) {
         this.game = game;
 
+        aspectRatio = (float)Gdx.graphics.getWidth()/Gdx.graphics.getHeight();
+
         this.camera = new OrthographicCamera();
-        this.viewport = new FillViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+        this.viewport = new FitViewport(game.mapHeight*aspectRatio, game.mapHeight, camera);
         this.renderer = new OrthogonalTiledMapRenderer(game.getMap(), 1);
         this.b2dr = new Box2DDebugRenderer();
 
