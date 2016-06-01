@@ -1,3 +1,7 @@
+/**
+ * Created by Bernardo on 30-05-2016.
+ */
+
 package feup.lpoo.bounce.logic;
 
 import com.badlogic.gdx.Game;
@@ -9,14 +13,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 
-/**
- * Created by Bernardo on 30-05-2016.
- */
-
-enum GameState { PAUSED, RUNNING}
-enum EntityType { WALL, BALL, SPIKE }
-
 public class BounceGame extends Game {
+    public enum GameState { PAUSED, RUNNING }
+    public enum EntityType { WALL, BALL, SPIKE }
     //World gravity
     public final static Vector2 GRAVITY = new Vector2(0, -576);
 

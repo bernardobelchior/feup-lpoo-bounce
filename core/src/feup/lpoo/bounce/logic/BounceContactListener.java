@@ -5,9 +5,6 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
-import feup.lpoo.bounce.Bounce;
-import sun.security.provider.ConfigFile;
-
 /**
  * Created by Bernardo on 01-06-2016.
  */
@@ -20,11 +17,11 @@ public class BounceContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        EntityType entityA = (EntityType) contact.getFixtureA().getBody().getUserData();
-        EntityType entityB = (EntityType) contact.getFixtureB().getBody().getUserData();
+        BounceGame.EntityType entityA = (BounceGame.EntityType) contact.getFixtureA().getBody().getUserData();
+        BounceGame.EntityType entityB = (BounceGame.EntityType) contact.getFixtureB().getBody().getUserData();
 
-        if(entityA == EntityType.BALL && entityB == EntityType.SPIKE ||
-                entityA == EntityType.SPIKE && entityB == EntityType.BALL)
+        if(entityA == BounceGame.EntityType.BALL && entityB == BounceGame.EntityType.SPIKE ||
+                entityA == BounceGame.EntityType.SPIKE && entityB == BounceGame.EntityType.BALL)
             game.over();
     }
 
