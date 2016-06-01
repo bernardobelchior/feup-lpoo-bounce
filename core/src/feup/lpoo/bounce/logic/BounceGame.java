@@ -52,11 +52,19 @@ public class BounceGame extends Game {
                 update(SECONDS_BETWEEN_TICKS);
             }
         }, 0, SECONDS_BETWEEN_TICKS);
-        gameTimer.start();
+
 
         world.setContactListener(new BounceContactListener(this));
+    }
 
+    public boolean start() {
+        if(this.gameState == GameState.RUNNING)
+            return false;
+
+        gameTimer.start();
         this.gameState = GameState.RUNNING;
+
+        return true;
     }
 
     public void update(float deltaTime) {

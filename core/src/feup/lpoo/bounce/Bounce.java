@@ -19,6 +19,7 @@ public class Bounce extends ApplicationAdapter {
 	@Override
 	public void create () {
 		BounceGame game = new BounceGame(1);
+		game.start();
 		currentScreen = new GameScreen(game);
 		game.setScreen(currentScreen);
 	}

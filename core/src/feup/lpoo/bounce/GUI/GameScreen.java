@@ -1,6 +1,5 @@
 package feup.lpoo.bounce.GUI;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -11,9 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import feup.lpoo.bounce.logic.BounceGame;
@@ -63,8 +60,18 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //camera.position.set(game.getBall().getWorldCenter().x, viewport.getWorldHeight()/2, 0);
+        /*float cameraX = game.getBall().getWorldCenter().x;
 
+        Gdx.app.log("VP SW:", "" + viewport.getScreenWidth());
+        Gdx.app.log("BWC:", "" + cameraX);
+
+        if(cameraX < viewport.getScreenWidth()/2)
+            cameraX = viewport.getScreenWidth()/2;
+        else if(cameraX > viewport.getWorldWidth() - viewport.getScreenWidth()/2)
+            cameraX = viewport.getWorldWidth() - viewport.getScreenWidth()/2;
+
+        camera.position.set(cameraX, viewport.getWorldHeight()/2, 0);*/
+        
         camera.update();
         renderer.setView(camera);
 
