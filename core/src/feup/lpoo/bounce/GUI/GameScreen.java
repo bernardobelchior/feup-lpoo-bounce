@@ -17,7 +17,7 @@ import feup.lpoo.bounce.logic.BounceGame;
 /**
  * Created by Bernardo on 30-05-2016.
  */
-public class GameScreen implements Screen, InputProcessor {
+public class GameScreen implements Screen, InputProcessor, Runnable {
     private BounceGame game;
 
     private OrthographicCamera camera;
@@ -45,9 +45,20 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     @Override
-    public void show() {
+    public void run() {
+        game.setScreen(this);
 
+        synchronized (game.getGameState()) {
+            try {
+                while (game.getGameState() == BounceGame.GameState.RUNNING) {
+                    game.getGameState().wait();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
 
     @Override
     public void render(float deltaTime) {
@@ -124,6 +135,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        Gdx.app.log("GameGUI", "Touched");
         game.ballJump();
         return false;
     }
@@ -146,6 +158,11 @@ public class GameScreen implements Screen, InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    @Override
+    public void show() {
+
     }
 }
 

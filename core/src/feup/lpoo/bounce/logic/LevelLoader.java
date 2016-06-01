@@ -38,7 +38,7 @@ public class LevelLoader {
 
         Body ball = world.createBody(bodyDef);
         ball.createFixture(fixtureDef);
-        ball.setUserData(EntityType.BALL);
+        ball.setUserData(BounceGame.EntityType.BALL);
 
         for(MapObject object : map.getLayers().get(WALL_LAYER).getObjects()) {
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
@@ -52,7 +52,7 @@ public class LevelLoader {
 
             Body body = world.createBody(bodyDef);
             body.createFixture(polygonShape, 1);
-            body.setUserData(EntityType.WALL);
+            body.setUserData(BounceGame.EntityType.WALL);
         }
 
         for(MapObject object : map.getLayers().get(SPIKE_LAYER).getObjects()) {
@@ -67,7 +67,7 @@ public class LevelLoader {
 
             Body body = world.createBody(bodyDef);
             body.createFixture(polygonShape, 1);
-            body.setUserData(EntityType.SPIKE);
+            body.setUserData(BounceGame.EntityType.SPIKE);
         }
 
         return ball;

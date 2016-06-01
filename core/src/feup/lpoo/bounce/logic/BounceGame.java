@@ -13,10 +13,12 @@ import com.badlogic.gdx.utils.Timer;
  * Created by Bernardo on 30-05-2016.
  */
 
-enum GameState { PAUSED, RUNNING}
-enum EntityType { WALL, BALL, SPIKE }
 
-public class BounceGame extends Game {
+
+public class BounceGame extends Game implements Runnable {
+    public enum EntityType { WALL, BALL, SPIKE }
+    public enum GameState { PAUSED, RUNNING }
+
     //World gravity
     public final static Vector2 GRAVITY = new Vector2(0, -576);
 
@@ -40,15 +42,15 @@ public class BounceGame extends Game {
 
     private Body ball;
     private Timer gameTimer;
-    private GameState gameState;
+    private volatile GameState gameState;
 
     public BounceGame(int level) {
-        this.gameState = GameState.PAUSED;
+        gameState = GameState.PAUSED;
 
         map = new TmxMapLoader().load("level" + level + ".tmx");
 
-        mapWidth = map.getProperties().get("width", Integer.class).intValue()*map.getProperties().get("tilewidth", Integer.class).intValue();
-        mapHeight = map.getProperties().get("height", Integer.class).intValue()*map.getProperties().get("tileheight", Integer.class).intValue();
+        mapWidth = map.getProperties().get("width", Integer.class) * map.getProperties().get("tilewidth", Integer.class);
+        mapHeight = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
 
         world = new World(GRAVITY, true);
         ball = new LevelLoader().load(map, world);
@@ -65,17 +67,29 @@ public class BounceGame extends Game {
         world.setContactListener(new BounceContactListener(this));
     }
 
-    public boolean start() {
-        if(this.gameState == GameState.RUNNING)
-            return false;
-
+    @Override
+    public void run() {
         gameTimer.start();
-        this.gameState = GameState.RUNNING;
+        synchronized (this) {
+            gameState = GameState.RUNNING;
+        }
 
-        return true;
+        Gdx.app.log("Wait", "Before");
+
+        try {
+            synchronized (gameState) {
+                while (gameState == GameState.RUNNING)
+                    gameState.wait();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Gdx.app.log("Wait", "After");
     }
 
     public void update(float deltaTime) {
+        Gdx.app.log("Update", "done");
         if(!isRunning())
             return;
 
@@ -118,13 +132,21 @@ public class BounceGame extends Game {
     }
 
     public boolean over() {
-        this.gameState = GameState.PAUSED;
+        synchronized (this) {
+            gameState = GameState.PAUSED;
+        }
+        gameState.notify();
+
         gameTimer.stop();
 
         return true;
     }
 
-    public boolean isRunning() {
+    public synchronized GameState getGameState() {
+        return gameState;
+    }
+
+    public synchronized boolean isRunning() {
         return gameState == GameState.RUNNING;
     }
 }
