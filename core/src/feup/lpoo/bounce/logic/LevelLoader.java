@@ -26,10 +26,10 @@ public class LevelLoader {
         BodyDef bodyDef = new BodyDef();
 
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(BounceGame.PIXELS_PER_METER*1.5f, mapHeight/2-BounceGame.PIXELS_PER_METER/2);
+        bodyDef.position.set(96, mapHeight/2-32);
 
         CircleShape ballShape = new CircleShape();
-        ballShape.setRadius(BounceGame.PIXELS_PER_METER/2);
+        ballShape.setRadius(32);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = ballShape;

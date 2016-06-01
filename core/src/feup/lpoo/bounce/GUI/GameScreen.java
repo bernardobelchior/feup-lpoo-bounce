@@ -11,35 +11,38 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+//import feup.lpoo.bounce.logic.BounceGame;
 import feup.lpoo.bounce.logic.BounceGame;
+import feup.lpoo.bounce.logic.BounceGame.*;
 
 /**
  * Created by Bernardo on 30-05-2016.
  */
 public class GameScreen implements Screen, InputProcessor {
-
-    private static final int VIRTUAL_WIDTH = 1280;
-    private static final int VIRTUAL_HEIGHT = 640;
-
     private BounceGame game;
 
     private OrthographicCamera camera;
-    private FitViewport viewport;
+    private FillViewport viewport;
     private OrthogonalTiledMapRenderer renderer;
     private Box2DDebugRenderer b2dr;
 
     private Texture ballTexture;
     private SpriteBatch spriteBatch;
 
+    private int mapWidth;
+    private int mapHeight;
+
     public GameScreen (BounceGame game) {
         this.game = game;
 
+        mapWidth = game.getMap().getProperties().get("width", Integer.class).intValue()*game.getMap().getProperties().get("tilewidth", Integer.class).intValue();
+        mapHeight = game.getMap().getProperties().get("height", Integer.class).intValue()*game.getMap().getProperties().get("tileheight", Integer.class).intValue();
+
         this.camera = new OrthographicCamera();
-        //this.viewport = new FitViewport(VIRTUAL_WIDTH/PIXELS_PER_METER, VIRTUAL_HEIGHT/PIXELS_PER_METER, camera);
-        this.viewport = new FitViewport(Gdx.graphics.getWidth()/BounceGame.PIXELS_PER_METER, Gdx.graphics.getHeight()/BounceGame.PIXELS_PER_METER, camera);
-        this.renderer = new OrthogonalTiledMapRenderer(game.getMap(), 1/BounceGame.PIXELS_PER_METER);
+        this.viewport = new FillViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+        this.renderer = new OrthogonalTiledMapRenderer(game.getMap(), 1);
         this.b2dr = new Box2DDebugRenderer();
 
         this.spriteBatch = new SpriteBatch();
@@ -60,27 +63,24 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        /*float cameraX = game.getBall().getWorldCenter().x;
+        float cameraX = game.getBall().getPosition().x - game.getBall().getFixtureList().get(0).getShape().getRadius();
 
-        Gdx.app.log("VP SW:", "" + viewport.getScreenWidth());
-        Gdx.app.log("BWC:", "" + cameraX);
+        if(cameraX < viewport.getWorldWidth()/2)
+            cameraX = viewport.getWorldWidth()/2;
+        else if(cameraX > mapWidth - viewport.getWorldWidth()/2)
+            cameraX = mapWidth - viewport.getWorldWidth()/2;
 
-        if(cameraX < viewport.getScreenWidth()/2)
-            cameraX = viewport.getScreenWidth()/2;
-        else if(cameraX > viewport.getWorldWidth() - viewport.getScreenWidth()/2)
-            cameraX = viewport.getWorldWidth() - viewport.getScreenWidth()/2;
-
-        camera.position.set(cameraX, viewport.getWorldHeight()/2, 0);*/
+        camera.position.set(cameraX, viewport.getWorldHeight()/2, 0);
         
         camera.update();
         renderer.setView(camera);
 
         renderer.render();
-
         b2dr.render(game.getWorld(), camera.combined);
 
         Shape ballShape = game.getBall().getFixtureList().get(0).getShape();
 
+        spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
         spriteBatch.draw(new Sprite(ballTexture), game.getBall().getPosition().x - ballShape.getRadius(),
                 game.getBall().getPosition().y - ballShape.getRadius());

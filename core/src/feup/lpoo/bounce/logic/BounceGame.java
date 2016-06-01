@@ -17,8 +17,7 @@ enum GameState { PAUSED, RUNNING}
 enum EntityType { WALL, BALL, SPIKE }
 
 public class BounceGame extends Game {
-    public static final float PIXELS_PER_METER = 64;
-    public final static Vector2 GRAVITY = new Vector2(0, -9.0f*PIXELS_PER_METER);
+    public final static Vector2 GRAVITY = new Vector2(0, -576);
     private final static float SECONDS_BETWEEN_TICKS = 1/300f;
     private final static float HORIZONTAL_ACCELERATION_TOLERANCE = 1f;
 
@@ -29,7 +28,6 @@ public class BounceGame extends Game {
 
     private TiledMap map;
     private World world;
-    private int level;
 
     private Body ball;
     private Timer gameTimer;
@@ -37,7 +35,6 @@ public class BounceGame extends Game {
 
     public BounceGame(int level) {
         this.gameState = GameState.PAUSED;
-        this.level = level;
 
         map = new TmxMapLoader().load("level" + level + ".tmx");
 
@@ -52,7 +49,6 @@ public class BounceGame extends Game {
                 update(SECONDS_BETWEEN_TICKS);
             }
         }, 0, SECONDS_BETWEEN_TICKS);
-
 
         world.setContactListener(new BounceContactListener(this));
     }

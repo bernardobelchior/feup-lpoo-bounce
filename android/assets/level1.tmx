@@ -50,7 +50,7 @@
   <object id="13" x="0" y="0" width="6400" height="64"/>
   <object id="14" x="0" y="64" width="64" height="512"/>
   <object id="17" x="6336" y="64" width="64" height="512"/>
-  <object id="18" x="1280" y="574" width="5186" height="64"/>
+  <object id="18" x="1280" y="574" width="5122" height="64"/>
  </objectgroup>
  <objectgroup name="Spikes">
   <object id="19" x="1088" y="576" width="192" height="64"/>
