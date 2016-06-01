@@ -72,10 +72,9 @@ public class GameScreen implements Screen, InputProcessor {
 
         Shape ballShape = game.getBall().getFixtureList().get(0).getShape();
 
-        //spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-        spriteBatch.draw(new Sprite(ballTexture), game.getBall().getPosition().x - ballShape.getRadius()/2,
-                game.getBall().getPosition().y - ballShape.getRadius()/2);
+        spriteBatch.draw(new Sprite(ballTexture), game.getBall().getPosition().x - ballShape.getRadius(),
+                game.getBall().getPosition().y - ballShape.getRadius());
         spriteBatch.end();
     }
 

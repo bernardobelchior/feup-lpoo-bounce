@@ -1,6 +1,7 @@
 package feup.lpoo.bounce.logic;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -22,11 +23,17 @@ import feup.lpoo.bounce.GUI.GameScreen;
 /**
  * Created by Bernardo on 30-05-2016.
  */
+
+enum GameState { RUNNING, PAUSED};
+
 public class BounceGame extends Game {
-    private final static Vector2 GRAVITY = new Vector2(0, -9.8f);
-    private final static int WALL_LAYER = 2;
-    private final static float SECONDS_BETWEEN_TICKS = 0.00333f;
     public static final float PIXELS_PER_METER = 64;
+    private final static Vector2 GRAVITY = new Vector2(0, -9.0f*PIXELS_PER_METER);
+    private final static int WALL_LAYER = 2;
+    private final static float SECONDS_BETWEEN_TICKS = 1/300f;
+    private final static float HORIZONTAL_ACCELERATION_TOLERANCE = 1f;
+    private final static int HORIZONTAL_MOVEMENT_MODIFIER = 1000000;
+    public static final int ATTRITION_MODIFIER = 10000;
 
     private TiledMap map;
     private World world;
@@ -37,9 +44,13 @@ public class BounceGame extends Game {
 
     private Body ball;
     private Timer gameTimer;
+    private GameState gameState;
 
     public BounceGame(int level) {
+        this.gameState = GameState.PAUSED;
         this.level = level;
+        create();
+        this.gameState = GameState.RUNNING;
     }
 
     @Override
@@ -60,33 +71,34 @@ public class BounceGame extends Game {
             }
         }, 0, SECONDS_BETWEEN_TICKS);
         gameTimer.start();
-
-        setScreen(new GameScreen(this));
     }
 
     private void loadWorld() {
         BodyDef bodyDef = new BodyDef();
 
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        //bodyDef.position.set(100, mapHeight/2/PIXELS_PER_METER);
-        bodyDef.position.set(128, 128);
+        bodyDef.position.set(PIXELS_PER_METER*1.5f, mapHeight/2-PIXELS_PER_METER/2);
 
         CircleShape ballShape = new CircleShape();
         ballShape.setRadius(PIXELS_PER_METER/2);
 
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = ballShape;
+        fixtureDef.restitution = 0.5f;
+        fixtureDef.density = 1;
+
         ball = world.createBody(bodyDef);
-        ball.createFixture(ballShape, 1);
+        ball.createFixture(fixtureDef);
 
         for(MapObject object : map.getLayers().get(WALL_LAYER).getObjects()) {
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 
             bodyDef = new BodyDef();
             bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set((rectangle.getX()+rectangle.getWidth()/2)/PIXELS_PER_METER,
-                    (rectangle.getY()+rectangle.getHeight()/2)/PIXELS_PER_METER);
+            bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
 
             PolygonShape polygonShape = new PolygonShape();
-            polygonShape.setAsBox(rectangle.getWidth()/2/PIXELS_PER_METER, rectangle.getHeight()/2/PIXELS_PER_METER);
+            polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
 
             Body body = world.createBody(bodyDef);
             body.createFixture(polygonShape, 1);
@@ -94,6 +106,15 @@ public class BounceGame extends Game {
     }
 
     public void update(float deltaTime) {
+        float horizontalAcceleration = Gdx.input.getAccelerometerY();
+
+        //Moves the ball depending on the accelerometer
+        if(Math.abs(horizontalAcceleration) > HORIZONTAL_ACCELERATION_TOLERANCE)
+            ball.applyForceToCenter(horizontalAcceleration*HORIZONTAL_MOVEMENT_MODIFIER, 0, true);
+
+        //Attrition application
+        ball.applyForceToCenter(-ball.getLinearVelocity().x* ATTRITION_MODIFIER, 0, true);
+
         world.step(deltaTime, 6, 2);
     }
 
@@ -110,6 +131,6 @@ public class BounceGame extends Game {
     }
 
     public void ballJump() {
-        ball.applyLinearImpulse(new Vector2(0 , 10000), ball.getPosition(), true);
+        ball.applyForceToCenter(-GRAVITY.x, 700000*-GRAVITY.y, true);
     }
 }
