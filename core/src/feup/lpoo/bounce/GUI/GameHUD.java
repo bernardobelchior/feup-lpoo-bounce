@@ -79,7 +79,8 @@ public class GameHUD {
         spriteBatch.begin();
 
         for(int i = 0; i < game.getRings().size(); i++) {
-            spriteBatch.draw(ringSprite, Gdx.graphics.getWidth()/15f + ringSprite.getWidth()*i, Gdx.graphics.getHeight()/50f);
+            spriteBatch.draw(ringSprite, Gdx.graphics.getWidth()/15f + ringSprite.getWidth()*i,
+                    Gdx.graphics.getHeight() - GameScreen.TEXTURE_SIZE - Gdx.graphics.getHeight()/50f);
         }
 
         spriteBatch.end();

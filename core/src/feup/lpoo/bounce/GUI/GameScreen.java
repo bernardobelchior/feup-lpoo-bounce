@@ -104,13 +104,13 @@ public class GameScreen implements Screen, InputProcessor {
                 game.getBall().getPosition().y - ballShape.getRadius());
 
         for(Body ring : game.getRings()) {
-            spriteBatch.draw(ringTextureRegion, ring.getPosition().x - ring.getFixtureList().get(0).getShape().getRadius(),
-                    ring.getPosition().y - ring.getFixtureList().get(0).getShape().getRadius());
+            spriteBatch.draw(ringTextureRegion, ring.getPosition().x - TEXTURE_SIZE/2,
+                    ring.getPosition().y - TEXTURE_SIZE/2);
         }
 
         for(Body gem : game.getGems()) {
-            spriteBatch.draw(gemTextureRegion, gem.getPosition().x - gem.getFixtureList().get(0).getShape().getRadius(),
-                    gem.getPosition().y - gem.getFixtureList().get(0).getShape().getRadius());
+            spriteBatch.draw(gemTextureRegion, gem.getPosition().x - TEXTURE_SIZE/2,
+                    gem.getPosition().y - TEXTURE_SIZE/2);
         }
 
         spriteBatch.end();
