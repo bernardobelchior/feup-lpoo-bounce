@@ -2,12 +2,15 @@ package feup.lpoo.bounce.logic;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
+
+import feup.lpoo.bounce.GUI.MenuScreen;
 
 /**
  * Created by Bernardo on 30-05-2016.
@@ -30,6 +33,7 @@ public class BounceGame extends Game {
     private TiledMap map;
     private World world;
     private int level;
+    private SpriteBatch batch;
 
     private Body ball;
     private Timer gameTimer;
@@ -91,6 +95,8 @@ public class BounceGame extends Game {
         return world;
     }
 
+    public SpriteBatch getBatch() { return batch; }
+
     public Body getBall() {
         return ball;
     }
@@ -106,7 +112,10 @@ public class BounceGame extends Game {
 
     @Override
     public void create() {
-
+        batch = new SpriteBatch();
+		/*Screen screen = new MenuScreen(this);
+		screens.push(screen);*/
+        setScreen(new MenuScreen(this));
     }
 
     public boolean over() {

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import feup.lpoo.bounce.GUI.GameScreen;
+import feup.lpoo.bounce.GUI.MenuScreen;
 import feup.lpoo.bounce.logic.BounceGame;
 
 public class Bounce extends ApplicationAdapter {
@@ -20,7 +21,7 @@ public class Bounce extends ApplicationAdapter {
 	public void create () {
 		BounceGame game = new BounceGame(1);
 		game.start();
-		currentScreen = new GameScreen(game);
+		currentScreen = new MenuScreen(game);
 		game.setScreen(currentScreen);
 	}
 
