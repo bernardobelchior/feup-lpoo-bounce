@@ -24,6 +24,7 @@ public class GameScreen implements Screen, InputProcessor {
     private OrthographicCamera camera;
     private FitViewport viewport;
     private OrthogonalTiledMapRenderer renderer;
+    private GameHUD gameHUD;
     private Box2DDebugRenderer b2dr;
 
     private Texture ballTexture;
@@ -35,13 +36,14 @@ public class GameScreen implements Screen, InputProcessor {
 
         aspectRatio = (float)Gdx.graphics.getWidth()/Gdx.graphics.getHeight();
 
-        this.camera = new OrthographicCamera();
-        this.viewport = new FitViewport(game.mapHeight*aspectRatio, game.mapHeight, camera);
-        this.renderer = new OrthogonalTiledMapRenderer(game.getMap(), 1);
-        this.b2dr = new Box2DDebugRenderer();
+        spriteBatch = new SpriteBatch();
+        ballTexture = new Texture("ball.png");
 
-        this.spriteBatch = new SpriteBatch();
-        this.ballTexture = new Texture("ball.png");
+        camera = new OrthographicCamera();
+        viewport = new FitViewport(game.mapHeight*aspectRatio, game.mapHeight, camera);
+        renderer = new OrthogonalTiledMapRenderer(game.getMap(), 1);
+        b2dr = new Box2DDebugRenderer();
+        gameHUD = new GameHUD(game, spriteBatch);
 
         camera.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2, 0);
 
@@ -77,6 +79,8 @@ public class GameScreen implements Screen, InputProcessor {
 
         renderer.render();
         b2dr.render(game.getWorld(), camera.combined);
+
+        gameHUD.render();
 
         //Draws the ball on its position
         spriteBatch.setProjectionMatrix(camera.combined);

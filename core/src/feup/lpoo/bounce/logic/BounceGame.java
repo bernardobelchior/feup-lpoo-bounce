@@ -11,9 +11,12 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 
 public class BounceGame extends Game {
+
+
     public enum GameState { PAUSED, RUNNING }
     public enum EntityType { WALL, BALL, SPIKE }
     //World gravity
@@ -40,6 +43,7 @@ public class BounceGame extends Game {
     private Body ball;
     private Timer gameTimer;
     private GameState gameState;
+    private int score;
 
     public BounceGame(int level) {
         this.gameState = GameState.PAUSED;
@@ -51,6 +55,7 @@ public class BounceGame extends Game {
 
         world = new World(GRAVITY, true);
         ball = new LevelLoader().load(map, world);
+        score = 0;
 
         gameTimer = new Timer();
         gameTimer.scheduleTask(new Timer.Task() {
@@ -125,5 +130,9 @@ public class BounceGame extends Game {
 
     public boolean isRunning() {
         return gameState == GameState.RUNNING;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
