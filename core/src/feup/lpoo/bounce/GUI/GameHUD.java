@@ -41,6 +41,7 @@ public class GameHUD {
 
     private Label scoreLabel;
     private ArrayList<Image> ringsImages;
+    private Table table;
 
     private BounceGame game;
 
@@ -54,7 +55,7 @@ public class GameHUD {
         stage = new Stage(viewport, spriteBatch);
         ringsImages = new ArrayList<Image>();
 
-        Table table = new Table();
+        table = new Table();
         table.setFillParent(true);
 
         //FIXME: GameScreen has the same variables. Find a way to avoid having a two copies of the same thing.
@@ -87,6 +88,8 @@ public class GameHUD {
         scoreLabel.setText(String.format("%06d", game.getScore()));
         spriteBatch.setProjectionMatrix(stage.getCamera().combined);
         stage.draw();
+
+        //FIXME: Delete rings when they are destroyed.
 
         spriteBatch.begin();
 
