@@ -85,15 +85,6 @@ public class GameOverScreen implements Screen {
             }
         });
 
-        /*retryButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(retryButton.isPressed()) {
-                    game.restart();
-                }
-            }
-        });*/
-
         nextLevelButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -104,11 +95,16 @@ public class GameOverScreen implements Screen {
             }
         });
 
+        Table table = createMenuTable();
+
+        stage.addActor(table);
+    }
+
+    private Table createMenuTable() {
         //Create the actual menu layout
         Table table = new Table();
         table.setFillParent(true);
         table.center();
-
 
         //First row
         table.add().expand().uniform();
@@ -144,8 +140,7 @@ public class GameOverScreen implements Screen {
         table.add().expand();
 
         table.setDebug(true);
-
-        stage.addActor(table);
+        return table;
     }
 
     @Override
@@ -156,6 +151,7 @@ public class GameOverScreen implements Screen {
     @Override
     public void render(float delta) {
         game.getScreen().render(delta);
+        stage.act(delta);
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         stage.draw();
     }

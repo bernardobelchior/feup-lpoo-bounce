@@ -61,7 +61,6 @@ public class GameScreen implements Screen, InputProcessor {
         gameHUD = new GameHUD(game, spriteBatch);
 
         camera.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2, 0);
-
         Gdx.input.setInputProcessor(this);
     }
 
