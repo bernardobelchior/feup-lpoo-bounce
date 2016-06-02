@@ -36,7 +36,6 @@ public class GameHUD {
     private TextureRegion ballTextureRegion;
     private Sprite ringSprite;
 
-
     private float aspectRatio;
 
     private Label scoreLabel;

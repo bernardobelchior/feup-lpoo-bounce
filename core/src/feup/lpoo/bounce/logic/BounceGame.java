@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
@@ -51,22 +50,16 @@ public class BounceGame extends Game {
     private ArrayList<Body> rings;
     private ArrayList<Body> gems;
 
+    private int level;
+
     public BounceGame(int level) {
         this.gameState = GameState.PAUSED;
+        this.level = level;
 
         map = new TmxMapLoader().load("level" + level + ".tmx");
 
         mapWidth = map.getProperties().get("width", Integer.class).intValue()*map.getProperties().get("tilewidth", Integer.class).intValue();
         mapHeight = map.getProperties().get("height", Integer.class).intValue()*map.getProperties().get("tileheight", Integer.class).intValue();
-
-        world = new World(GRAVITY, true);
-        LevelLoader levelLoader = new LevelLoader();
-        levelLoader.load(map, world);
-        ball = levelLoader.getBall();
-        rings = levelLoader.getRings();
-        gems = levelLoader.getGems();
-
-        score = 0;
 
         gameTimer = new Timer();
         gameTimer.scheduleTask(new Timer.Task() {
@@ -77,15 +70,28 @@ public class BounceGame extends Game {
             }
         }, 0, GAME_UPDATE_RATE);
 
+        setUpWorld();
+
         world.setContactListener(new BounceContactListener(this));
     }
 
+    private void setUpWorld() {
+        world = new World(GRAVITY, true);
+        LevelLoader levelLoader = new LevelLoader();
+        levelLoader.load(map, world);
+        ball = levelLoader.getBall();
+        rings = levelLoader.getRings();
+        gems = levelLoader.getGems();
+
+        score = 0;
+    }
+
     public boolean start() {
-        if(this.gameState == GameState.RUNNING)
+        if(gameState == GameState.RUNNING)
             return false;
 
         gameTimer.start();
-        this.gameState = GameState.RUNNING;
+        gameState = GameState.RUNNING;
 
         return true;
     }
@@ -133,7 +139,7 @@ public class BounceGame extends Game {
     }
 
     public void over() {
-        this.gameState = GameState.LOST;
+        gameState = GameState.LOST;
         gameTimer.stop();
         Gdx.app.log("Game", "Lost");
     }
@@ -173,5 +179,40 @@ public class BounceGame extends Game {
 
     public ArrayList<Body> getGems() {
         return gems;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        map.dispose();
+        world.dispose();
+    }
+
+    public void restart() {
+        setUpWorld();
+        start();
+    }
+
+    public boolean nextLevel() {
+        if(level > 2)
+            return false;
+
+        map = new TmxMapLoader().load("level" + level + ".tmx");
+
+        restart();
+
+        return true;
+    }
+
+    public void stop() {
+        gameState = GameState.PAUSED;
+    }
+
+    public boolean shouldRender() {
+        return gameState != GameState.PAUSED;
     }
 }

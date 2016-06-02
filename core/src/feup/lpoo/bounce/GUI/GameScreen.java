@@ -75,12 +75,10 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        Shape ballShape = game.getBall().getFixtureList().get(0).getShape();
-
         //Sets the camera x coordinate so it follows the ball
         //The below if statements are to make sure that no black
         //bars appear on the right nor on the left.'
-        float cameraX = game.getBall().getPosition().x - ballShape.getRadius();
+        float cameraX = game.getBall().getPosition().x - TEXTURE_SIZE/2;
 
         if(cameraX < viewport.getWorldWidth()/2)
             cameraX = viewport.getWorldWidth()/2;
@@ -88,26 +86,27 @@ public class GameScreen implements Screen, InputProcessor {
             cameraX = game.mapWidth - viewport.getWorldWidth()/2;
 
         camera.position.set(cameraX, viewport.getWorldHeight()/2, 0);
-        
+
+        //Updates the camera and renders the screen
         camera.update();
         renderer.setView(camera);
-
         renderer.render();
         b2dr.render(game.getWorld(), camera.combined);
-
         gameHUD.render();
 
         //Draws the ball on its position
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-        spriteBatch.draw(ballTextureRegion, game.getBall().getPosition().x - ballShape.getRadius(),
-                game.getBall().getPosition().y - ballShape.getRadius());
+        spriteBatch.draw(ballTextureRegion, game.getBall().getPosition().x - TEXTURE_SIZE/2,
+                game.getBall().getPosition().y - TEXTURE_SIZE/2);
 
+        //Draws all the rings in the correct position
         for(Body ring : game.getRings()) {
             spriteBatch.draw(ringTextureRegion, ring.getPosition().x - TEXTURE_SIZE/2,
                     ring.getPosition().y - TEXTURE_SIZE/2);
         }
 
+        //Draws all the gems in the correct position
         for(Body gem : game.getGems()) {
             spriteBatch.draw(gemTextureRegion, gem.getPosition().x - TEXTURE_SIZE/2,
                     gem.getPosition().y - TEXTURE_SIZE/2);
@@ -180,6 +179,14 @@ public class GameScreen implements Screen, InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    public OrthographicCamera getCamera() {
+        return camera;
+    }
+
+    public SpriteBatch getSpriteBatch() {
+        return spriteBatch;
     }
 }
 
