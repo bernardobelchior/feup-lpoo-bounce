@@ -48,4 +48,8 @@ public class Bounce extends ApplicationAdapter {
 				break;
 		}
 	}
+
+	public void setCurrentScreen(Screen currentScreen) {
+		this.currentScreen = currentScreen;
+	}
 }

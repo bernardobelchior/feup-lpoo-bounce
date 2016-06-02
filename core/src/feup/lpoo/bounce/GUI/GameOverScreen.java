@@ -7,11 +7,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import feup.lpoo.bounce.logic.BounceGame;
@@ -40,14 +44,22 @@ public class GameOverScreen implements Screen {
         //Set viewport and sprite batch for stage
         viewport = new FitViewport(game.mapHeight*aspectRatio, game.mapHeight, new OrthographicCamera());
         spriteBatch = new SpriteBatch();
-        //stage = new Stage(viewport, ((GameScreen)game.getScreen()).getSpriteBatch());
         stage = new Stage(viewport, spriteBatch);
+        Gdx.input.setInputProcessor(stage);
 
         //Define a labelStyle for all labels and create them
         Label.LabelStyle labelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
         messageLabel = new Label(message, labelStyle);
+        messageLabel.setFontScale(5f);
+        messageLabel.setAlignment(Align.center);
+
         scoreTextLabel = new Label("Score:", labelStyle);
+        scoreTextLabel.setFontScale(5f);
+        scoreTextLabel.setAlignment(Align.center);
+
         scoreLabel = new Label(String.format("%06d", game.getScore()), labelStyle);
+        scoreLabel.setFontScale(5f);
+        scoreLabel.setAlignment(Align.center);
 
         //Define a buttonStyle for all buttons and create them
         Button.ButtonStyle buttonStyle = new Button.ButtonStyle();
@@ -56,29 +68,36 @@ public class GameOverScreen implements Screen {
         nextLevelButton = new Button(buttonStyle);
 
         //Defining button's listeners
-        levelSelectionMenuButton.addListener(new ChangeListener() {
+        levelSelectionMenuButton.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(levelSelectionMenuButton.isPressed()) {
-                    //Go to level selection menu
-                    // Maybe?
-                    // game.dispose();
-                }
+            public void clicked(InputEvent e, float x, float y) {
+                Gdx.app.log("Level selection.", "clicked");
+                game.restart();
             }
         });
 
-        retryButton.addListener(new ChangeListener() {
+        retryButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("retry", "clicked");
+                game.restart();
+                return true;
+            }
+        });
+
+        /*retryButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(retryButton.isPressed()) {
                     game.restart();
                 }
             }
-        });
+        });*/
 
         nextLevelButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.log("hehe", "clickei");
                 if(nextLevelButton.isPressed()) {
                     game.nextLevel();
                 }
@@ -87,36 +106,42 @@ public class GameOverScreen implements Screen {
 
         //Create the actual menu layout
         Table table = new Table();
+        table.setFillParent(true);
+        table.center();
+
 
         //First row
-        table.add().expandX();
+        table.add().expand().uniform();
 
         //Second row
-        table.add().uniform();
+        table.row().fillX().uniform();
+        table.add().expand();
 
-        table.add(messageLabel).colspan(3);
+        table.add(messageLabel).colspan(3).uniform();
 
-        table.add().uniform();
+        table.add().expand();
 
         //Third row
-        table.row().uniform();
+        table.row().expand();
 
-        table.add().uniform();
+        table.add();
 
-        table.add(scoreTextLabel).uniform();
+        table.add(scoreTextLabel);
         table.add(scoreLabel).colspan(2);
-        table.add().uniform();
+        table.add();
 
         //Fourth row
-        table.row().uniform();
+        table.row().expand();
 
-        table.add().uniform();
+        table.add();
         table.add(levelSelectionMenuButton).uniform();
         table.add(retryButton).uniform();
         table.add(nextLevelButton).uniform();
+        table.add();
 
         //Fifth row
-        table.row().expandX();
+        table.row().expand().uniform();
+        table.add().expand();
 
         table.setDebug(true);
 
@@ -130,7 +155,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        //game.getScreen().render(delta);
+        game.getScreen().render(delta);
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         stage.draw();
     }
