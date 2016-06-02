@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import feup.lpoo.bounce.logic.BounceGame.EntityType;
 
 /**
  * Created by Bernardo on 01-06-2016.
@@ -17,12 +18,34 @@ public class BounceContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        BounceGame.EntityType entityA = (BounceGame.EntityType) contact.getFixtureA().getBody().getUserData();
-        BounceGame.EntityType entityB = (BounceGame.EntityType) contact.getFixtureB().getBody().getUserData();
+        EntityType entityA = (EntityType) contact.getFixtureA().getBody().getUserData();
+        EntityType entityB = (EntityType) contact.getFixtureB().getBody().getUserData();
 
-        if(entityA == BounceGame.EntityType.BALL && entityB == BounceGame.EntityType.SPIKE ||
-                entityA == BounceGame.EntityType.SPIKE && entityB == BounceGame.EntityType.BALL)
-            game.over();
+        if(entityA == EntityType.BALL) {
+            switch (entityB) {
+                case SPIKE:
+                    game.over();
+                    break;
+                case RING:
+                    game.ringDestroyed(contact.getFixtureB().getBody());
+                    break;
+                case GEM:
+                    game.gemDestroyed(contact.getFixtureB().getBody());
+                    break;
+            }
+        } else if (entityB == EntityType.BALL) {
+            switch (entityA) {
+                case SPIKE:
+                    game.over();
+                    break;
+                case RING:
+                    game.ringDestroyed(contact.getFixtureA().getBody());
+                    break;
+                case GEM:
+                    game.gemDestroyed(contact.getFixtureA().getBody());
+                    break;
+            }
+        }
     }
 
     @Override

@@ -14,11 +14,14 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 
+import java.util.ArrayList;
+
 public class BounceGame extends Game {
+    private static final int GEM_SCORE = 5;
+    private static final int RING_SCORE = 1;
 
-
-    public enum GameState { PAUSED, RUNNING }
-    public enum EntityType { WALL, BALL, SPIKE }
+    public enum GameState { PAUSED, RUNNING, LOST, WIN }
+    public enum EntityType { WALL, BALL, SPIKE, GEM, RING }
     //World gravity
     public final static Vector2 GRAVITY = new Vector2(0, -576);
 
@@ -45,6 +48,9 @@ public class BounceGame extends Game {
     private GameState gameState;
     private int score;
 
+    private ArrayList<Body> rings;
+    private ArrayList<Body> gems;
+
     public BounceGame(int level) {
         this.gameState = GameState.PAUSED;
 
@@ -54,7 +60,12 @@ public class BounceGame extends Game {
         mapHeight = map.getProperties().get("height", Integer.class).intValue()*map.getProperties().get("tileheight", Integer.class).intValue();
 
         world = new World(GRAVITY, true);
-        ball = new LevelLoader().load(map, world);
+        LevelLoader levelLoader = new LevelLoader();
+        levelLoader.load(map, world);
+        ball = levelLoader.getBall();
+        rings = levelLoader.getRings();
+        gems = levelLoader.getGems();
+
         score = 0;
 
         gameTimer = new Timer();
@@ -121,11 +132,16 @@ public class BounceGame extends Game {
 
     }
 
-    public boolean over() {
-        this.gameState = GameState.PAUSED;
+    public void over() {
+        this.gameState = GameState.LOST;
         gameTimer.stop();
+        Gdx.app.log("Game", "Lost");
+    }
 
-        return true;
+    public void win() {
+        gameState = GameState.WIN;
+        gameTimer.stop();
+        Gdx.app.log("Game", "Won");
     }
 
     public boolean isRunning() {
@@ -134,5 +150,28 @@ public class BounceGame extends Game {
 
     public int getScore() {
         return score;
+    }
+
+    public void ringDestroyed(Body ring) {
+        world.destroyBody(ring);
+        rings.remove(ring);
+        score += RING_SCORE;
+
+        if(rings.size() == 0)
+            win();
+    }
+
+    public void gemDestroyed(Body gem) {
+        world.destroyBody(gem);
+        gems.remove(gem);
+        score += GEM_SCORE;
+    }
+
+    public ArrayList<Body> getRings() {
+        return rings;
+    }
+
+    public ArrayList<Body> getGems() {
+        return gems;
     }
 }

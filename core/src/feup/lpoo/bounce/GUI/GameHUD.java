@@ -52,6 +52,7 @@ public class GameHUD {
     }
 
     public void render() {
+        scoreLabel.setText(String.format("%06d", game.getScore()));
         spriteBatch.setProjectionMatrix(stage.getCamera().combined);
         stage.draw();
     }
