@@ -93,7 +93,7 @@ public class GameScreen implements Screen, InputProcessor {
         renderer.setView(camera);
 
         renderer.render();
-      //  b2dr.render(game.getWorld(), camera.combined);
+        b2dr.render(game.getWorld(), camera.combined);
 
         gameHUD.render();
 

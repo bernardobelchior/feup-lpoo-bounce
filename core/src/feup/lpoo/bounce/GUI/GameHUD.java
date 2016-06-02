@@ -34,13 +34,12 @@ public class GameHUD {
     private Texture tileset;
 
     private TextureRegion ballTextureRegion;
-    private TextureRegion ringTextureRegion;
+    private Sprite ringSprite;
 
 
     private float aspectRatio;
 
     private Label scoreLabel;
-    private ArrayList<Image> ringsImages;
     private Table table;
 
     private BounceGame game;
@@ -53,7 +52,6 @@ public class GameHUD {
 
         viewport = new FitViewport(game.mapHeight*aspectRatio, Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
-        ringsImages = new ArrayList<Image>();
 
         table = new Table();
         table.setFillParent(true);
@@ -61,25 +59,14 @@ public class GameHUD {
         //FIXME: GameScreen has the same variables. Find a way to avoid having a two copies of the same thing.
         tileset = new Texture("tileset.png");
         ballTextureRegion = new TextureRegion(tileset, 0, 0, GameScreen.TEXTURE_SIZE, GameScreen.TEXTURE_SIZE);
-        ringTextureRegion = new TextureRegion(tileset, 0, GameScreen.TEXTURE_SIZE, GameScreen.TEXTURE_SIZE, GameScreen.TEXTURE_SIZE);
-        Sprite ringSprite = new Sprite(ringTextureRegion);
+        TextureRegion ringTextureRegion = new TextureRegion(tileset, 0, GameScreen.TEXTURE_SIZE, GameScreen.TEXTURE_SIZE, GameScreen.TEXTURE_SIZE);
+        ringSprite = new Sprite(ringTextureRegion);
         ringSprite.scale(RING_SPRITE_SCALING);
-
-        for(int i = 0; i < game.getRings().size(); i++)
-            ringsImages.add(new Image(ringSprite));
-
-        table.top().left();
-        table.padLeft(Gdx.graphics.getWidth()/15f);
-        for(Image ringsImage : ringsImages) {
-            table.add(ringsImage).align(Align.left).width(ringSprite.getWidth()*RING_SPRITE_SCALING);
-        }
 
         scoreLabel = new Label(String.format("%06d", game.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         scoreLabel.setFontScale(FONT_SCALE);
         table.top().right();
         table.add(scoreLabel).padRight(Gdx.graphics.getWidth()/25f).expandX().align(Align.right);
-
-        table.setDebug(true);
 
         stage.addActor(table);
     }
@@ -89,9 +76,11 @@ public class GameHUD {
         spriteBatch.setProjectionMatrix(stage.getCamera().combined);
         stage.draw();
 
-        //FIXME: Delete rings when they are destroyed.
-
         spriteBatch.begin();
+
+        for(int i = 0; i < game.getRings().size(); i++) {
+            spriteBatch.draw(ringSprite, Gdx.graphics.getWidth()/15f + ringSprite.getWidth()*i, Gdx.graphics.getHeight()/50f);
+        }
 
         spriteBatch.end();
     }
