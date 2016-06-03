@@ -18,12 +18,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.logic.BounceGame;
 
 /**
  * Created by Bernardo on 02-06-2016.
  */
 public class GameOverScreen implements Screen {
+    private Bounce bounce;
     private BounceGame game;
 
     private Label messageLabel;
@@ -36,7 +38,8 @@ public class GameOverScreen implements Screen {
     private FitViewport viewport;
     private SpriteBatch spriteBatch;
 
-    public GameOverScreen(final BounceGame game, String message) {
+    public GameOverScreen(final Bounce bounce, final BounceGame game, String message) {
+        this.bounce = bounce;
         this.game = game;
 
         float aspectRatio = (float) Gdx.graphics.getWidth()/Gdx.graphics.getHeight();
@@ -73,6 +76,8 @@ public class GameOverScreen implements Screen {
             public void clicked(InputEvent e, float x, float y) {
                 Gdx.app.log("Level selection.", "clicked");
                 game.restart();
+                bounce.setProgramState(Bounce.ProgramState.GAME);
+
             }
         });
 
@@ -81,6 +86,7 @@ public class GameOverScreen implements Screen {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.log("retry", "clicked");
                 game.restart();
+                bounce.setProgramState(Bounce.ProgramState.GAME);
                 return true;
             }
         });
@@ -91,6 +97,7 @@ public class GameOverScreen implements Screen {
                 Gdx.app.log("hehe", "clickei");
                 if(nextLevelButton.isPressed()) {
                     game.nextLevel();
+                    bounce.setProgramState(Bounce.ProgramState.LEVEL_SELECTION);
                 }
             }
         });

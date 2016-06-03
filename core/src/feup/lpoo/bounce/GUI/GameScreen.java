@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.logic.BounceGame;
 
 /**
@@ -43,7 +44,7 @@ public class GameScreen implements Screen, InputProcessor {
     private float aspectRatio;
 
 
-    public GameScreen (BounceGame game) {
+    public GameScreen(BounceGame game) {
         this.game = game;
 
         aspectRatio = (float)Gdx.graphics.getWidth()/Gdx.graphics.getHeight();
@@ -178,14 +179,6 @@ public class GameScreen implements Screen, InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
-    }
-
-    public OrthographicCamera getCamera() {
-        return camera;
-    }
-
-    public SpriteBatch getSpriteBatch() {
-        return spriteBatch;
     }
 }
 

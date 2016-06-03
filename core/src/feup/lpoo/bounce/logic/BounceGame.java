@@ -212,7 +212,7 @@ public class BounceGame extends Game {
         gameState = GameState.PAUSED;
     }
 
-    public boolean shouldRender() {
-        return gameState != GameState.PAUSED;
+    public int getLevel() {
+        return level;
     }
 }
