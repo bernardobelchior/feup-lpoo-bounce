@@ -1,5 +1,6 @@
 package feup.lpoo.bounce.logic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -56,78 +57,100 @@ public class LevelLoader {
         ball.createFixture(fixtureDef);
         ball.setUserData(Bounce.EntityType.BALL);
 
-        for(MapObject object : map.getLayers().get(WALL_LAYER).getObjects()) {
-            Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+        try {
+            for(MapObject object : map.getLayers().get(WALL_LAYER).getObjects()) {
+                Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 
-            bodyDef = new BodyDef();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyDef.BodyType.StaticBody;
+                bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
 
-            PolygonShape polygonShape = new PolygonShape();
-            polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
+                PolygonShape polygonShape = new PolygonShape();
+                polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
 
-            Body body = world.createBody(bodyDef);
-            body.createFixture(polygonShape, 1);
-            body.setUserData(Bounce.EntityType.WALL);
+                Body body = world.createBody(bodyDef);
+                body.createFixture(polygonShape, 1);
+                body.setUserData(Bounce.EntityType.WALL);
+            }
+        } catch(IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            Gdx.app.log("LevelLoader", "No walls layer in map.");
+            System.exit(1);
         }
 
-        for(MapObject object : map.getLayers().get(SPIKE_LAYER).getObjects()) {
-            Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+        try {
+            for(MapObject object : map.getLayers().get(SPIKE_LAYER).getObjects()) {
+                Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 
-            bodyDef = new BodyDef();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyDef.BodyType.StaticBody;
+                bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
 
-            PolygonShape polygonShape = new PolygonShape();
-            polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
+                PolygonShape polygonShape = new PolygonShape();
+                polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
 
-            Body body = world.createBody(bodyDef);
-            body.createFixture(polygonShape, 1);
-            body.setUserData(Bounce.EntityType.SPIKE);
+                Body body = world.createBody(bodyDef);
+                body.createFixture(polygonShape, 1);
+                body.setUserData(Bounce.EntityType.SPIKE);
+            }
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            Gdx.app.log("LevelLoader", "No spikes layer in map.");
         }
 
-        //FIXME: Use the appropriate shape
-        for(MapObject object : map.getLayers().get(RINGS_LAYER).getObjects()) {
-            Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 
-            bodyDef = new BodyDef();
-            bodyDef.type = BodyDef.BodyType.KinematicBody;
-            bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
+        try {
+            //FIXME: Use the appropriate shape
+            for(MapObject object : map.getLayers().get(RINGS_LAYER).getObjects()) {
+                Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 
-            PolygonShape polygonShape = new PolygonShape();
-            polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyDef.BodyType.KinematicBody;
+                bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
 
-            fixtureDef = new FixtureDef();
-            fixtureDef.shape = polygonShape;
-            fixtureDef.density = 1;
-            fixtureDef.isSensor = true;
+                PolygonShape polygonShape = new PolygonShape();
+                polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
 
-            Body body = world.createBody(bodyDef);
-            body.createFixture(fixtureDef);
-            body.setUserData(Bounce.EntityType.RING);
-            rings.add(body);
+                fixtureDef = new FixtureDef();
+                fixtureDef.shape = polygonShape;
+                fixtureDef.density = 1;
+                fixtureDef.isSensor = true;
+
+                Body body = world.createBody(bodyDef);
+                body.createFixture(fixtureDef);
+                body.setUserData(Bounce.EntityType.RING);
+                rings.add(body);
+            }
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            Gdx.app.log("LevelLoader", "No rings layer in map.");
         }
 
-        //FIXME: Use the appropriate shape
-        for(MapObject object : map.getLayers().get(GEMS_LAYER).getObjects()) {
-            Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+        try {
+            //FIXME: Use the appropriate shape
+            for(MapObject object : map.getLayers().get(GEMS_LAYER).getObjects()) {
+                Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
 
-            bodyDef = new BodyDef();
-            bodyDef.type = BodyDef.BodyType.KinematicBody;
-            bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyDef.BodyType.KinematicBody;
+                bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
 
-            PolygonShape polygonShape = new PolygonShape();
-            polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
+                PolygonShape polygonShape = new PolygonShape();
+                polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
 
-            fixtureDef = new FixtureDef();
-            fixtureDef.shape = polygonShape;
-            fixtureDef.density = 1;
-            fixtureDef.isSensor = true;
+                fixtureDef = new FixtureDef();
+                fixtureDef.shape = polygonShape;
+                fixtureDef.density = 1;
+                fixtureDef.isSensor = true;
 
-            Body body = world.createBody(bodyDef);
-            body.createFixture(fixtureDef);
-            body.setUserData(Bounce.EntityType.GEM);
-            gems.add(body);
+                Body body = world.createBody(bodyDef);
+                body.createFixture(fixtureDef);
+                body.setUserData(Bounce.EntityType.GEM);
+                gems.add(body);
+            }
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            Gdx.app.log("LevelLoader", "No gems layer in map.");
         }
     }
 
