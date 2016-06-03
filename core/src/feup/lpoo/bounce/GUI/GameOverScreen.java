@@ -4,17 +4,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -31,16 +37,25 @@ public class GameOverScreen implements Screen {
     private Label messageLabel;
     private Label scoreTextLabel;
     private Label scoreLabel;
-    private Button levelSelectionMenuButton;
-    private Button retryButton;
-    private Button nextLevelButton;
+    private ImageButton levelSelectionMenuButton;
+    private ImageButton retryButton;
+    private ImageButton nextLevelButton;
+
     private Stage stage;
     private FitViewport viewport;
     private SpriteBatch spriteBatch;
 
+    private Texture backTexture;
+    private Texture retryTexture;
+    private Texture nextTexture;
+
     public GameOverScreen(final Bounce bounce, final BounceGame game, String message) {
         this.bounce = bounce;
         this.game = game;
+
+        backTexture = new Texture("next.png");
+        retryTexture = new Texture("retry.png");
+        nextTexture = new Texture("next.png");
 
         float aspectRatio = (float) Gdx.graphics.getWidth()/Gdx.graphics.getHeight();
 
@@ -65,44 +80,59 @@ public class GameOverScreen implements Screen {
         scoreLabel.setAlignment(Align.center);
 
         //Define a buttonStyle for all buttons and create them
-        Button.ButtonStyle buttonStyle = new Button.ButtonStyle();
-        levelSelectionMenuButton = new Button(buttonStyle);
-        retryButton = new Button(buttonStyle);
-        nextLevelButton = new Button(buttonStyle);
+        ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.pressedOffsetX = 1;
+        imageButtonStyle.pressedOffsetY = -1;
+        
+        imageButtonStyle.imageUp = new TextureRegionDrawable(new TextureRegion(backTexture));
+        imageButtonStyle.imageDown = new TextureRegionDrawable(new TextureRegion(backTexture));
+        levelSelectionMenuButton = new ImageButton(imageButtonStyle);
+        levelSelectionMenuButton.setFillParent(true);
+
+        imageButtonStyle.imageUp = new TextureRegionDrawable(new TextureRegion(retryTexture));
+        imageButtonStyle.imageDown = new TextureRegionDrawable(new TextureRegion(retryTexture));
+        retryButton = new ImageButton(imageButtonStyle);
+        retryButton.setFillParent(true);
+
+        imageButtonStyle.imageUp = new TextureRegionDrawable(new TextureRegion(nextTexture));
+        imageButtonStyle.imageDown = new TextureRegionDrawable(new TextureRegion(nextTexture));
+        nextLevelButton = new ImageButton(imageButtonStyle);
+        nextLevelButton.setFillParent(true);
 
         //Defining button's listeners
         levelSelectionMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent e, float x, float y) {
-                Gdx.app.log("Level selection.", "clicked");
-                game.restart();
-                bounce.setProgramState(Bounce.ProgramState.GAME);
-
+                //TODO: Go back
+                //bounce.setProgramState(Bounce.ProgramState.LEVEL_SELECTION);
             }
         });
 
-        retryButton.addListener(new InputListener() {
+        retryButton.addListener(new ClickListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("retry", "clicked");
+            public void clicked(InputEvent event, float x, float y) {
                 game.restart();
                 bounce.setProgramState(Bounce.ProgramState.GAME);
-                return true;
             }
         });
 
-        nextLevelButton.addListener(new ChangeListener() {
+        nextLevelButton.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.log("hehe", "clickei");
-                if(nextLevelButton.isPressed()) {
+            public void clicked(InputEvent event, float x, float y) {
                     game.nextLevel();
-                    bounce.setProgramState(Bounce.ProgramState.LEVEL_SELECTION);
-                }
+                    bounce.setProgramState(Bounce.ProgramState.GAME);
             }
         });
 
         Table table = createMenuTable();
+        table.setTouchable(Touchable.childrenOnly);
+
+        /*table.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("Clicked", "table on x: " + x + " y: " + y);
+            }
+        });*/
 
         stage.addActor(table);
     }

@@ -71,8 +71,6 @@ public class BounceGame extends Game {
         }, 0, GAME_UPDATE_RATE);
 
         setUpWorld();
-
-        world.setContactListener(new BounceContactListener(this));
     }
 
     private void setUpWorld() {
@@ -84,6 +82,8 @@ public class BounceGame extends Game {
         gems = levelLoader.getGems();
 
         score = 0;
+
+        world.setContactListener(new BounceContactListener(this));
     }
 
     public boolean start() {
@@ -201,6 +201,7 @@ public class BounceGame extends Game {
         if(level > 2)
             return false;
 
+        level++;
         map = new TmxMapLoader().load("level" + level + ".tmx");
 
         restart();
