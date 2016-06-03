@@ -1,11 +1,13 @@
 package feup.lpoo.bounce;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.TimeUtils;
 
+import feup.lpoo.bounce.GUI.GamePausedScreen;
 import feup.lpoo.bounce.GUI.GameScreen;
 import feup.lpoo.bounce.GUI.GameOverScreen;
 import feup.lpoo.bounce.GUI.LevelSelectionScreen;
@@ -13,15 +15,17 @@ import feup.lpoo.bounce.logic.BounceGame;
 
 public class Bounce extends ApplicationAdapter{
     //Global enumerations
-	public enum ProgramState { MAIN_MENU, LEVEL_SELECTION, GAME, GAME_OVER }
+	public enum ProgramState { MAIN_MENU, LEVEL_SELECTION, GAME, GAME_OVER, GAME_PAUSED }
     public enum GameState { PAUSED, RUNNING, LOSS, WIN }
     public enum EntityType { WALL, BALL, SPIKE, GEM, RING }
 
     //Global variables
-    public static final int NUMBER_OF_LEVELS = 2;
+    public static final int NUMBER_OF_LEVELS = 1;
     public static final int TEXTURE_SIZE = 64;
     public static final String LOSS_MESSAGE = "Try again...";
     public static final String WIN_MESSAGE = "You won!";
+    public static final String PAUSED_MESSAGE = "Paused";
+    public static final float BITMAP_FONT_SCALING = 5;
     public static final int GEM_SCORE = 5;
     public static final int RING_SCORE = 1;
     public final static Vector2 WORLD_GRAVITY = new Vector2(0, -576);
@@ -37,11 +41,9 @@ public class Bounce extends ApplicationAdapter{
     public final static int ATTRITION_MODIFIER = 10000;
     public final static int JUMP_HEIGHT_MODIFIER = 700000;
 
-
     private Screen currentScreen;
 	private ProgramState programState;
     private BounceGame game;
-
 	private long lastUpdateTime = TimeUtils.millis();
 
     @Override
@@ -69,7 +71,7 @@ public class Bounce extends ApplicationAdapter{
                 GameState gameState = game.getGameState();
                 if(gameState == GameState.WIN || gameState == GameState.LOSS) {
                     programState = ProgramState.GAME_OVER;
-                    game.stop();
+                    game.pauseGame();
                     currentScreen = new GameOverScreen(this, game, gameState);
                 }
 				break;
@@ -99,11 +101,14 @@ public class Bounce extends ApplicationAdapter{
                 currentScreen = new LevelSelectionScreen(this);
                 break;
             case GAME:
-                currentScreen = new GameScreen(game);
+                currentScreen = new GameScreen(this, game);
                 game.setScreen(currentScreen);
                 break;
             case GAME_OVER:
                 //End of game already handles GAME_OVER
+                break;
+            case GAME_PAUSED:
+                currentScreen = new GamePausedScreen(this, game);
                 break;
         }
     }

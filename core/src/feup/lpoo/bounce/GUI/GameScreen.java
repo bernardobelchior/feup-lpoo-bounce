@@ -11,15 +11,27 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import feup.lpoo.bounce.Bounce;
+import feup.lpoo.bounce.Bounce.GameState;
+import feup.lpoo.bounce.Utils;
 import feup.lpoo.bounce.logic.BounceGame;
 
 /**
  * Created by Bernardo on 30-05-2016.
  */
 public class GameScreen implements Screen, InputProcessor {
+    private Bounce bounce;
     private BounceGame game;
 
     private OrthographicCamera camera;
@@ -27,8 +39,11 @@ public class GameScreen implements Screen, InputProcessor {
     private OrthogonalTiledMapRenderer renderer;
     private GameHUD gameHUD;
     private Box2DDebugRenderer b2dr;
+   // private Stage stage;
 
     private Texture tileset;
+
+    private ImageButton pauseButton;
 
     //Texture regions
     private TextureRegion ballTextureRegion;
@@ -37,7 +52,8 @@ public class GameScreen implements Screen, InputProcessor {
 
     private SpriteBatch spriteBatch;
 
-    public GameScreen(BounceGame game) {
+    public GameScreen(Bounce bounce, BounceGame game) {
+        this.bounce = bounce;
         this.game = game;
 
         spriteBatch = new SpriteBatch();
@@ -51,9 +67,38 @@ public class GameScreen implements Screen, InputProcessor {
         renderer = new OrthogonalTiledMapRenderer(game.getMap(), 1);
         b2dr = new Box2DDebugRenderer();
         gameHUD = new GameHUD(game, spriteBatch);
+        //stage = new Stage(viewport, spriteBatch);
+
+        //stage.addActor(createPauseButton());
 
         camera.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2, 0);
         Gdx.input.setInputProcessor(this);
+    }
+
+    private Actor createPauseButton() {
+        TextureRegionDrawable pauseTexture = new TextureRegionDrawable(new TextureRegion(new Texture("pause.png")));
+
+        pauseButton = Utils.createButtonWithImage(pauseTexture);
+
+        pauseButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(pauseButton.isPressed()) {
+                    game.pauseGame();
+                    bounce.setProgramState(Bounce.ProgramState.GAME_PAUSED);
+                }
+            }
+        });
+
+        Table table = new Table();
+        table.setFillParent(true);
+        table.setDebug(true);
+        table.top().padRight(Gdx.graphics.getWidth()/44f).padTop(Gdx.graphics.getHeight()/22f);
+
+        table.add().expandX();
+        table.add(pauseButton).align(Align.topRight);
+
+        return table;
     }
 
     @Override
@@ -84,6 +129,15 @@ public class GameScreen implements Screen, InputProcessor {
         renderer.render();
         b2dr.render(game.getWorld(), camera.combined);
         gameHUD.render();
+
+        /*if(game.getGameState() != GameState.RUNNING)
+            pauseButton.setDisabled(true);
+        else
+            pauseButton.setDisabled(false);*/
+
+
+        //Draws the stage (the pause button)
+        //stage.draw();
 
         //Draws the ball on its position
         spriteBatch.setProjectionMatrix(camera.combined);

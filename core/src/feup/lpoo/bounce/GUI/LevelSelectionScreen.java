@@ -56,7 +56,7 @@ public class LevelSelectionScreen implements Screen {
             imageTextButton.setUserObject(new Integer(i+1));
             imageTextButton.getImage().setAlign(Align.center);
             imageTextButton.getLabel().setAlignment(Align.center);
-            imageTextButton.getLabel().setFontScale(5f);
+            imageTextButton.getLabel().setFontScale(Bounce.BITMAP_FONT_SCALING);
 
             imageTextButton.addListener(new ChangeListener() {
                 @Override

@@ -8,14 +8,20 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import feup.lpoo.bounce.Bounce;
+import feup.lpoo.bounce.Utils;
 import feup.lpoo.bounce.logic.BounceGame;
+import feup.lpoo.bounce.Bounce.GameState;
 
 /**
  * Created by Bernardo on 02-06-2016.
@@ -41,7 +47,7 @@ public class GameHUD {
 
     private BounceGame game;
 
-    public GameHUD(BounceGame game, SpriteBatch spriteBatch) {
+    public GameHUD(final BounceGame game, SpriteBatch spriteBatch) {
         this.game = game;
         this.spriteBatch = spriteBatch;
 
@@ -63,7 +69,7 @@ public class GameHUD {
         scoreLabel = new Label(String.format("%06d", game.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         scoreLabel.setFontScale(FONT_SCALE);
         table.top().right();
-        table.add(scoreLabel).padRight(Gdx.graphics.getWidth()/25f).expandX().align(Align.right);
+        table.add(scoreLabel).padRight(Gdx.graphics.getWidth()/6f).expandX().align(Align.right);
 
         stage.addActor(table);
     }

@@ -182,7 +182,7 @@ public class BounceGame extends Game {
     }
 
     public boolean nextLevel() {
-        if(level > 2)
+        if(level > Bounce.NUMBER_OF_LEVELS)
             return false;
 
         level++;
@@ -193,8 +193,9 @@ public class BounceGame extends Game {
         return true;
     }
 
-    public void stop() {
+    public void pauseGame() {
         gameState = Bounce.GameState.PAUSED;
+        gameTimer.stop();
     }
 
     public int getLevel() {
