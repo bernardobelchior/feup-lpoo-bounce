@@ -13,6 +13,8 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.ArrayList;
 
+import feup.lpoo.bounce.Bounce;
+
 /**
  * Created by Bernardo on 01-06-2016.
  */
@@ -27,9 +29,12 @@ public class LevelLoader {
     private ArrayList<Body> rings;
     private ArrayList<Body> gems;
 
+    private int mapWidth;
+    private int mapHeight;
+
     public void load(TiledMap map, World world) {
-        int mapWidth = map.getProperties().get("width", Integer.class).intValue()*map.getProperties().get("tilewidth", Integer.class).intValue();
-        int mapHeight = map.getProperties().get("height", Integer.class).intValue()*map.getProperties().get("tileheight", Integer.class).intValue();
+        mapWidth = map.getProperties().get("width", Integer.class).intValue()*map.getProperties().get("tilewidth", Integer.class).intValue();
+        mapHeight = map.getProperties().get("height", Integer.class).intValue()*map.getProperties().get("tileheight", Integer.class).intValue();
 
         rings = new ArrayList<Body>();
         gems = new ArrayList<Body>();
@@ -49,7 +54,7 @@ public class LevelLoader {
 
         ball = world.createBody(bodyDef);
         ball.createFixture(fixtureDef);
-        ball.setUserData(BounceGame.EntityType.BALL);
+        ball.setUserData(Bounce.EntityType.BALL);
 
         for(MapObject object : map.getLayers().get(WALL_LAYER).getObjects()) {
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
@@ -63,7 +68,7 @@ public class LevelLoader {
 
             Body body = world.createBody(bodyDef);
             body.createFixture(polygonShape, 1);
-            body.setUserData(BounceGame.EntityType.WALL);
+            body.setUserData(Bounce.EntityType.WALL);
         }
 
         for(MapObject object : map.getLayers().get(SPIKE_LAYER).getObjects()) {
@@ -78,7 +83,7 @@ public class LevelLoader {
 
             Body body = world.createBody(bodyDef);
             body.createFixture(polygonShape, 1);
-            body.setUserData(BounceGame.EntityType.SPIKE);
+            body.setUserData(Bounce.EntityType.SPIKE);
         }
 
         //FIXME: Use the appropriate shape
@@ -99,7 +104,7 @@ public class LevelLoader {
 
             Body body = world.createBody(bodyDef);
             body.createFixture(fixtureDef);
-            body.setUserData(BounceGame.EntityType.RING);
+            body.setUserData(Bounce.EntityType.RING);
             rings.add(body);
         }
 
@@ -121,7 +126,7 @@ public class LevelLoader {
 
             Body body = world.createBody(bodyDef);
             body.createFixture(fixtureDef);
-            body.setUserData(BounceGame.EntityType.GEM);
+            body.setUserData(Bounce.EntityType.GEM);
             gems.add(body);
         }
     }
@@ -136,5 +141,13 @@ public class LevelLoader {
 
     public ArrayList<Body> getGems() {
         return gems;
+    }
+
+    public int getMapHeight() {
+        return mapHeight;
+    }
+
+    public int getMapWidth() {
+        return mapWidth;
     }
 }

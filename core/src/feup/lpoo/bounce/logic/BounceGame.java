@@ -8,43 +8,25 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
 
+import feup.lpoo.bounce.Bounce;
+
 public class BounceGame extends Game {
-    private static final int GEM_SCORE = 5;
-    private static final int RING_SCORE = 1;
-
-    public enum GameState { PAUSED, RUNNING, LOST, WIN }
-    public enum EntityType { WALL, BALL, SPIKE, GEM, RING }
-    //World gravity
-    public final static Vector2 GRAVITY = new Vector2(0, -576);
-
-    //Game update rate in seconds
-    private final static float GAME_UPDATE_RATE = 1/300f;
-
-    //Used to check if the phone is relatively standing still
-    private final static float HORIZONTAL_ACCELERATION_TOLERANCE = 1f;
-
-    //Movement modifiers
-    private final static int HORIZONTAL_MOVEMENT_MODIFIER = 1000000;
-    private final static int ATTRITION_MODIFIER = 10000;
-    private final static int JUMP_HEIGHT_MODIFIER = 700000;
-
     //Map dimensions
-    public final int mapWidth;
-    public final int mapHeight;
+    private int mapWidth;
+    private int mapHeight;
 
     private TiledMap map;
     private World world;
 
     private Body ball;
     private Timer gameTimer;
-    private GameState gameState;
+    private Bounce.GameState gameState;
     private int score;
 
     private ArrayList<Body> rings;
@@ -53,7 +35,7 @@ public class BounceGame extends Game {
     private int level;
 
     public BounceGame(int level) {
-        this.gameState = GameState.PAUSED;
+        this.gameState = Bounce.GameState.PAUSED;
         this.level = level;
 
         map = new TmxMapLoader().load("level" + level + ".tmx");
@@ -66,20 +48,22 @@ public class BounceGame extends Game {
             @Override
             public void run() {
                 //FIXME: Actually use the elapsed time
-                update(GAME_UPDATE_RATE);
+                update(Bounce.GAME_UPDATE_RATE);
             }
-        }, 0, GAME_UPDATE_RATE);
+        }, 0, Bounce.GAME_UPDATE_RATE);
 
         setUpWorld();
     }
 
     private void setUpWorld() {
-        world = new World(GRAVITY, true);
+        world = new World(Bounce.WORLD_GRAVITY, true);
         LevelLoader levelLoader = new LevelLoader();
         levelLoader.load(map, world);
         ball = levelLoader.getBall();
         rings = levelLoader.getRings();
         gems = levelLoader.getGems();
+        mapHeight = levelLoader.getMapHeight();
+        mapWidth = levelLoader.getMapWidth();
 
         score = 0;
 
@@ -87,11 +71,11 @@ public class BounceGame extends Game {
     }
 
     public boolean start() {
-        if(gameState == GameState.RUNNING)
+        if(gameState == Bounce.GameState.RUNNING)
             return false;
 
         gameTimer.start();
-        gameState = GameState.RUNNING;
+        gameState = Bounce.GameState.RUNNING;
 
         return true;
     }
@@ -103,11 +87,11 @@ public class BounceGame extends Game {
         float horizontalAcceleration = Gdx.input.getAccelerometerY();
 
         //Moves the ball depending on the accelerometer
-        if(Math.abs(horizontalAcceleration) > HORIZONTAL_ACCELERATION_TOLERANCE)
-            ball.applyForceToCenter(horizontalAcceleration*HORIZONTAL_MOVEMENT_MODIFIER, 0, true);
+        if(Math.abs(horizontalAcceleration) > Bounce.HORIZONTAL_ACCELERATION_TOLERANCE)
+            ball.applyForceToCenter(horizontalAcceleration* Bounce.HORIZONTAL_MOVEMENT_MODIFIER, 0, true);
 
         //Attrition application
-        ball.applyForceToCenter(-ball.getLinearVelocity().x* ATTRITION_MODIFIER, 0, true);
+        ball.applyForceToCenter(-ball.getLinearVelocity().x* Bounce.ATTRITION_MODIFIER, 0, true);
 
         world.step(deltaTime, 6, 2);
     }
@@ -128,7 +112,7 @@ public class BounceGame extends Game {
         if(!isRunning())
             return false;
 
-        ball.applyForceToCenter(-GRAVITY.x, JUMP_HEIGHT_MODIFIER *-GRAVITY.y, true);
+        ball.applyForceToCenter(-Bounce.WORLD_GRAVITY.x, Bounce.JUMP_HEIGHT_MODIFIER *-Bounce.WORLD_GRAVITY.y, true);
 
         return true;
     }
@@ -139,19 +123,19 @@ public class BounceGame extends Game {
     }
 
     public void over() {
-        gameState = GameState.LOST;
+        gameState = Bounce.GameState.LOSS;
         gameTimer.stop();
         Gdx.app.log("Game", "Lost");
     }
 
     public void win() {
-        gameState = GameState.WIN;
+        gameState = Bounce.GameState.WIN;
         gameTimer.stop();
         Gdx.app.log("Game", "Won");
     }
 
     public boolean isRunning() {
-        return gameState == GameState.RUNNING;
+        return gameState == Bounce.GameState.RUNNING;
     }
 
     public int getScore() {
@@ -161,7 +145,7 @@ public class BounceGame extends Game {
     public void ringDestroyed(Body ring) {
         world.destroyBody(ring);
         rings.remove(ring);
-        score += RING_SCORE;
+        score += Bounce.RING_SCORE;
 
         if(rings.size() == 0)
             win();
@@ -170,7 +154,7 @@ public class BounceGame extends Game {
     public void gemDestroyed(Body gem) {
         world.destroyBody(gem);
         gems.remove(gem);
-        score += GEM_SCORE;
+        score += Bounce.GEM_SCORE;
     }
 
     public ArrayList<Body> getRings() {
@@ -181,7 +165,7 @@ public class BounceGame extends Game {
         return gems;
     }
 
-    public GameState getGameState() {
+    public Bounce.GameState getGameState() {
         return gameState;
     }
 
@@ -210,10 +194,18 @@ public class BounceGame extends Game {
     }
 
     public void stop() {
-        gameState = GameState.PAUSED;
+        gameState = Bounce.GameState.PAUSED;
     }
 
     public int getLevel() {
         return level;
+    }
+
+    public int getMapWidth() {
+        return mapWidth;
+    }
+
+    public int getMapHeight() {
+        return mapHeight;
     }
 }

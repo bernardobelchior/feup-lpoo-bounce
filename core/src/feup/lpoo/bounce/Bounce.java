@@ -1,30 +1,53 @@
 package feup.lpoo.bounce;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 
 import feup.lpoo.bounce.GUI.GameScreen;
 import feup.lpoo.bounce.GUI.GameOverScreen;
+import feup.lpoo.bounce.GUI.LevelSelectionScreen;
 import feup.lpoo.bounce.logic.BounceGame;
 
 public class Bounce extends ApplicationAdapter{
+    //Global enumerations
 	public enum ProgramState { MAIN_MENU, LEVEL_SELECTION, GAME, GAME_OVER }
+    public enum GameState { PAUSED, RUNNING, LOSS, WIN }
+    public enum EntityType { WALL, BALL, SPIKE, GEM, RING }
 
-	public static final String LOST_MESSAGE = "Try again...";
-	public static final String WON_MESSAGE = "You won!";
+    //Global variables
+    public static final int NUMBER_OF_LEVELS = 2;
+    public static final int TEXTURE_SIZE = 64;
+    public static final String LOSS_MESSAGE = "Try again...";
+    public static final String WIN_MESSAGE = "You won!";
+    public static final int GEM_SCORE = 5;
+    public static final int RING_SCORE = 1;
+    public final static Vector2 WORLD_GRAVITY = new Vector2(0, -576);
 
-	private Screen currentScreen;
+    //Game update rate in seconds
+    public final static float GAME_UPDATE_RATE = 1/300f;
+
+    //Used to check if the phone is relatively standing still
+    public final static float HORIZONTAL_ACCELERATION_TOLERANCE = 1f;
+
+    //Movement modifiers
+    public final static int HORIZONTAL_MOVEMENT_MODIFIER = 1000000;
+    public final static int ATTRITION_MODIFIER = 10000;
+    public final static int JUMP_HEIGHT_MODIFIER = 700000;
+
+
+    private Screen currentScreen;
 	private ProgramState programState;
+    private BounceGame game;
 
 	private long lastUpdateTime = TimeUtils.millis();
 
-	private BounceGame game;
-
-	@Override
+    @Override
 	public void create () {
         programState = ProgramState.MAIN_MENU;
-		launchGame(1);
+        setProgramState(ProgramState.LEVEL_SELECTION);
 	}
 
 	@Override
@@ -43,18 +66,12 @@ public class Bounce extends ApplicationAdapter{
 			case LEVEL_SELECTION:
 				break;
 			case GAME:
-				switch (game.getGameState()) {
-					case WIN:
-                        programState = ProgramState.GAME_OVER;
-						game.stop();
-						currentScreen = new GameOverScreen(this, game, WON_MESSAGE);
-						break;
-					case LOST:
-                        programState = ProgramState.GAME_OVER;
-						game.stop();
-						currentScreen = new GameOverScreen(this, game, LOST_MESSAGE);
-						break;
-				}
+                GameState gameState = game.getGameState();
+                if(gameState == GameState.WIN || gameState == GameState.LOSS) {
+                    programState = ProgramState.GAME_OVER;
+                    game.stop();
+                    currentScreen = new GameOverScreen(this, game, gameState);
+                }
 				break;
 			case GAME_OVER:
 				break;
@@ -79,17 +96,14 @@ public class Bounce extends ApplicationAdapter{
                 //currentScreen = new MainMenuScreen();
                 break;
             case LEVEL_SELECTION:
-                //currentScreen = new LevelSelectionScreen();
+                currentScreen = new LevelSelectionScreen(this);
                 break;
             case GAME:
                 currentScreen = new GameScreen(game);
                 game.setScreen(currentScreen);
                 break;
             case GAME_OVER:
-                if(game.getGameState() == BounceGame.GameState.WIN)
-                    currentScreen = new GameOverScreen(this, game, WON_MESSAGE);
-                else if(game.getGameState() == BounceGame.GameState.LOST)
-                    currentScreen = new GameOverScreen(this, game, LOST_MESSAGE);
+                //End of game already handles GAME_OVER
                 break;
         }
     }

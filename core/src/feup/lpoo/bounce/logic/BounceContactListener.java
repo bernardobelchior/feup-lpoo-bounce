@@ -4,7 +4,9 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import feup.lpoo.bounce.logic.BounceGame.EntityType;
+
+import feup.lpoo.bounce.Bounce;
+import feup.lpoo.bounce.Bounce.EntityType;
 
 /**
  * Created by Bernardo on 01-06-2016.
@@ -21,7 +23,7 @@ public class BounceContactListener implements ContactListener {
         EntityType entityA = (EntityType) contact.getFixtureA().getBody().getUserData();
         EntityType entityB = (EntityType) contact.getFixtureB().getBody().getUserData();
 
-        if(entityA == EntityType.BALL) {
+        if(entityA == Bounce.EntityType.BALL) {
             switch (entityB) {
                 case SPIKE:
                     game.over();
@@ -33,7 +35,7 @@ public class BounceContactListener implements ContactListener {
                     game.gemDestroyed(contact.getFixtureB().getBody());
                     break;
             }
-        } else if (entityB == EntityType.BALL) {
+        } else if (entityB == Bounce.EntityType.BALL) {
             switch (entityA) {
                 case SPIKE:
                     game.over();

@@ -9,14 +9,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import java.util.ArrayList;
-
+import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.logic.BounceGame;
 
 /**
@@ -49,7 +47,7 @@ public class GameHUD {
 
         aspectRatio = (float)Gdx.graphics.getWidth()/Gdx.graphics.getHeight();
 
-        viewport = new FitViewport(game.mapHeight*aspectRatio, Gdx.graphics.getHeight(), new OrthographicCamera());
+        viewport = new FitViewport(game.getMapHeight() *aspectRatio, Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
 
         table = new Table();
@@ -57,8 +55,8 @@ public class GameHUD {
 
         //FIXME: GameScreen has the same variables. Find a way to avoid having a two copies of the same thing.
         tileset = new Texture("tileset.png");
-        ballTextureRegion = new TextureRegion(tileset, 0, 0, GameScreen.TEXTURE_SIZE, GameScreen.TEXTURE_SIZE);
-        TextureRegion ringTextureRegion = new TextureRegion(tileset, 0, GameScreen.TEXTURE_SIZE, GameScreen.TEXTURE_SIZE, GameScreen.TEXTURE_SIZE);
+        ballTextureRegion = new TextureRegion(tileset, 0, 0, Bounce.TEXTURE_SIZE, Bounce.TEXTURE_SIZE);
+        TextureRegion ringTextureRegion = new TextureRegion(tileset, 0, Bounce.TEXTURE_SIZE, Bounce.TEXTURE_SIZE, Bounce.TEXTURE_SIZE);
         ringSprite = new Sprite(ringTextureRegion);
         ringSprite.scale(RING_SPRITE_SCALING);
 
@@ -79,7 +77,7 @@ public class GameHUD {
 
         for(int i = 0; i < game.getRings().size(); i++) {
             spriteBatch.draw(ringSprite, Gdx.graphics.getWidth()/15f + ringSprite.getWidth()*i,
-                    Gdx.graphics.getHeight() - GameScreen.TEXTURE_SIZE - Gdx.graphics.getHeight()/50f);
+                    Gdx.graphics.getHeight() - Bounce.TEXTURE_SIZE - Gdx.graphics.getHeight()/50f);
         }
 
         spriteBatch.end();
