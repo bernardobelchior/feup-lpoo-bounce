@@ -6,6 +6,7 @@ package feup.lpoo.bounce.logic;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -34,9 +35,15 @@ public class BounceGame extends Game {
 
     private int level;
 
+    private final Sound LOSS_SOUND;
+    private final Sound WIN_SOUND;
+
     public BounceGame(int level) {
         this.gameState = Bounce.GameState.PAUSED;
         this.level = level;
+
+        LOSS_SOUND = Gdx.audio.newSound(Gdx.files.internal("sounds/lose.mp3"));
+        WIN_SOUND = Gdx.audio.newSound(Gdx.files.internal("sounds/win.mp3"));
 
         map = new TmxMapLoader().load("level" + level + ".tmx");
 
@@ -123,12 +130,14 @@ public class BounceGame extends Game {
     }
 
     public void over() {
+        LOSS_SOUND.play();
         gameState = Bounce.GameState.LOSS;
         gameTimer.stop();
         Gdx.app.log("Game", "Lost");
     }
 
     public void win() {
+        WIN_SOUND.play();
         gameState = Bounce.GameState.WIN;
         gameTimer.stop();
         Gdx.app.log("Game", "Won");

@@ -3,6 +3,7 @@ package feup.lpoo.bounce;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -30,6 +31,9 @@ public class Bounce extends ApplicationAdapter{
     public static final int GEM_SCORE = 5;
     public static final int RING_SCORE = 1;
     public final static Vector2 WORLD_GRAVITY = new Vector2(0, -800);
+
+    //Sound variables
+    //public static final Sound PICK_UP_ITEMS_SOUND = Gdx.audio.newSound(Gdx.files.internal("sounds/pick_up_items.mp3"));
 
     //Game update rate in seconds
     public final static float GAME_UPDATE_RATE = 1/300f;

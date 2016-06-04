@@ -1,5 +1,7 @@
 package feup.lpoo.bounce.logic;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -14,8 +16,11 @@ import feup.lpoo.bounce.Bounce.EntityType;
 public class BounceContactListener implements ContactListener {
     private BounceGame game;
 
+    private final Sound PICK_UP_ITEMS_SOUND;
+
     public BounceContactListener(BounceGame game) {
         this.game = game;
+        PICK_UP_ITEMS_SOUND = Gdx.audio.newSound(Gdx.files.internal("sounds/pick_up_items.mp3"));
     }
 
     @Override
@@ -29,9 +34,11 @@ public class BounceContactListener implements ContactListener {
                     game.over();
                     break;
                 case RING:
+                    PICK_UP_ITEMS_SOUND.play();
                     game.ringDestroyed(contact.getFixtureB().getBody());
                     break;
                 case GEM:
+                    PICK_UP_ITEMS_SOUND.play();
                     game.gemDestroyed(contact.getFixtureB().getBody());
                     break;
             }
@@ -41,9 +48,11 @@ public class BounceContactListener implements ContactListener {
                     game.over();
                     break;
                 case RING:
+                    PICK_UP_ITEMS_SOUND.play();
                     game.ringDestroyed(contact.getFixtureA().getBody());
                     break;
                 case GEM:
+                    PICK_UP_ITEMS_SOUND.play();
                     game.gemDestroyed(contact.getFixtureA().getBody());
                     break;
             }

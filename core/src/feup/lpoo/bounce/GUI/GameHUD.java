@@ -2,6 +2,7 @@ package feup.lpoo.bounce.GUI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -49,10 +50,14 @@ public class GameHUD extends Stage implements InputProcessor {
     private BounceGame game;
     private Bounce bounce;
 
+    private final Sound JUMPING_SOUND;
+
     public GameHUD(Bounce bounce, final BounceGame game) {
         super(new FitViewport(game.getMapHeight() *(float)Gdx.graphics.getWidth()/Gdx.graphics.getHeight(), game.getMapHeight(), new OrthographicCamera()), new SpriteBatch());
         this.bounce = bounce;
         this.game = game;
+
+        JUMPING_SOUND = Gdx.audio.newSound(Gdx.files.internal("sounds/jump.mp3"));
 
         spriteBatch = new SpriteBatch();
 
@@ -120,6 +125,7 @@ public class GameHUD extends Stage implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(!super.touchDown(screenX, screenY, pointer, button)) {
+            JUMPING_SOUND.play();
             game.ballJump();
             return true;
         }

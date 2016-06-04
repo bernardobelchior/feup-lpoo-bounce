@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="64" tileheight="64" nextobjectid="68">
+ <tileset firstgid="1" name="tileset" tilewidth="64" tileheight="64" tilecount="16" columns="4">
+  <image source="tileset.png" trans="ff00ff" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="17" name="clouds" tilewidth="64" tileheight="64" tilecount="108" columns="12">
+  <image source="mMf3zdS.png" trans="53e3ff" width="800" height="600"/>
+ </tileset>
+ <tileset firstgid="125" name="barbed wire" tilewidth="64" tileheight="64" tilecount="36" columns="6">
+  <image source="KineBo4iq.png" trans="53e3ff" width="430" height="430"/>
+ </tileset>
+ <layer name="backgroud" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztw8EJAAAMA6GD7L9zh+hXwVVTVVVVVVVfD0UKEZU=
+  </data>
+ </layer>
+ <layer name="graphics" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztWMtuwzAME/rIJ+7srdduu27dT/ST5xwMCIYl0VSK5lACRIDWlOXQlowcROTw4q7Y8CYcWF1Gj2qetSYGzY9S+V75UXmZ0LO6jB7VsLmxOg3Ey9GY5se18rPyq/J7In6ki3JD9KyGiZ3RrSgSe+mNaX78VP5W3ir/JuJbOjQ3T28B1SzAuNFe8eIvxrMB8dIb0/ePGa2Fu6NdBtwaVm/UKDJXk9D+i+wVb0zkBxK/f6fNj16LrEfj6OSVRaYmMTiD40bvA+lFLf5If5ccToqWJ4ifHpg6yWImTz2uCH6GvdiIH57nOn/kjMzeSzP7BZ0rOg/W/9oP9gz3OXrrLbJdj0diIfmdjScz1wq9n7w77WhP699H78Hz2crR8yNTt/saFcVC8kP79Gze1twRvLrG3r08P7as21EsJj92LnTuCGw/XGHlmO3nW8HL7yiPvb+x+y7jh4VRfZ7ho9H82BvWtT/7OybLE8k95tXH+AdUKG90
+  </data>
+ </layer>
+ <objectgroup name="wall">
+  <object id="10" x="0" y="0" width="64" height="960"/>
+  <object id="11" x="64" y="0" width="6272" height="64"/>
+  <object id="12" x="6336" y="0" width="64" height="960"/>
+  <object id="14" x="6144" y="896" width="192" height="64"/>
+  <object id="16" x="64" y="896" width="2816" height="64"/>
+  <object id="17" x="3776" y="896" width="1536" height="64"/>
+  <object id="18" x="384" y="704" width="128" height="64"/>
+  <object id="19" x="832" y="512" width="64" height="64"/>
+  <object id="20" x="960" y="448" width="128" height="64"/>
+  <object id="21" x="1664" y="384" width="448" height="64"/>
+  <object id="22" x="2688" y="640" width="256" height="64"/>
+  <object id="24" x="2880" y="448" width="256" height="64"/>
+  <object id="25" x="3328" y="320" width="256" height="64"/>
+  <object id="26" x="4032" y="640" width="512" height="64"/>
+  <object id="27" x="4672" y="320" width="512" height="64"/>
+  <object id="28" x="5376" y="576" width="192" height="64"/>
+  <object id="29" x="5632" y="448" width="192" height="64"/>
+  <object id="30" x="5888" y="576" width="192" height="64"/>
+  <object id="61" x="2304" y="512" width="192" height="64"/>
+ </objectgroup>
+ <objectgroup name="spikes">
+  <object id="31" x="2880" y="928" width="896" height="32"/>
+  <object id="32" x="5312" y="928" width="832" height="32"/>
+  <object id="62" x="2304" y="480" width="192" height="32"/>
+ </objectgroup>
+ <objectgroup name="rings">
+  <object id="33" x="448" y="640" width="64" height="64"/>
+  <object id="34" x="832" y="448" width="64" height="64"/>
+  <object id="35" x="1536" y="832" width="64" height="64"/>
+  <object id="36" x="1600" y="832" width="64" height="64"/>
+  <object id="37" x="1664" y="832" width="64" height="64"/>
+  <object id="38" x="1728" y="832" width="64" height="64"/>
+  <object id="39" x="1792" y="832" width="64" height="64"/>
+  <object id="40" x="1856" y="832" width="64" height="64"/>
+  <object id="41" x="1920" y="832" width="64" height="64"/>
+  <object id="42" x="1984" y="832" width="64" height="64"/>
+  <object id="43" x="2048" y="832" width="64" height="64"/>
+  <object id="44" x="2112" y="832" width="64" height="64"/>
+  <object id="45" x="2176" y="832" width="64" height="64"/>
+  <object id="46" x="2240" y="832" width="64" height="64"/>
+  <object id="47" x="4096" y="576" width="64" height="64"/>
+  <object id="48" x="4224" y="576" width="64" height="64"/>
+  <object id="49" x="4352" y="576" width="64" height="64"/>
+  <object id="63" x="5440" y="512" width="64" height="64"/>
+  <object id="64" x="5696" y="384" width="64" height="64"/>
+  <object id="65" x="5952" y="512" width="64" height="64"/>
+  <object id="66" x="6272" y="832" width="64" height="64"/>
+  <object id="67" x="3456" y="256" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup name="gems">
+  <object id="50" x="1024" y="384" width="64" height="64"/>
+  <object id="51" x="1728" y="320" width="64" height="64"/>
+  <object id="52" x="1792" y="320" width="64" height="64"/>
+  <object id="53" x="1856" y="320" width="64" height="64"/>
+  <object id="54" x="1920" y="320" width="64" height="64"/>
+  <object id="55" x="1984" y="320" width="64" height="64"/>
+  <object id="56" x="4800" y="256" width="64" height="64"/>
+  <object id="57" x="4928" y="256" width="64" height="64"/>
+  <object id="58" x="5056" y="256" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup name="barbedWire">
+  <object id="59" x="1312" y="320" width="32" height="576"/>
+  <object id="60" x="3872" y="512" width="32" height="384"/>
+ </objectgroup>
+</map>
