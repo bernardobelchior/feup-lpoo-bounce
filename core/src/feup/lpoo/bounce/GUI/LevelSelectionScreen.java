@@ -54,8 +54,11 @@ public class LevelSelectionScreen implements Screen {
         for(int i = 0; i < Bounce.NUMBER_OF_LEVELS; i++) {
             final ImageTextButton imageTextButton = new ImageTextButton("" + (i+1), imageTextButtonStyle);
             imageTextButton.setUserObject(new Integer(i+1));
-            imageTextButton.getImage().setAlign(Align.center);
-            imageTextButton.getLabel().setAlignment(Align.center);
+            imageTextButton.getImageCell().center();
+            imageTextButton.getLabelCell().center();
+            //imageTextButton.center();
+            //imageTextButton.getImage().setAlign(Align.right);
+            //imageTextButton.getLabel().setAlignment(Align.center);
             imageTextButton.getLabel().setFontScale(Bounce.BITMAP_FONT_SCALING);
 
             imageTextButton.addListener(new ChangeListener() {

@@ -1,6 +1,7 @@
 package feup.lpoo.bounce;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -28,7 +29,7 @@ public class Bounce extends ApplicationAdapter{
     public static final float BITMAP_FONT_SCALING = 5;
     public static final int GEM_SCORE = 5;
     public static final int RING_SCORE = 1;
-    public final static Vector2 WORLD_GRAVITY = new Vector2(0, -576);
+    public final static Vector2 WORLD_GRAVITY = new Vector2(0, -800);
 
     //Game update rate in seconds
     public final static float GAME_UPDATE_RATE = 1/300f;
@@ -39,7 +40,7 @@ public class Bounce extends ApplicationAdapter{
     //Movement modifiers
     public final static int HORIZONTAL_MOVEMENT_MODIFIER = 1000000;
     public final static int ATTRITION_MODIFIER = 10000;
-    public final static int JUMP_HEIGHT_MODIFIER = 700000;
+    public final static int JUMP_HEIGHT_MODIFIER = 1400000;
 
     private Screen currentScreen;
 	private ProgramState programState;

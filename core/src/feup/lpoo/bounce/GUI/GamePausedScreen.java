@@ -112,6 +112,7 @@ public class GamePausedScreen implements Screen {
 
         Table table = new Table();
         table.setFillParent(true);
+        //table.setDebug(true);
         table.center();
         //table.setBackground(GamePausedBackground);
 
@@ -133,8 +134,6 @@ public class GamePausedScreen implements Screen {
         table.add(levelSelectionMenuButton).uniform();
         table.add(retryButton).uniform();
         table.add(resumeButton).uniform();
-
-        table.setDebug(true);
         return table;
     }
 
@@ -147,9 +146,9 @@ public class GamePausedScreen implements Screen {
     public void render(float delta) {
         gameScreen.render(delta);
 
-        stage.draw();
-
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
+
+        stage.draw();
         spriteBatch.begin();
 
         spriteBatch.end();

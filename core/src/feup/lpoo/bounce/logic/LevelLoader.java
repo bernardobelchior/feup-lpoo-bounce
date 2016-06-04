@@ -50,7 +50,7 @@ public class LevelLoader {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = ballShape;
-        fixtureDef.restitution = 0.5f;
+        fixtureDef.restitution = 0.3f;
         fixtureDef.density = 1;
 
         ball = world.createBody(bodyDef);
