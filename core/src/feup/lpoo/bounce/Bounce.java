@@ -13,6 +13,7 @@ import feup.lpoo.bounce.GUI.GamePausedScreen;
 import feup.lpoo.bounce.GUI.GameScreen;
 import feup.lpoo.bounce.GUI.GameOverScreen;
 import feup.lpoo.bounce.GUI.LevelSelectionScreen;
+import feup.lpoo.bounce.GUI.MainMenuScreen;
 import feup.lpoo.bounce.logic.BounceGame;
 
 public class Bounce extends ApplicationAdapter{
@@ -53,8 +54,8 @@ public class Bounce extends ApplicationAdapter{
 
     @Override
 	public void create () {
-        programState = ProgramState.MAIN_MENU;
-        setProgramState(ProgramState.LEVEL_SELECTION);
+        //programState = ProgramState.MAIN_MENU;
+        setProgramState(ProgramState.MAIN_MENU);
 	}
 
 	@Override
@@ -100,7 +101,7 @@ public class Bounce extends ApplicationAdapter{
 
         switch (programState) {
             case MAIN_MENU:
-                //currentScreen = new MainMenuScreen();
+                currentScreen = new MainMenuScreen(this);
                 break;
             case LEVEL_SELECTION:
                 currentScreen = new LevelSelectionScreen(this);
