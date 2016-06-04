@@ -6,7 +6,6 @@ package feup.lpoo.bounce.logic;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -15,11 +14,11 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import feup.lpoo.bounce.Bounce;
+import feup.lpoo.bounce.Bounce.GameState;
 
 public class BounceGame extends Game {
     //Map dimensions
@@ -31,7 +30,7 @@ public class BounceGame extends Game {
 
     private Body ball;
     private Timer gameTimer;
-    private Bounce.GameState gameState;
+    private GameState gameState;
     private int score;
 
     private ArrayList<Body> rings;
@@ -42,6 +41,8 @@ public class BounceGame extends Game {
 
     private final Sound LOSS_SOUND;
     private final Sound WIN_SOUND;
+    private static final String HIGHSCORE_FILE_NAME = "highscore";
+    private static final String HIGHSCORE_FILE_EXTENSION = ".dat";
 
     public BounceGame(int level) {
         this.gameState = Bounce.GameState.PAUSED;
@@ -69,7 +70,7 @@ public class BounceGame extends Game {
     }
 
     private void loadHighscore() {
-        FileHandle highscoreFile = Gdx.files.local("highscore.dat");
+        FileHandle highscoreFile = Gdx.files.local(HIGHSCORE_FILE_NAME + level + HIGHSCORE_FILE_EXTENSION);
 
         if(highscoreFile.exists()) {
             String highscoreString = highscoreFile.readString();
@@ -157,7 +158,7 @@ public class BounceGame extends Game {
 
     private void saveScore() {
         if(score > highscore) {
-            FileHandle file = Gdx.files.local("highscore.dat");
+            FileHandle file = Gdx.files.local(HIGHSCORE_FILE_NAME + level + HIGHSCORE_FILE_EXTENSION);
 
             try {
                 if(!file.exists()) {
