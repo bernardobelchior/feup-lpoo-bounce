@@ -153,7 +153,6 @@ public class BounceGame extends Game {
         LOSS_SOUND.play();
         gameState = Bounce.GameState.LOSS;
         gameTimer.stop();
-        Gdx.app.log("Game", "Lost");
     }
 
     private void saveScore() {
@@ -177,7 +176,6 @@ public class BounceGame extends Game {
         WIN_SOUND.play();
         gameState = Bounce.GameState.WIN;
         gameTimer.stop();
-        Gdx.app.log("Game", "Won");
     }
 
     public boolean isRunning() {
