@@ -6,13 +6,17 @@ package feup.lpoo.bounce.logic;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Timer;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import feup.lpoo.bounce.Bounce;
@@ -34,6 +38,7 @@ public class BounceGame extends Game {
     private ArrayList<Body> gems;
 
     private int level;
+    private int highscore;
 
     private final Sound LOSS_SOUND;
     private final Sound WIN_SOUND;
@@ -60,6 +65,18 @@ public class BounceGame extends Game {
         }, 0, Bounce.GAME_UPDATE_RATE);
 
         setUpWorld();
+        start();
+    }
+
+    private void loadHighscore() {
+        FileHandle highscoreFile = Gdx.files.local("highscore.dat");
+
+        if(highscoreFile.exists()) {
+            String highscoreString = highscoreFile.readString();
+            highscore = Integer.parseInt(highscoreString);
+        }
+        else
+            highscore = 0;
     }
 
     private void setUpWorld() {
@@ -81,6 +98,7 @@ public class BounceGame extends Game {
         if(gameState == Bounce.GameState.RUNNING)
             return false;
 
+        loadHighscore();
         gameTimer.start();
         gameState = Bounce.GameState.RUNNING;
 
@@ -130,13 +148,31 @@ public class BounceGame extends Game {
     }
 
     public void over() {
+        saveScore();
         LOSS_SOUND.play();
         gameState = Bounce.GameState.LOSS;
         gameTimer.stop();
         Gdx.app.log("Game", "Lost");
     }
 
+    private void saveScore() {
+        if(score > highscore) {
+            FileHandle file = Gdx.files.local("highscore.dat");
+
+            try {
+                if(!file.exists()) {
+                    file.file().createNewFile();
+                }
+
+                file.writeString(new Integer(score).toString(), false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void win() {
+        saveScore();
         WIN_SOUND.play();
         gameState = Bounce.GameState.WIN;
         gameTimer.stop();
