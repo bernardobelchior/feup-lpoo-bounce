@@ -6,7 +6,6 @@ package feup.lpoo.bounce.logic;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -20,6 +19,7 @@ import java.util.ArrayList;
 
 import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.Bounce.GameState;
+import feup.lpoo.bounce.GameSound;
 
 public class BounceGame extends Game {
     //World gravity
@@ -58,17 +58,12 @@ public class BounceGame extends Game {
     private int level;
     private int highscore;
 
-    private final Sound LOSS_SOUND;
-    private final Sound WIN_SOUND;
     private static final String HIGHSCORE_FILE_NAME = "highscore";
     private static final String HIGHSCORE_FILE_EXTENSION = ".dat";
 
     public BounceGame(int level) {
         this.gameState = Bounce.GameState.PAUSED;
         this.level = level;
-
-        LOSS_SOUND = Gdx.audio.newSound(Gdx.files.internal("sounds/lose.mp3"));
-        WIN_SOUND = Gdx.audio.newSound(Gdx.files.internal("sounds/win.mp3"));
 
         map = new TmxMapLoader().load("level" + level + ".tmx");
 
@@ -169,7 +164,7 @@ public class BounceGame extends Game {
 
     public void over() {
         saveScore();
-        LOSS_SOUND.play();
+        GameSound.getLossSound().play();
         gameState = Bounce.GameState.LOSS;
         gameTimer.stop();
     }
@@ -192,7 +187,7 @@ public class BounceGame extends Game {
 
     public void win() {
         saveScore();
-        WIN_SOUND.play();
+        GameSound.getWinSound().play();
         gameState = Bounce.GameState.WIN;
         gameTimer.stop();
     }

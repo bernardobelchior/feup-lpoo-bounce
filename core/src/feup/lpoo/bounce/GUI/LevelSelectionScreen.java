@@ -35,15 +35,13 @@ public class LevelSelectionScreen implements Screen {
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
 
-        Texture levelButtonBackground = new Texture("level_button_background.png");
-
         Table table = new Table();
         table.setFillParent(true);
         table.top().left();
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = Graphics.getFont();
-        textButtonStyle.fontColor = Color.GOLD;
+        textButtonStyle.fontColor = Color.WHITE;
         textButtonStyle.pressedOffsetY = -2;
         textButtonStyle.pressedOffsetX = 2;
 
@@ -61,7 +59,7 @@ public class LevelSelectionScreen implements Screen {
                 }
             });
 
-            Stack levelStack = new Stack(new Image(levelButtonBackground), levelTextButton);
+            Stack levelStack = new Stack(new Image(Graphics.getEmptyButtonTextureRegionDrawable()), levelTextButton);
 
             table.add(levelStack).uniform().padLeft(Gdx.graphics.getWidth()/11).padTop(Gdx.graphics.getHeight()/11f);
             if((i+1) % 5 == 0)

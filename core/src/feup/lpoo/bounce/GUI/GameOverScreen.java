@@ -41,18 +41,10 @@ public class GameOverScreen implements Screen {
     private FitViewport viewport;
     private SpriteBatch spriteBatch;
 
-    private TextureRegionDrawable backTexture;
-    private TextureRegionDrawable retryTexture;
-    private TextureRegionDrawable nextTexture;
-
     public GameOverScreen(final Bounce bounce, final BounceGame game, GameState gameState) {
         this.bounce = bounce;
         this.game = game;
         this.gameState = gameState;
-
-        backTexture = new TextureRegionDrawable(new TextureRegion(new Texture("back.png")));
-        retryTexture = new TextureRegionDrawable(new TextureRegion((new Texture("retry.png"))));
-        nextTexture = new TextureRegionDrawable(new TextureRegion(new Texture("next.png")));
 
         //Set viewport and sprite batch for stage
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
@@ -88,9 +80,9 @@ public class GameOverScreen implements Screen {
         scoreLabel.setAlignment(Align.center);
 
         //Define a buttonStyle for all buttons and create them
-        levelSelectionMenuButton = Utils.createButtonWithImage(backTexture);
-        retryButton = Utils.createButtonWithImage(retryTexture);
-        nextLevelButton = Utils.createButtonWithImage(nextTexture);
+        levelSelectionMenuButton = Utils.createButtonWithImage(Graphics.getBackButtonTextureRegionDrawable());
+        retryButton = Utils.createButtonWithImage(Graphics.getRetryButtonTextureRegionDrawable());
+        nextLevelButton = Utils.createButtonWithImage(Graphics.getNextButtonTextureRegionDrawable());
 
         if(gameState == Bounce.GameState.LOSS || game.getLevel() == Bounce.NUMBER_OF_LEVELS)
             nextLevelButton.setDisabled(true);

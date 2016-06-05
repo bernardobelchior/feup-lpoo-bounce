@@ -4,9 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -27,14 +25,6 @@ public class GameScreen implements Screen {
     private OrthogonalTiledMapRenderer renderer;
     private GameHUD gameHUD;
     private Box2DDebugRenderer b2dr;
-   // private Stage stage;
-
-    private Texture tileset;
-
-    //Texture regions
-    private TextureRegion ballTextureRegion;
-    private TextureRegion ringTextureRegion;
-    private TextureRegion gemTextureRegion;
 
     private SpriteBatch spriteBatch;
 
@@ -43,10 +33,6 @@ public class GameScreen implements Screen {
         this.game = game;
 
         spriteBatch = new SpriteBatch();
-        tileset = new Texture("tileset.png");
-        ballTextureRegion = new TextureRegion(tileset, 0, 0, Graphics.TEXTURE_SIZE, Graphics.TEXTURE_SIZE);
-        ringTextureRegion = new TextureRegion(tileset, 0, Graphics.TEXTURE_SIZE, Graphics.TEXTURE_SIZE, Graphics.TEXTURE_SIZE);
-        gemTextureRegion = new TextureRegion(tileset, Graphics.TEXTURE_SIZE, Graphics.TEXTURE_SIZE, Graphics.TEXTURE_SIZE, Graphics.TEXTURE_SIZE);
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(game.getMapHeight() *(float)Gdx.graphics.getWidth()/Gdx.graphics.getHeight(), game.getMapHeight(), camera);
@@ -70,7 +56,7 @@ public class GameScreen implements Screen {
         //Sets the camera x coordinate so it follows the ball
         //The below if statements are to make sure that no black
         //bars appear on the right nor on the left.'
-        float cameraX = game.getBall().getPosition().x - Graphics.TEXTURE_SIZE/2;
+        float cameraX = game.getBall().getPosition().x - Graphics.GAME_TEXTURE_SIZE /2;
 
         if(cameraX < viewport.getWorldWidth()/2)
             cameraX = viewport.getWorldWidth()/2;
@@ -88,19 +74,19 @@ public class GameScreen implements Screen {
         //Draws the ball on its position
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-        spriteBatch.draw(ballTextureRegion, game.getBall().getPosition().x - Graphics.TEXTURE_SIZE/2,
-                game.getBall().getPosition().y - Graphics.TEXTURE_SIZE/2);
+        spriteBatch.draw(Graphics.getBallTextureRegion(), game.getBall().getPosition().x - Graphics.GAME_TEXTURE_SIZE /2,
+                game.getBall().getPosition().y - Graphics.GAME_TEXTURE_SIZE /2);
 
         //Draws all the rings in the correct position
         for(Body ring : game.getRings()) {
-            spriteBatch.draw(ringTextureRegion, ring.getPosition().x - Graphics.TEXTURE_SIZE/2,
-                    ring.getPosition().y - Graphics.TEXTURE_SIZE/2);
+            spriteBatch.draw(Graphics.getRingTextureRegion(), ring.getPosition().x - Graphics.GAME_TEXTURE_SIZE /2,
+                    ring.getPosition().y - Graphics.GAME_TEXTURE_SIZE /2);
         }
 
         //Draws all the gems in the correct position
         for(Body gem : game.getGems()) {
-            spriteBatch.draw(gemTextureRegion, gem.getPosition().x - Graphics.TEXTURE_SIZE/2,
-                    gem.getPosition().y - Graphics.TEXTURE_SIZE/2);
+            spriteBatch.draw(Graphics.getGemTextureRegion(), gem.getPosition().x - Graphics.GAME_TEXTURE_SIZE /2,
+                    gem.getPosition().y - Graphics.GAME_TEXTURE_SIZE /2);
         }
 
         spriteBatch.end();

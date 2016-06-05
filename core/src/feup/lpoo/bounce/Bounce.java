@@ -28,9 +28,6 @@ public class Bounce extends ApplicationAdapter{
     public static final String WIN_MESSAGE = "You won!";
     public static final String PAUSED_MESSAGE = "Paused";
 
-    //Sound variables
-    //public static final Sound PICK_UP_ITEMS_SOUND = Gdx.audio.newSound(Gdx.files.internal("sounds/pick_up_items.mp3"));
-
     private Screen currentScreen;
 	private ProgramState programState;
     private BounceGame game;

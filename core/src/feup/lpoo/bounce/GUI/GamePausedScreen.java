@@ -4,9 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -40,10 +38,6 @@ public class GamePausedScreen implements Screen {
     private ImageButton retryButton;
     private ImageButton resumeButton;
 
-    private TextureRegionDrawable backTexture;
-    private TextureRegionDrawable retryTexture;
-    private TextureRegionDrawable nextTexture;
-
     public GamePausedScreen(final Bounce bounce, final BounceGame game) {
         this.game = game;
         this.bounce = bounce;
@@ -53,10 +47,6 @@ public class GamePausedScreen implements Screen {
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
         Gdx.input.setInputProcessor(stage);
-
-        backTexture = new TextureRegionDrawable(new TextureRegion(new Texture("back.png")));
-        retryTexture = new TextureRegionDrawable(new TextureRegion((new Texture("retry.png"))));
-        nextTexture = new TextureRegionDrawable(new TextureRegion(new Texture("next.png")));
 
         stage.addActor(createMenu());
     }
@@ -76,9 +66,9 @@ public class GamePausedScreen implements Screen {
         scoreLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
         scoreLabel.setAlignment(Align.center);
 
-        levelSelectionMenuButton = Utils.createButtonWithImage(backTexture);
-        retryButton = Utils.createButtonWithImage(retryTexture);
-        resumeButton = Utils.createButtonWithImage(nextTexture);
+        levelSelectionMenuButton = Utils.createButtonWithImage(new TextureRegionDrawable(Graphics.getBackButtonTextureRegionDrawable()));
+        retryButton = Utils.createButtonWithImage(new TextureRegionDrawable(Graphics.getRetryButtonTextureRegionDrawable()));
+        resumeButton = Utils.createButtonWithImage(new TextureRegionDrawable(Graphics.getNextButtonTextureRegionDrawable()));
 
         levelSelectionMenuButton.addListener(new ChangeListener() {
             @Override

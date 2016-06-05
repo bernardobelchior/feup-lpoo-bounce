@@ -2,25 +2,22 @@ package feup.lpoo.bounce.GUI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.Bounce.ProgramState;
+import feup.lpoo.bounce.GameSound;
 import feup.lpoo.bounce.Utils;
 import feup.lpoo.bounce.logic.BounceGame;
 
@@ -32,9 +29,6 @@ public class GameHUD extends Stage implements InputProcessor {
 
     private SpriteBatch spriteBatch;
 
-    private Texture tileset;
-
-    private TextureRegion ballTextureRegion;
     private Sprite ringSprite;
 
     private Label scoreLabel;
@@ -44,14 +38,10 @@ public class GameHUD extends Stage implements InputProcessor {
     private BounceGame game;
     private Bounce bounce;
 
-    private final Sound JUMPING_SOUND;
-
     public GameHUD(Bounce bounce, final BounceGame game) {
         super(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera()), new SpriteBatch());
         this.bounce = bounce;
         this.game = game;
-
-        JUMPING_SOUND = Gdx.audio.newSound(Gdx.files.internal("sounds/jump.mp3"));
 
         spriteBatch = new SpriteBatch();
 
@@ -66,15 +56,10 @@ public class GameHUD extends Stage implements InputProcessor {
     }
 
     private Table createHUD() {
-        //FIXME: GameScreen has the same variables. Find a way to avoid having a two copies of the same thing.
-        TextureRegionDrawable pauseTexture = new TextureRegionDrawable(new TextureRegion(new Texture("pause.png")));
-        tileset = new Texture("tileset.png");
-        ballTextureRegion = new TextureRegion(tileset, 0, 0, Graphics.TEXTURE_SIZE, Graphics.TEXTURE_SIZE);
-        TextureRegion ringTextureRegion = new TextureRegion(tileset, 16, Graphics.TEXTURE_SIZE, Graphics.TEXTURE_SIZE/2, Graphics.TEXTURE_SIZE);
-        ringSprite = new Sprite(ringTextureRegion);
+        ringSprite = new Sprite(Graphics.getTrimmedRingTextureRegion());
         ringSprite.scale(RING_SPRITE_SCALING);
 
-        pauseButton = Utils.createButtonWithImage(pauseTexture);
+        pauseButton = Utils.createButtonWithImage(Graphics.getPauseButtonTextureRegionDrawable());
 
         pauseButton.addListener(new ChangeListener() {
             @Override
@@ -119,7 +104,7 @@ public class GameHUD extends Stage implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(!super.touchDown(screenX, screenY, pointer, button)) {
-            JUMPING_SOUND.play();
+            GameSound.getJumpingSound().play();
             game.ballJump();
             return true;
         }
@@ -161,7 +146,7 @@ public class GameHUD extends Stage implements InputProcessor {
 
         for(int i = 0; i < game.getRings().size(); i++) {
             spriteBatch.draw(ringSprite, Gdx.graphics.getWidth()/15f + ringSprite.getWidth()*i,
-                    Gdx.graphics.getHeight() - Graphics.TEXTURE_SIZE - Gdx.graphics.getHeight()/50f);
+                    Gdx.graphics.getHeight() - Graphics.GAME_TEXTURE_SIZE - Gdx.graphics.getHeight()/50f);
         }
 
         spriteBatch.end();
