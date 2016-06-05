@@ -45,12 +45,12 @@ public class MainMenuScreen implements Screen {
         spriteBatch = new SpriteBatch();
         stage = new Stage(viewport, spriteBatch);
 
+        createMenu();
 
-        stage.addActor(createMenu());
         Gdx.input.setInputProcessor(stage);
     }
 
-    public Table createMenu() {
+    public void createMenu() {
         TextureRegionDrawable buttonTexture = new TextureRegionDrawable(new TextureRegion(new Texture("menu_button.png")));
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
@@ -88,20 +88,29 @@ public class MainMenuScreen implements Screen {
             }
         });
 
-        Table table = new Table();
-        table.center().setFillParent(true);
-        table.setDebug(true);
-        table.pad(Gdx.graphics.getHeight()/2.2f, Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/2);
+        Table buttonsTable = new Table();
+        buttonsTable.center().setFillParent(true);
+        buttonsTable.setDebug(true);
+        buttonsTable.pad(Gdx.graphics.getHeight()/2.2f, Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/2);
 
-        table.add(playStack).align(Align.center).expand();
-        table.row().uniform();
-        table.add().expand();
-        table.row().uniform();
-        table.add().expand();
-        table.row().uniform();
-        table.add(exitStack).align(Align.center).expand();
+        buttonsTable.add(playStack).align(Align.center).expand();
+        buttonsTable.row().uniform();
+        buttonsTable.add().expand();
+        buttonsTable.row().uniform();
+        buttonsTable.add().expand();
+        buttonsTable.row().uniform();
+        buttonsTable.add().expand();
+//        buttonsTable.add(exitStack).align(Align.center).expand();
 
-        return table;
+        stage.addActor(buttonsTable);
+
+        Table exitTable = new Table();
+        exitTable.align(Align.bottomRight);
+        exitTable.setFillParent(true);
+        exitTable.add(exitStack);
+        exitTable.padRight(Gdx.graphics.getWidth()/25f).padBottom(Gdx.graphics.getHeight()/15f);
+
+        stage.addActor(exitTable);
     }
 
     @Override

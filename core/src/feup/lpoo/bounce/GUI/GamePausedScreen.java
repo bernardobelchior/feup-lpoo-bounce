@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -31,13 +32,6 @@ public class GamePausedScreen implements Screen {
     private FitViewport viewport;
     private SpriteBatch spriteBatch;
 
-    private Label messageLabel;
-    private Label scoreTextLabel;
-    private Label scoreLabel;
-    private ImageButton levelSelectionMenuButton;
-    private ImageButton retryButton;
-    private ImageButton resumeButton;
-
     public GamePausedScreen(final Bounce bounce, final BounceGame game) {
         this.game = game;
         this.bounce = bounce;
@@ -54,21 +48,29 @@ public class GamePausedScreen implements Screen {
     private Table createMenu() {
         Label.LabelStyle labelStyle = new Label.LabelStyle(Graphics.getFont(), Color.WHITE);
 
-        messageLabel = new Label(Bounce.PAUSED_MESSAGE, labelStyle);
+        Label messageLabel = new Label(Bounce.PAUSED_MESSAGE, labelStyle);
         messageLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
         messageLabel.setAlignment(Align.center);
 
-        scoreTextLabel = new Label("Score:", labelStyle);
+        Label scoreTextLabel = new Label("Score:", labelStyle);
         scoreTextLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
         scoreTextLabel.setAlignment(Align.center);
 
-        scoreLabel = new Label(String.format("%06d", game.getScore()), labelStyle);
+        Label scoreLabel = new Label(String.format("%06d", game.getScore()), labelStyle);
         scoreLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
         scoreLabel.setAlignment(Align.center);
 
-        levelSelectionMenuButton = Utils.createButtonWithImage(new TextureRegionDrawable(Graphics.getBackButtonTextureRegionDrawable()));
-        retryButton = Utils.createButtonWithImage(new TextureRegionDrawable(Graphics.getRetryButtonTextureRegionDrawable()));
-        resumeButton = Utils.createButtonWithImage(new TextureRegionDrawable(Graphics.getNextButtonTextureRegionDrawable()));
+        Label highscoreTextLabel = new Label("Highscore:", labelStyle);
+        highscoreTextLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
+        highscoreTextLabel.setAlignment(Align.center);
+
+        Label highscoreLabel = new Label(String.format("%06d", game.getHighscore()), labelStyle);
+        highscoreLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
+        highscoreLabel.setAlignment(Align.center);
+
+        final ImageButton levelSelectionMenuButton = Utils.createButtonWithImage(new TextureRegionDrawable(Graphics.getBackButtonTextureRegionDrawable()));
+        final ImageButton retryButton = Utils.createButtonWithImage(new TextureRegionDrawable(Graphics.getRetryButtonTextureRegionDrawable()));
+        final ImageButton resumeButton = Utils.createButtonWithImage(new TextureRegionDrawable(Graphics.getNextButtonTextureRegionDrawable()));
 
         levelSelectionMenuButton.addListener(new ChangeListener() {
             @Override
@@ -101,7 +103,7 @@ public class GamePausedScreen implements Screen {
 
         Table table = new Table();
         table.setFillParent(true);
-        //table.setDebug(true);
+        table.setDebug(true);
         table.center();
         //table.setBackground(GamePausedBackground);
 
@@ -109,7 +111,7 @@ public class GamePausedScreen implements Screen {
                 Gdx.graphics.getHeight()/6f, Gdx.graphics.getWidth()/8f);
 
         //First row
-        table.add(messageLabel).colspan(3).uniform();
+        table.add(messageLabel).colspan(3).expand();
 
         //Second row
         table.row().expand();
@@ -118,6 +120,12 @@ public class GamePausedScreen implements Screen {
         table.add(scoreLabel).colspan(2);
 
         //Third row
+        table.row().expand();
+
+        table.add(highscoreTextLabel);
+        table.add(highscoreLabel).colspan(2);
+
+        //Fourth row
         table.row().expand();
 
         table.add(levelSelectionMenuButton).uniform();

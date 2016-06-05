@@ -26,6 +26,9 @@ public class Graphics {
     private static Texture gameTileset;
     private static Texture buttonTileset;
 
+    //Background
+    private static TextureRegionDrawable menuBackgroundTextureRegion;
+
     //Game sprites
     private static TextureRegion ballTextureRegion;
     private static TextureRegion ringTextureRegion;
@@ -38,6 +41,7 @@ public class Graphics {
     private static TextureRegionDrawable retryButtonTextureRegion;
     private static TextureRegionDrawable pauseButtonTextureRegion;
     private static TextureRegionDrawable emptyButtonTextureRegion;
+    private static TextureRegionDrawable menuButtonTextureRegion;
 
 
     public static BitmapFont getFont() {
@@ -122,5 +126,19 @@ public class Graphics {
             pauseButtonTextureRegion = new TextureRegionDrawable(new TextureRegion(getButtonTileset(), 0, BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE));
 
         return pauseButtonTextureRegion;
+    }
+
+    public static TextureRegionDrawable getMenuButtonTextureRegion() {
+        if(menuButtonTextureRegion == null)
+            menuButtonTextureRegion = new TextureRegionDrawable(new TextureRegion(new Texture("menu_button.png")));
+
+        return menuButtonTextureRegion;
+    }
+
+    public static TextureRegionDrawable getMenuBackgroundTextureRegion() {
+        if(menuBackgroundTextureRegion == null)
+            menuBackgroundTextureRegion = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("menu_background.png"))));
+
+        return menuBackgroundTextureRegion;
     }
 }

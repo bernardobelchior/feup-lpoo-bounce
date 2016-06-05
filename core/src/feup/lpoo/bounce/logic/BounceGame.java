@@ -397,4 +397,12 @@ public class BounceGame extends Game {
     public int getRingsLeft() {
         return rings.size();
     }
+
+    /**
+     * Gets the current highscore.
+     * @return highscore
+     */
+    public int getHighscore() {
+        return highscore;
+    }
 }

@@ -85,7 +85,7 @@ public class GameHUD extends Stage implements InputProcessor {
 
         table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+        //table.setDebug(true);
         table.padTop(Gdx.graphics.getHeight()/44f);
         table.top();
 
@@ -145,8 +145,7 @@ public class GameHUD extends Stage implements InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
-        return false;
-    }
+        return false;    }
 
     @Override
     public void draw() {

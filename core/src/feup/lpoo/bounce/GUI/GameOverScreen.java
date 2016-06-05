@@ -30,13 +30,6 @@ public class GameOverScreen implements Screen {
     private BounceGame game;
     private GameState gameState;
 
-    private Label messageLabel;
-    private Label scoreTextLabel;
-    private Label scoreLabel;
-    private ImageButton levelSelectionMenuButton;
-    private ImageButton retryButton;
-    private ImageButton nextLevelButton;
-
     private Stage stage;
     private FitViewport viewport;
     private SpriteBatch spriteBatch;
@@ -59,6 +52,8 @@ public class GameOverScreen implements Screen {
         //Define a labelStyle for all labels and create them
         Label.LabelStyle labelStyle = new Label.LabelStyle(Graphics.getFont(), Color.WHITE);
 
+        Label messageLabel = null;
+
         switch (gameState) {
             case WIN:
                 messageLabel = new Label(Bounce.WIN_MESSAGE, labelStyle);
@@ -71,18 +66,26 @@ public class GameOverScreen implements Screen {
         messageLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
         messageLabel.setAlignment(Align.center);
 
-        scoreTextLabel = new Label("Score:", labelStyle);
+        Label scoreTextLabel = new Label("Score:", labelStyle);
         scoreTextLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
         scoreTextLabel.setAlignment(Align.center);
 
-        scoreLabel = new Label(String.format("%06d", game.getScore()), labelStyle);
+        Label scoreLabel = new Label(String.format("%06d", game.getScore()), labelStyle);
         scoreLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
         scoreLabel.setAlignment(Align.center);
 
+        Label highscoreTextLabel = new Label("Highscore:", labelStyle);
+        highscoreTextLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
+        highscoreTextLabel.setAlignment(Align.center);
+
+        Label highscoreLabel = new Label(String.format("%06d", game.getHighscore()), labelStyle);
+        highscoreLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
+        highscoreLabel.setAlignment(Align.center);
+
         //Define a buttonStyle for all buttons and create them
-        levelSelectionMenuButton = Utils.createButtonWithImage(Graphics.getBackButtonTextureRegionDrawable());
-        retryButton = Utils.createButtonWithImage(Graphics.getRetryButtonTextureRegionDrawable());
-        nextLevelButton = Utils.createButtonWithImage(Graphics.getNextButtonTextureRegionDrawable());
+        final ImageButton levelSelectionMenuButton = Utils.createButtonWithImage(Graphics.getBackButtonTextureRegionDrawable());
+        final ImageButton retryButton = Utils.createButtonWithImage(Graphics.getRetryButtonTextureRegionDrawable());
+        final ImageButton nextLevelButton = Utils.createButtonWithImage(Graphics.getNextButtonTextureRegionDrawable());
 
         if(gameState == Bounce.GameState.LOSS || game.getLevel() == Bounce.NUMBER_OF_LEVELS)
             nextLevelButton.setDisabled(true);
@@ -137,6 +140,12 @@ public class GameOverScreen implements Screen {
         table.add(scoreLabel).colspan(2);
 
         //Third row
+        table.row().expand();
+
+        table.add(highscoreTextLabel);
+        table.add(highscoreLabel).colspan(2);
+
+        //Fourth row
         table.row().expand();
 
         table.add(levelSelectionMenuButton).uniform();
