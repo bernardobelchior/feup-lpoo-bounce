@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -33,6 +34,7 @@ public class GameHUD extends Stage implements InputProcessor {
 
     private Label scoreLabel;
     private ImageButton pauseButton;
+    private Label ringsLabel;
     private Table table;
 
     private BounceGame game;
@@ -59,6 +61,12 @@ public class GameHUD extends Stage implements InputProcessor {
         ringSprite = new Sprite(Graphics.getTrimmedRingTextureRegion());
         ringSprite.scale(RING_SPRITE_SCALING);
 
+        Label.LabelStyle labelStyle = new Label.LabelStyle(Graphics.getFont(), Color.WHITE);
+
+        Image ringsImage = new Image(Graphics.getRingTextureRegion());
+        ringsLabel = new Label(String.format("%02d", game.getRingsLeft()), labelStyle);
+        ringsLabel.setFontScale(Graphics.BITMAP_FONT_SCALING*0.75f);
+
         pauseButton = Utils.createButtonWithImage(Graphics.getPauseButtonTextureRegionDrawable());
 
         pauseButton.addListener(new ChangeListener() {
@@ -77,11 +85,14 @@ public class GameHUD extends Stage implements InputProcessor {
 
         table = new Table();
         table.setFillParent(true);
-        //table.setDebug(true);
+        table.setDebug(true);
+        table.padTop(Gdx.graphics.getHeight()/44f);
         table.top();
-        table.add().uniform();
-        table.add(scoreLabel).align(Align.center).expandX();
-        table.add(pauseButton).padRight(Gdx.graphics.getWidth()/44f).align(Align.right).uniform();
+
+        table.add(ringsImage).padLeft(Gdx.graphics.getWidth()/20f).center();
+        table.add(ringsLabel).padLeft(Gdx.graphics.getWidth()/120f).center();
+        table.add(scoreLabel).align(Align.center).expandX().center();
+        table.add(pauseButton).padRight(Gdx.graphics.getWidth()/44f).align(Align.right).uniform().center();
 
         return table;
     }
@@ -141,14 +152,6 @@ public class GameHUD extends Stage implements InputProcessor {
     public void draw() {
         super.draw();
         scoreLabel.setText(String.format("%06d", game.getScore()));
-
-        spriteBatch.begin();
-
-        for(int i = 0; i < game.getRings().size(); i++) {
-            spriteBatch.draw(ringSprite, Gdx.graphics.getWidth()/15f + ringSprite.getWidth()*i,
-                    Gdx.graphics.getHeight() - Graphics.GAME_TEXTURE_SIZE - Gdx.graphics.getHeight()/50f);
-        }
-
-        spriteBatch.end();
+        ringsLabel.setText(String.format("%02d", game.getRingsLeft()));
     }
 }

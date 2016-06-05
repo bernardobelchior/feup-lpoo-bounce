@@ -57,9 +57,12 @@ public class BounceGame extends Game {
 
     private int level;
     private int highscore;
+    private boolean canBallJump;
 
     private static final String HIGHSCORE_FILE_NAME = "highscore";
     private static final String HIGHSCORE_FILE_EXTENSION = ".dat";
+
+    private ArrayList<Body> destroyNextUpdate;
 
     public BounceGame(int level) {
         this.gameState = Bounce.GameState.PAUSED;
@@ -105,6 +108,8 @@ public class BounceGame extends Game {
         mapWidth = levelLoader.getMapWidth();
 
         score = 0;
+        canBallJump = true;
+        destroyNextUpdate = new ArrayList<Body>();
 
         world.setContactListener(new BounceContactListener(this));
     }
@@ -123,6 +128,12 @@ public class BounceGame extends Game {
     public void update(float deltaTime) {
         if(!isRunning())
             return;
+
+        for(Body toDelete : destroyNextUpdate) {
+            world.destroyBody(toDelete);
+        }
+
+        destroyNextUpdate.clear();
 
         float horizontalAcceleration = Gdx.input.getAccelerometerY();
 
@@ -149,11 +160,11 @@ public class BounceGame extends Game {
     }
 
     public boolean ballJump() {
-        if(!isRunning())
+        if(!isRunning() || !canBallJump)
             return false;
 
         ball.applyForceToCenter(-WORLD_GRAVITY.x, JUMP_HEIGHT_MODIFIER *-WORLD_GRAVITY.y, true);
-
+        canBallJump = false;
         return true;
     }
 
@@ -201,7 +212,7 @@ public class BounceGame extends Game {
     }
 
     public void ringDestroyed(Body ring) {
-        world.destroyBody(ring);
+        destroyNextUpdate.add(ring);
         rings.remove(ring);
         score += RING_SCORE;
 
@@ -210,7 +221,7 @@ public class BounceGame extends Game {
     }
 
     public void gemDestroyed(Body gem) {
-        world.destroyBody(gem);
+        destroyNextUpdate.add(gem);
         gems.remove(gem);
         score += GEM_SCORE;
     }
@@ -266,5 +277,13 @@ public class BounceGame extends Game {
 
     public int getMapHeight() {
         return mapHeight;
+    }
+
+    public void enableBallJump() {
+        canBallJump = true;
+    }
+
+    public int getRingsLeft() {
+        return rings.size();
     }
 }

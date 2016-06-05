@@ -64,12 +64,13 @@ public class LevelLoader {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = ballShape;
-        fixtureDef.restitution = 0.3f;
+        fixtureDef.restitution = 0.4f;
         fixtureDef.density = 1;
 
         ball = world.createBody(bodyDef);
         ball.createFixture(fixtureDef);
         ball.setUserData(Bounce.EntityType.BALL);
+        ballShape.dispose();
 
         try {
             for(MapObject object : map.getLayers().get(WALL_LAYER).getObjects()) {
@@ -85,6 +86,7 @@ public class LevelLoader {
                 Body body = world.createBody(bodyDef);
                 body.createFixture(polygonShape, 1);
                 body.setUserData(Bounce.EntityType.WALL);
+                polygonShape.dispose();
             }
         } catch(IndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -106,6 +108,7 @@ public class LevelLoader {
                 Body body = world.createBody(bodyDef);
                 body.createFixture(polygonShape, 1);
                 body.setUserData(Bounce.EntityType.SPIKE);
+                polygonShape.dispose();
             }
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -140,6 +143,7 @@ public class LevelLoader {
                 body.createFixture(fixtureDef);
                 body.setUserData(Bounce.EntityType.RING);
                 rings.add(body);
+                ellipseShape.dispose();
             }
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -172,6 +176,7 @@ public class LevelLoader {
                 body.createFixture(fixtureDef);
                 body.setUserData(Bounce.EntityType.GEM);
                 gems.add(body);
+                ellipseShape.dispose();
             }
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();

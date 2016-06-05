@@ -1,7 +1,5 @@
 package feup.lpoo.bounce.logic;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -15,6 +13,7 @@ import feup.lpoo.bounce.GameSound;
  * Created by Bernardo on 01-06-2016.
  */
 public class BounceContactListener implements ContactListener {
+    public static final float CONTACT_X_TOLERANCE = 2;
     private BounceGame game;
 
     public BounceContactListener(BounceGame game) {
@@ -39,6 +38,11 @@ public class BounceContactListener implements ContactListener {
                     GameSound.getPickUpSound().play();
                     game.gemDestroyed(contact.getFixtureB().getBody());
                     break;
+                case WALL:
+                    if(Math.abs(contact.getWorldManifold().getNormal().x) < CONTACT_X_TOLERANCE &&
+                            contact.getWorldManifold().getNormal().y < 0)
+                        game.enableBallJump();
+                    break;
             }
         } else if (entityB == Bounce.EntityType.BALL) {
             switch (entityA) {
@@ -52,6 +56,11 @@ public class BounceContactListener implements ContactListener {
                 case GEM:
                     GameSound.getPickUpSound().play();
                     game.gemDestroyed(contact.getFixtureA().getBody());
+                    break;
+                case WALL:
+                    if(Math.abs(contact.getWorldManifold().getNormal().x) < CONTACT_X_TOLERANCE &&
+                            contact.getWorldManifold().getNormal().y > 0)
+                        game.enableBallJump();
                     break;
             }
         }
