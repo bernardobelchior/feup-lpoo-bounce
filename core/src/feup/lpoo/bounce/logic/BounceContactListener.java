@@ -11,11 +11,17 @@ import feup.lpoo.bounce.GameSound;
 
 /**
  * Created by Bernardo on 01-06-2016.
+ *
+ * Class used to handle the contacts that occur in the BounceGame world.
  */
 public class BounceContactListener implements ContactListener {
     public static final float CONTACT_X_TOLERANCE = 2;
     private BounceGame game;
 
+    /**
+     * Bounce contact listener constuctor
+     * @param game Game in which the contact will happen
+     */
     public BounceContactListener(BounceGame game) {
         this.game = game;
     }
@@ -25,17 +31,19 @@ public class BounceContactListener implements ContactListener {
         EntityType entityA = (EntityType) contact.getFixtureA().getBody().getUserData();
         EntityType entityB = (EntityType) contact.getFixtureB().getBody().getUserData();
 
+        //Checks what collided with what and
+        //handles its consequences
         if(entityA == Bounce.EntityType.BALL) {
             switch (entityB) {
                 case SPIKE:
                     game.over();
                     break;
                 case RING:
-                    GameSound.getPickUpSound().play();
+                    GameSound.playPickUpSound();
                     game.ringDestroyed(contact.getFixtureB().getBody());
                     break;
                 case GEM:
-                    GameSound.getPickUpSound().play();
+                    GameSound.playPickUpSound();
                     game.gemDestroyed(contact.getFixtureB().getBody());
                     break;
                 case WALL:
@@ -50,11 +58,11 @@ public class BounceContactListener implements ContactListener {
                     game.over();
                     break;
                 case RING:
-                    GameSound.getPickUpSound().play();
+                    GameSound.playPickUpSound();
                     game.ringDestroyed(contact.getFixtureA().getBody());
                     break;
                 case GEM:
-                    GameSound.getPickUpSound().play();
+                    GameSound.playPickUpSound();
                     game.gemDestroyed(contact.getFixtureA().getBody());
                     break;
                 case WALL:

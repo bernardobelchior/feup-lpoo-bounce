@@ -63,7 +63,7 @@ public class Graphics {
 
     public static TextureRegion getBallTextureRegion() {
         if(ballTextureRegion == null)
-            ballTextureRegion = new TextureRegion(getGameTileset(), 0, 0, GAME_TEXTURE_SIZE, GAME_TEXTURE_SIZE);
+            ballTextureRegion = new TextureRegion(getGameTileset(), 2*GAME_TEXTURE_SIZE, GAME_TEXTURE_SIZE, GAME_TEXTURE_SIZE, GAME_TEXTURE_SIZE);
 
         return ballTextureRegion;
     }

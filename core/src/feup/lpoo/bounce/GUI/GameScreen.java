@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -74,8 +75,13 @@ public class GameScreen implements Screen {
         //Draws the ball on its position
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-        spriteBatch.draw(Graphics.getBallTextureRegion(), game.getBall().getPosition().x - Graphics.GAME_TEXTURE_SIZE /2,
-                game.getBall().getPosition().y - Graphics.GAME_TEXTURE_SIZE /2);
+        spriteBatch.draw(Graphics.getBallTextureRegion(),
+                game.getBall().getPosition().x - Graphics.GAME_TEXTURE_SIZE/2, //x coordinate
+                game.getBall().getPosition().y - Graphics.GAME_TEXTURE_SIZE/2, //y coordinate
+                Graphics.GAME_TEXTURE_SIZE/2, Graphics.GAME_TEXTURE_SIZE/2, //origin coordinates
+                Graphics.GAME_TEXTURE_SIZE, Graphics.GAME_TEXTURE_SIZE, //texture size
+                1, 1, //scaling
+                game.getBall().getAngle()/(float)Math.PI*180); //rotation
 
         //Draws all the rings in the correct position
         for(Body ring : game.getRings()) {

@@ -142,7 +142,7 @@
    <ellipse/>
   </object>
  </objectgroup>
- <layer name="unseenGraphics" width="100" height="15">
+ <layer name="unseenGraphics" width="100" height="15" visible="0">
   <data encoding="base64" compression="zlib">
    eJzt08EKABAQRVEW/P8n21gJhRczuqeklAxvhAAAUMl1nOz/VRqse7mzlzot6mU/6ocdqmyUNWGNhf+lyD838+l59OR/yHRu531W96gzuJmp59otnAtAL74uADCqAI0KAIM=
   </data>

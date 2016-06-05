@@ -1,7 +1,3 @@
-/**
- * Created by Bernardo on 30-05-2016.
- */
-
 package feup.lpoo.bounce.logic;
 
 import com.badlogic.gdx.Game;
@@ -21,6 +17,11 @@ import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.Bounce.GameState;
 import feup.lpoo.bounce.GameSound;
 
+/**
+ * Created by Bernardo on 30-05-2016.
+ *
+ * Class that handles all the Bounce Game logic.
+ */
 public class BounceGame extends Game {
     //World gravity
     private final static Vector2 WORLD_GRAVITY = new Vector2(0, -800);
@@ -64,6 +65,10 @@ public class BounceGame extends Game {
 
     private ArrayList<Body> destroyNextUpdate;
 
+    /**
+     * Game constructor. Uses level to load the map file.
+     * @param level level to load
+     */
     public BounceGame(int level) {
         this.gameState = Bounce.GameState.PAUSED;
         this.level = level;
@@ -86,6 +91,9 @@ public class BounceGame extends Game {
         start();
     }
 
+    /**
+     * Loads highscore from the respective file.
+     */
     private void loadHighscore() {
         FileHandle highscoreFile = Gdx.files.local(HIGHSCORE_FILE_NAME + level + HIGHSCORE_FILE_EXTENSION);
 
@@ -97,6 +105,9 @@ public class BounceGame extends Game {
             highscore = 0;
     }
 
+    /**
+     * Loads the map and sets up the world.
+     */
     private void setUpWorld() {
         world = new World(WORLD_GRAVITY, true);
         LevelLoader levelLoader = new LevelLoader();
@@ -114,6 +125,10 @@ public class BounceGame extends Game {
         world.setContactListener(new BounceContactListener(this));
     }
 
+    /**
+     * Starts the game if is not already running.
+     * @return true if the game was started.
+     */
     public boolean start() {
         if(gameState == Bounce.GameState.RUNNING)
             return false;
@@ -125,10 +140,16 @@ public class BounceGame extends Game {
         return true;
     }
 
+    /**
+     * Updates the game logic.
+     * @param deltaTime Delta time since the last update
+     */
     public void update(float deltaTime) {
         if(!isRunning())
             return;
 
+        //Workaround because deleting bodies while world.step
+        //is running is dangerous and can lead to unexpected crashes
         for(Body toDelete : destroyNextUpdate) {
             world.destroyBody(toDelete);
         }
@@ -141,24 +162,41 @@ public class BounceGame extends Game {
         if(Math.abs(horizontalAcceleration) > HORIZONTAL_ACCELERATION_TOLERANCE)
             ball.applyForceToCenter(horizontalAcceleration* HORIZONTAL_MOVEMENT_MODIFIER, 0, true);
 
+
         //Attrition application
         ball.applyForceToCenter(-ball.getLinearVelocity().x* ATTRITION_MODIFIER, 0, true);
 
         world.step(deltaTime, 6, 2);
     }
 
+    /**
+     * Gets map
+     * @return Map
+     */
     public TiledMap getMap() {
         return map;
     }
 
+    /**
+     * Gets world
+     * @return World
+     */
     public World getWorld() {
         return world;
     }
 
+    /**
+     * Gets ball
+     * @return Ball
+     */
     public Body getBall() {
         return ball;
     }
 
+    /**
+     * Tries to make the ball jump.
+     * @return True if the ball has jumped, returning false otherwise.
+     */
     public boolean ballJump() {
         if(!isRunning() || !canBallJump)
             return false;
@@ -168,18 +206,27 @@ public class BounceGame extends Game {
         return true;
     }
 
+    /**
+     * Creates the game
+     */
     @Override
     public void create() {
 
     }
 
+    /**
+     * Ends the game with a loss for the player.
+     */
     public void over() {
         saveScore();
-        GameSound.getLossSound().play();
+        GameSound.playLossSound();
         gameState = Bounce.GameState.LOSS;
         gameTimer.stop();
     }
 
+    /**
+     * Saves the player score to the respective file, if it is higher than the highscore.
+     */
     private void saveScore() {
         if(score > highscore) {
             FileHandle file = Gdx.files.local(HIGHSCORE_FILE_NAME + level + HIGHSCORE_FILE_EXTENSION);
@@ -196,21 +243,36 @@ public class BounceGame extends Game {
         }
     }
 
+    /**
+     * Ends the game with a win for the player.
+     */
     public void win() {
         saveScore();
-        GameSound.getWinSound().play();
+        GameSound.playWinSound();
         gameState = Bounce.GameState.WIN;
         gameTimer.stop();
     }
 
+    /**
+     * Gets whether the game is running or not.
+     * @return true if the game is running.
+     */
     public boolean isRunning() {
         return gameState == Bounce.GameState.RUNNING;
     }
 
+    /**
+     * Gets the player score
+     * @return score
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * Destroys the ring passed as argument in the next update process.
+     * @param ring Ring to be destroyed
+     */
     public void ringDestroyed(Body ring) {
         destroyNextUpdate.add(ring);
         rings.remove(ring);
@@ -220,24 +282,43 @@ public class BounceGame extends Game {
             win();
     }
 
+    /**
+     * Destroys the gem passed as argument in the next update process.
+     * @param gem Gem to be destroyed
+     */
     public void gemDestroyed(Body gem) {
         destroyNextUpdate.add(gem);
         gems.remove(gem);
         score += GEM_SCORE;
     }
 
+    /**
+     * Gets the rings array
+     * @return Rings array
+     */
     public ArrayList<Body> getRings() {
         return rings;
     }
 
+    /**
+     * Gets the gems array
+     * @return Gems array
+     */
     public ArrayList<Body> getGems() {
         return gems;
     }
 
-    public Bounce.GameState getGameState() {
+    /**
+     * Gets the game state
+     * @return gameState
+     */
+    public GameState getGameState() {
         return gameState;
     }
 
+    /**
+     * Disposes the unnecessary resources.
+     */
     @Override
     public void dispose() {
         super.dispose();
@@ -245,11 +326,19 @@ public class BounceGame extends Game {
         world.dispose();
     }
 
+    /**
+     * Restarts the game by reloading the level.
+     */
     public void restart() {
         setUpWorld();
         start();
     }
 
+    /**
+     * Tries to increment the level and load the corresponding map.
+     * If this current level is the last one, returns false.
+     * @return True if the level was successfully incremented
+     */
     public boolean nextLevel() {
         if(level > Bounce.NUMBER_OF_LEVELS)
             return false;
@@ -262,27 +351,49 @@ public class BounceGame extends Game {
         return true;
     }
 
+    /**
+     * Pauses the game.
+     */
     public void pauseGame() {
         gameState = Bounce.GameState.PAUSED;
         gameTimer.stop();
     }
 
+    /**
+     * Gets the current level
+     * @return level
+     */
     public int getLevel() {
         return level;
     }
 
+    /**
+     * Gets the map width
+     * @return mapWidth
+     */
     public int getMapWidth() {
         return mapWidth;
     }
 
+    /**
+     * Gets the map height
+     * @return mapHeight
+     */
     public int getMapHeight() {
         return mapHeight;
     }
 
+    /**
+     * Enables the ball to jump.
+     */
     public void enableBallJump() {
         canBallJump = true;
     }
 
+    /**
+     * Gets the number of rings left.
+     * @return Number of rings left.
+     */
     public int getRingsLeft() {
         return rings.size();
     }

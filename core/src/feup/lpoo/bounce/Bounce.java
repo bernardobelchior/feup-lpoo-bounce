@@ -16,6 +16,9 @@ import feup.lpoo.bounce.GUI.LevelSelectionScreen;
 import feup.lpoo.bounce.GUI.MainMenuScreen;
 import feup.lpoo.bounce.logic.BounceGame;
 
+/**
+ * Main class. Handles the whole application state.
+ */
 public class Bounce extends ApplicationAdapter{
     //Global enumerations
 	public enum ProgramState { MAIN_MENU, LEVEL_SELECTION, GAME, GAME_OVER, GAME_PAUSED }
@@ -48,6 +51,9 @@ public class Bounce extends ApplicationAdapter{
 		lastUpdateTime = currentTime;
 	}
 
+    /**
+     * Updates the application state.
+     */
 	private void update() {
 		switch (programState) {
 			case MAIN_MENU:
@@ -67,9 +73,14 @@ public class Bounce extends ApplicationAdapter{
 		}
 	}
 
+    /**
+     * Launches a BounceGame with the respective level.
+     * @param level Level
+     */
     public void launchGame(int level) {
         if(game == null || game.getLevel() != level) {
             game = new BounceGame(level);
+            GameSound.muted = false;
             game.start();
         } else
             game.restart();
@@ -77,6 +88,10 @@ public class Bounce extends ApplicationAdapter{
         setProgramState(ProgramState.GAME);
     }
 
+    /**
+     * Sets the application state
+     * @param programState New program state
+     */
 	public void setProgramState(ProgramState programState) {
         this.programState = programState;
 

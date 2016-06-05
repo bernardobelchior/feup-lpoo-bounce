@@ -12,32 +12,57 @@ public class GameSound {
     private static Sound winSound;
     private static Sound jumpingSound;
     private static Sound pickUpSound;
+    public static boolean muted = true;
 
-    public static Sound getLossSound() {
+    /**
+     * Plays the loss sound if the game is not muted
+     */
+    public static void playLossSound() {
+        if(muted)
+            return;
+
         if(lossSound == null)
             lossSound = Gdx.audio.newSound(Gdx.files.internal("sounds/lose.mp3"));
 
-        return lossSound;
+        lossSound.play();
     }
 
-    public static Sound getWinSound() {
+    /**
+     * Plays the win sound if the game is not muted
+     */
+    public static void playWinSound() {
+        if(muted)
+            return;
+
         if(winSound == null)
             winSound = Gdx.audio.newSound(Gdx.files.internal("sounds/win.mp3"));
 
-        return winSound;
+        winSound.play();
     }
 
-    public static Sound getJumpingSound() {
+    /**
+     * Plays the jumping sound if the game is not muted
+     */
+    public static void playJumpingSound() {
+        if(muted)
+            return;
+
         if(jumpingSound == null)
             jumpingSound = Gdx.audio.newSound(Gdx.files.internal("sounds/jump.mp3"));
 
-        return jumpingSound;
+        jumpingSound.play();
     }
 
-    public static Sound getPickUpSound() {
+    /**
+     * Plays the pick up sound if the game is not muted
+     */
+    public static void playPickUpSound() {
+        if(muted)
+            return;
+
         if(pickUpSound == null)
             pickUpSound = Gdx.audio.newSound(Gdx.files.internal("sounds/pick_up_items.mp3"));
 
-        return pickUpSound;
+        pickUpSound.play();
     }
 }

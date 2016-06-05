@@ -24,6 +24,8 @@ import feup.lpoo.bounce.Bounce;
 
 /**
  * Created by Bernardo on 01-06-2016.
+ *
+ * Class used to load the TiledMap passed as argument to a World.
  */
 public class LevelLoader {
     //Map layers definition
@@ -40,6 +42,11 @@ public class LevelLoader {
     private int mapWidth;
     private int mapHeight;
 
+    /**
+     * Loads the map into the world
+     * @param map Map
+     * @param world World
+     */
     public void load(TiledMap map, World world) {
         mapWidth = map.getProperties().get("width", Integer.class).intValue()*map.getProperties().get("tilewidth", Integer.class).intValue();
         mapHeight = map.getProperties().get("height", Integer.class).intValue()*map.getProperties().get("tileheight", Integer.class).intValue();
@@ -184,22 +191,42 @@ public class LevelLoader {
         }
     }
 
+    /**
+     * Gets the ball
+     * @return Ball
+     */
     public Body getBall() {
         return ball;
     }
 
+    /**
+     * Gets the rings
+     * @return Rings
+     */
     public ArrayList<Body> getRings() {
         return rings;
     }
 
+    /**
+     * Gets the gems
+     * @return Gems
+     */
     public ArrayList<Body> getGems() {
         return gems;
     }
 
+    /**
+     * Gets the map height
+     * @return mapHeight
+     */
     public int getMapHeight() {
         return mapHeight;
     }
 
+    /**
+     * Gets the map width
+     * @return mapWidth
+     */
     public int getMapWidth() {
         return mapWidth;
     }

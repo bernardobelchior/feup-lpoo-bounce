@@ -115,7 +115,7 @@ public class GameHUD extends Stage implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(!super.touchDown(screenX, screenY, pointer, button)) {
-            GameSound.getJumpingSound().play();
+            GameSound.playJumpingSound();
             game.ballJump();
             return true;
         }
