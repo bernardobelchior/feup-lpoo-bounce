@@ -5,14 +5,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -78,15 +76,15 @@ public class GameOverScreen implements Screen {
                 break;
         }
 
-        messageLabel.setFontScale(Bounce.BITMAP_FONT_SCALING);
+        messageLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
         messageLabel.setAlignment(Align.center);
 
         scoreTextLabel = new Label("Score:", labelStyle);
-        scoreTextLabel.setFontScale(Bounce.BITMAP_FONT_SCALING);
+        scoreTextLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
         scoreTextLabel.setAlignment(Align.center);
 
         scoreLabel = new Label(String.format("%06d", game.getScore()), labelStyle);
-        scoreLabel.setFontScale(Bounce.BITMAP_FONT_SCALING);
+        scoreLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
         scoreLabel.setAlignment(Align.center);
 
         //Define a buttonStyle for all buttons and create them

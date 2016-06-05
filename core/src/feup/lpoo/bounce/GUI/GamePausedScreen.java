@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -66,15 +65,15 @@ public class GamePausedScreen implements Screen {
         Label.LabelStyle labelStyle = new Label.LabelStyle(Graphics.getFont(), Color.WHITE);
 
         messageLabel = new Label(Bounce.PAUSED_MESSAGE, labelStyle);
-        messageLabel.setFontScale(Bounce.BITMAP_FONT_SCALING);
+        messageLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
         messageLabel.setAlignment(Align.center);
 
         scoreTextLabel = new Label("Score:", labelStyle);
-        scoreTextLabel.setFontScale(Bounce.BITMAP_FONT_SCALING);
+        scoreTextLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
         scoreTextLabel.setAlignment(Align.center);
 
         scoreLabel = new Label(String.format("%06d", game.getScore()), labelStyle);
-        scoreLabel.setFontScale(Bounce.BITMAP_FONT_SCALING);
+        scoreLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
         scoreLabel.setAlignment(Align.center);
 
         levelSelectionMenuButton = Utils.createButtonWithImage(backTexture);

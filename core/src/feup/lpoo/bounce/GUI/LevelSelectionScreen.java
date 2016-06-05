@@ -50,7 +50,7 @@ public class LevelSelectionScreen implements Screen {
         for(int i = 0; i < Bounce.NUMBER_OF_LEVELS; i++) {
             final TextButton levelTextButton = new TextButton("" + (i+1), textButtonStyle);
             levelTextButton.setUserObject(new Integer(i+1));
-            levelTextButton.getLabel().setFontScale(Bounce.BITMAP_FONT_SCALING);
+            levelTextButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING);
 
             levelTextButton.addListener(new ChangeListener() {
                 @Override

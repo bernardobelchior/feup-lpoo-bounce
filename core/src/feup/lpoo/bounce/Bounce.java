@@ -28,7 +28,6 @@ public class Bounce extends ApplicationAdapter{
     public static final String LOSS_MESSAGE = "Try again...";
     public static final String WIN_MESSAGE = "You won!";
     public static final String PAUSED_MESSAGE = "Paused";
-    public static final float BITMAP_FONT_SCALING = 0.75f;
     public static final int GEM_SCORE = 5;
     public static final int RING_SCORE = 1;
     public final static Vector2 WORLD_GRAVITY = new Vector2(0, -800);

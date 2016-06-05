@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 public class Graphics {
     private static final String BITMAP_FONT = "comfortaa.fnt";
 
+    public static final float BITMAP_FONT_SCALING = 0.75f;
+
     private static BitmapFont font;
     private static Texture tileset;
 
