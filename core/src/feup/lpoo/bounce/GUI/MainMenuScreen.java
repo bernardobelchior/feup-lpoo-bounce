@@ -56,11 +56,11 @@ public class MainMenuScreen implements Screen {
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.pressedOffsetX = 2;
         textButtonStyle.pressedOffsetY = -2;
-        textButtonStyle.font = new BitmapFont();
+        textButtonStyle.font = Graphics.getFont();
 
         final TextButton playButton = new TextButton(PLAY_LABEL, textButtonStyle);
         playButton.getLabel().setAlignment(Align.center);
-        playButton.getLabel().setFontScale(2);
+        playButton.getLabel().setFontScale(0.25f);
 
         Stack playStack = new Stack(new Image(buttonTexture), playButton);
 
@@ -75,7 +75,7 @@ public class MainMenuScreen implements Screen {
 
         final TextButton exitButton = new TextButton(EXIT_LABEL, textButtonStyle);
         exitButton.getLabel().setAlignment(Align.center);
-        exitButton.getLabel().setFontScale(2);
+        exitButton.getLabel().setFontScale(0.25f);
 
         Stack exitStack = new Stack(new Image(buttonTexture), exitButton);
 

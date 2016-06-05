@@ -33,7 +33,6 @@ import feup.lpoo.bounce.Bounce.GameState;
  * Created by Bernardo on 02-06-2016.
  */
 public class GameHUD extends Stage implements InputProcessor {
-    private static final float FONT_SCALE = 5;
     public static final float RING_SPRITE_SCALING = 0.5f;
 
     private SpriteBatch spriteBatch;
@@ -93,8 +92,8 @@ public class GameHUD extends Stage implements InputProcessor {
             }
         });
 
-        scoreLabel = new Label(String.format("%06d", game.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel.setFontScale(FONT_SCALE);
+        scoreLabel = new Label(String.format("%06d", game.getScore()), new Label.LabelStyle(Graphics.getFont(), Color.WHITE));
+        scoreLabel.setFontScale(Bounce.BITMAP_FONT_SCALING);
 
         table = new Table();
         table.setFillParent(true);

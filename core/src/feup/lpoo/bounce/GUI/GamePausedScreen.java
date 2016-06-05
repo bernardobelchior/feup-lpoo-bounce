@@ -63,7 +63,7 @@ public class GamePausedScreen implements Screen {
     }
 
     private Table createMenu() {
-        Label.LabelStyle labelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(Graphics.getFont(), Color.WHITE);
 
         messageLabel = new Label(Bounce.PAUSED_MESSAGE, labelStyle);
         messageLabel.setFontScale(Bounce.BITMAP_FONT_SCALING);

@@ -67,7 +67,7 @@ public class GameOverScreen implements Screen {
 
     private Table createMenu() {
         //Define a labelStyle for all labels and create them
-        Label.LabelStyle labelStyle = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(Graphics.getFont(), Color.WHITE);
 
         switch (gameState) {
             case WIN:
