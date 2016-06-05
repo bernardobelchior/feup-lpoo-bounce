@@ -24,27 +24,12 @@ public class Bounce extends ApplicationAdapter{
 
     //Global variables
     public static final int NUMBER_OF_LEVELS = 2;
-    public static final int TEXTURE_SIZE = 64;
     public static final String LOSS_MESSAGE = "Try again...";
     public static final String WIN_MESSAGE = "You won!";
     public static final String PAUSED_MESSAGE = "Paused";
-    public static final int GEM_SCORE = 5;
-    public static final int RING_SCORE = 1;
-    public final static Vector2 WORLD_GRAVITY = new Vector2(0, -800);
 
     //Sound variables
     //public static final Sound PICK_UP_ITEMS_SOUND = Gdx.audio.newSound(Gdx.files.internal("sounds/pick_up_items.mp3"));
-
-    //Game update rate in seconds
-    public final static float GAME_UPDATE_RATE = 1/300f;
-
-    //Used to check if the phone is relatively standing still
-    public final static float HORIZONTAL_ACCELERATION_TOLERANCE = 1f;
-
-    //Movement modifiers
-    public final static int HORIZONTAL_MOVEMENT_MODIFIER = 1000000;
-    public final static int ATTRITION_MODIFIER = 10000;
-    public final static int JUMP_HEIGHT_MODIFIER = 1400000;
 
     private Screen currentScreen;
 	private ProgramState programState;

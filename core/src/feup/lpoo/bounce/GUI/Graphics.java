@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
  * Created by Bernardo on 05-06-2016.
  */
 public class Graphics {
+    public static final int TEXTURE_SIZE = 64;
     private static final String BITMAP_FONT = "comfortaa.fnt";
 
     public static final float BITMAP_FONT_SCALING = 0.75f;

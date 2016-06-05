@@ -69,8 +69,8 @@ public class GameHUD extends Stage implements InputProcessor {
         //FIXME: GameScreen has the same variables. Find a way to avoid having a two copies of the same thing.
         TextureRegionDrawable pauseTexture = new TextureRegionDrawable(new TextureRegion(new Texture("pause.png")));
         tileset = new Texture("tileset.png");
-        ballTextureRegion = new TextureRegion(tileset, 0, 0, Bounce.TEXTURE_SIZE, Bounce.TEXTURE_SIZE);
-        TextureRegion ringTextureRegion = new TextureRegion(tileset, 16, Bounce.TEXTURE_SIZE, Bounce.TEXTURE_SIZE/2, Bounce.TEXTURE_SIZE);
+        ballTextureRegion = new TextureRegion(tileset, 0, 0, Graphics.TEXTURE_SIZE, Graphics.TEXTURE_SIZE);
+        TextureRegion ringTextureRegion = new TextureRegion(tileset, 16, Graphics.TEXTURE_SIZE, Graphics.TEXTURE_SIZE/2, Graphics.TEXTURE_SIZE);
         ringSprite = new Sprite(ringTextureRegion);
         ringSprite.scale(RING_SPRITE_SCALING);
 
@@ -161,7 +161,7 @@ public class GameHUD extends Stage implements InputProcessor {
 
         for(int i = 0; i < game.getRings().size(); i++) {
             spriteBatch.draw(ringSprite, Gdx.graphics.getWidth()/15f + ringSprite.getWidth()*i,
-                    Gdx.graphics.getHeight() - Bounce.TEXTURE_SIZE - Gdx.graphics.getHeight()/50f);
+                    Gdx.graphics.getHeight() - Graphics.TEXTURE_SIZE - Gdx.graphics.getHeight()/50f);
         }
 
         spriteBatch.end();
