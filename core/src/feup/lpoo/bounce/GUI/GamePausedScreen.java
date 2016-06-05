@@ -51,7 +51,7 @@ public class GamePausedScreen implements Screen {
         this.gameScreen = (GameScreen) game.getScreen();
 
         spriteBatch = new SpriteBatch();
-        viewport = new FitViewport(game.getMapHeight() *(float) Gdx.graphics.getWidth()/Gdx.graphics.getHeight(), game.getMapHeight(), new OrthographicCamera());
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
         Gdx.input.setInputProcessor(stage);
 

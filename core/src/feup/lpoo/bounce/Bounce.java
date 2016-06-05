@@ -23,7 +23,7 @@ public class Bounce extends ApplicationAdapter{
     public enum EntityType { WALL, BALL, SPIKE, GEM, RING }
 
     //Global variables
-    public static final int NUMBER_OF_LEVELS = 1;
+    public static final int NUMBER_OF_LEVELS = 2;
     public static final int TEXTURE_SIZE = 64;
     public static final String LOSS_MESSAGE = "Try again...";
     public static final String WIN_MESSAGE = "You won!";

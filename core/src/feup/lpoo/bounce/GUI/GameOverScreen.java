@@ -57,7 +57,7 @@ public class GameOverScreen implements Screen {
         nextTexture = new TextureRegionDrawable(new TextureRegion(new Texture("next.png")));
 
         //Set viewport and sprite batch for stage
-        viewport = new FitViewport(game.getMapHeight() *(float)Gdx.graphics.getWidth()/Gdx.graphics.getHeight(), game.getMapHeight(), new OrthographicCamera());
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         spriteBatch = new SpriteBatch();
         stage = new Stage(viewport, spriteBatch);
         Gdx.input.setInputProcessor(stage);

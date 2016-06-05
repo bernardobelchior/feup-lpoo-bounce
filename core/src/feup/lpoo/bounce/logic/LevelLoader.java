@@ -2,8 +2,14 @@ package feup.lpoo.bounce.logic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.EllipseMapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
+import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Ellipse;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -22,6 +28,7 @@ import feup.lpoo.bounce.Bounce;
 public class LevelLoader {
     //Map layers definition
     private final static int WALL_LAYER = 2;
+    private final static int BALL_LAYER = 3;
     private final static int SPIKE_LAYER = 4;
     private final static int RINGS_LAYER = 5;
     private final static int GEMS_LAYER = 6;
@@ -44,6 +51,13 @@ public class LevelLoader {
 
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(96, mapHeight/2-32);
+
+        try {
+            Rectangle rectangle = ((RectangleMapObject) map.getLayers().get(BALL_LAYER).getObjects().get(0)).getRectangle();
+            bodyDef.position.set(rectangle.getX(), rectangle.getY());
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
 
         CircleShape ballShape = new CircleShape();
         ballShape.setRadius(32);
@@ -100,19 +114,25 @@ public class LevelLoader {
 
 
         try {
-            //FIXME: Use the appropriate shape
             for(MapObject object : map.getLayers().get(RINGS_LAYER).getObjects()) {
-                Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+                Ellipse ellipse = ((EllipseMapObject) object).getEllipse();
 
                 bodyDef = new BodyDef();
                 bodyDef.type = BodyDef.BodyType.KinematicBody;
-                bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
+                bodyDef.position.set(ellipse.x + ellipse.width/2, ellipse.y + ellipse.height/2);
 
-                PolygonShape polygonShape = new PolygonShape();
-                polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
+                CircleShape ellipseShape = new CircleShape();
+
+                float radius;
+                if(ellipse.height < ellipse.width)
+                    radius = ellipse.height/2;
+                else
+                    radius = ellipse.width/2;
+
+                ellipseShape.setRadius(radius);
 
                 fixtureDef = new FixtureDef();
-                fixtureDef.shape = polygonShape;
+                fixtureDef.shape = ellipseShape;
                 fixtureDef.density = 1;
                 fixtureDef.isSensor = true;
 
@@ -127,19 +147,24 @@ public class LevelLoader {
         }
 
         try {
-            //FIXME: Use the appropriate shape
             for(MapObject object : map.getLayers().get(GEMS_LAYER).getObjects()) {
-                Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+                Ellipse ellipse = ((EllipseMapObject) object).getEllipse();
 
                 bodyDef = new BodyDef();
                 bodyDef.type = BodyDef.BodyType.KinematicBody;
-                bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
+                bodyDef.position.set(ellipse.x + ellipse.width/2, ellipse.y + ellipse.height/2);
 
-                PolygonShape polygonShape = new PolygonShape();
-                polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
+                float radius;
+                if(ellipse.height < ellipse.width)
+                    radius = ellipse.height/2;
+                else
+                    radius = ellipse.width/2;
+
+                CircleShape ellipseShape = new CircleShape();
+                ellipseShape.setRadius(radius);
 
                 fixtureDef = new FixtureDef();
-                fixtureDef.shape = polygonShape;
+                fixtureDef.shape = ellipseShape;
                 fixtureDef.density = 1;
                 fixtureDef.isSensor = true;
 

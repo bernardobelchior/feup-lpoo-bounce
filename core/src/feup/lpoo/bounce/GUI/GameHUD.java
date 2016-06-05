@@ -53,7 +53,7 @@ public class GameHUD extends Stage implements InputProcessor {
     private final Sound JUMPING_SOUND;
 
     public GameHUD(Bounce bounce, final BounceGame game) {
-        super(new FitViewport(game.getMapHeight() *(float)Gdx.graphics.getWidth()/Gdx.graphics.getHeight(), game.getMapHeight(), new OrthographicCamera()), new SpriteBatch());
+        super(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera()), new SpriteBatch());
         this.bounce = bounce;
         this.game = game;
 
@@ -76,7 +76,7 @@ public class GameHUD extends Stage implements InputProcessor {
         TextureRegionDrawable pauseTexture = new TextureRegionDrawable(new TextureRegion(new Texture("pause.png")));
         tileset = new Texture("tileset.png");
         ballTextureRegion = new TextureRegion(tileset, 0, 0, Bounce.TEXTURE_SIZE, Bounce.TEXTURE_SIZE);
-        TextureRegion ringTextureRegion = new TextureRegion(tileset, 0, Bounce.TEXTURE_SIZE, Bounce.TEXTURE_SIZE, Bounce.TEXTURE_SIZE);
+        TextureRegion ringTextureRegion = new TextureRegion(tileset, 16, Bounce.TEXTURE_SIZE, Bounce.TEXTURE_SIZE/2, Bounce.TEXTURE_SIZE);
         ringSprite = new Sprite(ringTextureRegion);
         ringSprite.scale(RING_SPRITE_SCALING);
 
