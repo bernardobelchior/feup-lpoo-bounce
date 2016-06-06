@@ -12,13 +12,14 @@ public class GameSound {
     private static Sound winSound;
     private static Sound jumpingSound;
     private static Sound pickUpSound;
-    public static boolean muted = true;
+    public static boolean soundMuted = true;
+    public static boolean musicMuted = true;
 
     /**
-     * Plays the loss sound if the game is not muted
+     * Plays the loss sound if the sound is not muted
      */
     public static void playLossSound() {
-        if(muted)
+        if(soundMuted)
             return;
 
         if(lossSound == null)
@@ -28,10 +29,10 @@ public class GameSound {
     }
 
     /**
-     * Plays the win sound if the game is not muted
+     * Plays the win sound if the sound is not muted
      */
     public static void playWinSound() {
-        if(muted)
+        if(soundMuted)
             return;
 
         if(winSound == null)
@@ -41,10 +42,10 @@ public class GameSound {
     }
 
     /**
-     * Plays the jumping sound if the game is not muted
+     * Plays the jumping sound if the sound is not muted
      */
     public static void playJumpingSound() {
-        if(muted)
+        if(soundMuted)
             return;
 
         if(jumpingSound == null)
@@ -54,10 +55,10 @@ public class GameSound {
     }
 
     /**
-     * Plays the pick up sound if the game is not muted
+     * Plays the pick up sound if the sound is not muted
      */
     public static void playPickUpSound() {
-        if(muted)
+        if(soundMuted)
             return;
 
         if(pickUpSound == null)

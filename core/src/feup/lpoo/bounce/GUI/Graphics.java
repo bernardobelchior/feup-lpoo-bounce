@@ -44,6 +44,8 @@ public class Graphics {
     private static TextureRegionDrawable pauseButtonTextureRegion;
     private static TextureRegionDrawable emptyButtonTextureRegion;
     private static TextureRegionDrawable menuButtonTextureRegion;
+    private static TextureRegionDrawable musicOnButtonTextureRegion;
+    private static TextureRegionDrawable musicOffButtonTextureRegion;
 
 
     public static BitmapFont getFont() {
@@ -156,5 +158,19 @@ public class Graphics {
             monsterTextureRegion = new TextureRegion(getGameTileset(), 0, 4*GAME_TEXTURE_SIZE, 2*GAME_TEXTURE_SIZE, 2*GAME_TEXTURE_SIZE);
 
         return monsterTextureRegion;
+    }
+
+    public static TextureRegionDrawable getMusicOffButtonTextureRegion() {
+        if(musicOffButtonTextureRegion == null)
+            musicOffButtonTextureRegion = new TextureRegionDrawable(new TextureRegion(getButtonTileset(), BUTTON_TEXTURE_SIZE, 2*BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE));
+
+        return musicOffButtonTextureRegion;
+    }
+
+    public static TextureRegionDrawable getMusicOnButtonTextureRegion() {
+        if(musicOnButtonTextureRegion == null)
+            musicOnButtonTextureRegion = new TextureRegionDrawable(new TextureRegion(getButtonTileset(), 0, 2*BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE));
+
+        return musicOnButtonTextureRegion;
     }
 }

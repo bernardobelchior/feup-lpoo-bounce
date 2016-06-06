@@ -14,6 +14,7 @@ import feup.lpoo.bounce.GUI.GameScreen;
 import feup.lpoo.bounce.GUI.GameOverScreen;
 import feup.lpoo.bounce.GUI.LevelSelectionScreen;
 import feup.lpoo.bounce.GUI.MainMenuScreen;
+import feup.lpoo.bounce.GUI.OptionsScreen;
 import feup.lpoo.bounce.logic.BounceGame;
 
 /**
@@ -21,7 +22,7 @@ import feup.lpoo.bounce.logic.BounceGame;
  */
 public class Bounce extends ApplicationAdapter{
     //Global enumerations
-	public enum ProgramState { MAIN_MENU, LEVEL_SELECTION, GAME, GAME_OVER, GAME_PAUSED }
+	public enum ProgramState { MAIN_MENU, LEVEL_SELECTION, GAME, GAME_OVER, OPTIONS, HOW_TO_PLAY, GAME_PAUSED }
     public enum GameState { PAUSED, RUNNING, LOSS, WIN }
     public enum EntityType { WALL, BALL, SPIKE, GEM, BARBED_WIRE, MONSTER, RING }
 
@@ -38,7 +39,6 @@ public class Bounce extends ApplicationAdapter{
 
     @Override
 	public void create () {
-        //programState = ProgramState.MAIN_MENU;
         setProgramState(ProgramState.MAIN_MENU);
 	}
 
@@ -46,7 +46,7 @@ public class Bounce extends ApplicationAdapter{
 	public void render () {
 		update();
 		long currentTime = TimeUtils.millis();
-        if(currentScreen != null)
+        //if(currentScreen != null)
 		    currentScreen.render(lastUpdateTime - currentTime);
 		lastUpdateTime = currentTime;
 	}
@@ -80,7 +80,8 @@ public class Bounce extends ApplicationAdapter{
     public void launchGame(int level) {
         if(game == null || game.getLevel() != level) {
             game = new BounceGame(level);
-            GameSound.muted = false;
+            GameSound.soundMuted = false;
+            GameSound.musicMuted = false;
             game.start();
         } else
             game.restart();
@@ -111,6 +112,9 @@ public class Bounce extends ApplicationAdapter{
                 break;
             case GAME_PAUSED:
                 currentScreen = new GamePausedScreen(this, game);
+                break;
+            case OPTIONS:
+                currentScreen = new OptionsScreen(this);
                 break;
         }
     }

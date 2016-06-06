@@ -97,7 +97,6 @@ public class BounceGame extends Game {
         }, 0, GAME_UPDATE_RATE);
 
         setUpWorld();
-        start();
     }
 
     /**

@@ -11,30 +11,15 @@ import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.logic.BounceGame;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.mockito.Mockito.mock;
+
 
 /**
  * Created by Bernardo on 06-06-2016.
  */
 @RunWith(TestsLauncher.class)
 public class GameLogicTest {
-    @Test
-    public void testTest() {
-        assertEquals(1, 1);
-    }
 
-    @Test
-    public void loadMapTest () {
-        Files files = Gdx.files;
-
-        files.isLocalStorageAvailable();
-        files.getLocalStoragePath();
-
-        System.out.println(Gdx.files.internal("level1.tmx").file().getAbsolutePath());
-
-        TiledMap map = new TmxMapLoader().load("level1.tmx");
-
-        assertEquals(map.getLayers().getCount(), 8);
-    }
 
     @Test
     public void gameStateTest() {
