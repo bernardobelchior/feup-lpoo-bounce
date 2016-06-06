@@ -56,7 +56,7 @@ public class BounceGame extends Game {
     private ArrayList<Body> rings;
     private ArrayList<Body> gems;
 
-    private int level;
+    private Integer level;
     private int highscore;
     private boolean canBallJump;
 
@@ -70,13 +70,21 @@ public class BounceGame extends Game {
      * @param level level to load
      */
     public BounceGame(int level) {
-        this.gameState = Bounce.GameState.PAUSED;
+        this(new TmxMapLoader().load("level" + level + ".tmx"));
         this.level = level;
+    }
 
-        map = new TmxMapLoader().load("level" + level + ".tmx");
+    /**
+     * Game constructor. Uses the map passed as argument.
+     * @param map Map to use
+     */
+    public BounceGame(TiledMap map) {
+        this.map = map;
 
         mapWidth = map.getProperties().get("width", Integer.class).intValue()*map.getProperties().get("tilewidth", Integer.class).intValue();
         mapHeight = map.getProperties().get("height", Integer.class).intValue()*map.getProperties().get("tileheight", Integer.class).intValue();
+
+        gameState = Bounce.GameState.PAUSED;
 
         gameTimer = new Timer();
         gameTimer.scheduleTask(new Timer.Task() {
