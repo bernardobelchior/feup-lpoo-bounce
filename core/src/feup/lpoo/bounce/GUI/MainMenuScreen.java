@@ -5,16 +5,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -91,16 +86,13 @@ public class MainMenuScreen implements Screen {
         Table buttonsTable = new Table();
         buttonsTable.center().setFillParent(true);
         buttonsTable.setDebug(true);
-        buttonsTable.pad(Gdx.graphics.getHeight()/2.2f, Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/6, Gdx.graphics.getWidth()/2);
+        buttonsTable.pad(Gdx.graphics.getHeight()/2f, Gdx.graphics.getWidth()/8f, Gdx.graphics.getHeight()/6f, Gdx.graphics.getWidth()/2f);
 
         buttonsTable.add(playStack).align(Align.center).expand();
-        buttonsTable.row().uniform();
         buttonsTable.add().expand();
         buttonsTable.row().uniform();
         buttonsTable.add().expand();
-        buttonsTable.row().uniform();
         buttonsTable.add().expand();
-//        buttonsTable.add(exitStack).align(Align.center).expand();
 
         stage.addActor(buttonsTable);
 
@@ -125,7 +117,7 @@ public class MainMenuScreen implements Screen {
 
         spriteBatch.setProjectionMatrix(stage.getCamera().combined);
         spriteBatch.begin();
-        spriteBatch.draw(menuBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        spriteBatch.draw(Graphics.getMenuBackgroundTexture(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         spriteBatch.end();
 
         stage.draw();

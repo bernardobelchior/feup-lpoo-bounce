@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.logic.BounceGame;
+import feup.lpoo.bounce.logic.Monster;
 
 /**
  * Created by Bernardo on 30-05-2016.
@@ -93,6 +94,12 @@ public class GameScreen implements Screen {
         for(Body gem : game.getGems()) {
             spriteBatch.draw(Graphics.getGemTextureRegion(), gem.getPosition().x - Graphics.GAME_TEXTURE_SIZE /2,
                     gem.getPosition().y - Graphics.GAME_TEXTURE_SIZE /2);
+        }
+
+        //Draws all the monsters in the correct position
+        for(Monster monster : game.getMonsters()) {
+            spriteBatch.draw(Graphics.getMonsterTextureRegion(), monster.getPosition().x - Graphics.GAME_TEXTURE_SIZE,
+                    monster.getPosition().y - Graphics.GAME_TEXTURE_SIZE);
         }
 
         spriteBatch.end();

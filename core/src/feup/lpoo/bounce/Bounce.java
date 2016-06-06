@@ -23,7 +23,7 @@ public class Bounce extends ApplicationAdapter{
     //Global enumerations
 	public enum ProgramState { MAIN_MENU, LEVEL_SELECTION, GAME, GAME_OVER, GAME_PAUSED }
     public enum GameState { PAUSED, RUNNING, LOSS, WIN }
-    public enum EntityType { WALL, BALL, SPIKE, GEM, BARBED_WIRE, RING }
+    public enum EntityType { WALL, BALL, SPIKE, GEM, BARBED_WIRE, MONSTER, RING }
 
     //Global variables
     public static final int NUMBER_OF_LEVELS = 6;

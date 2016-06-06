@@ -27,6 +27,7 @@ public class Graphics {
     private static Texture buttonTileset;
 
     //Background
+    private static Texture menuBackgroundTexture;
     private static TextureRegionDrawable menuBackgroundTextureRegion;
 
     //Game sprites
@@ -34,6 +35,7 @@ public class Graphics {
     private static TextureRegion ringTextureRegion;
     private static TextureRegion trimmedRingTextureRegion;
     private static TextureRegion gemTextureRegion;
+    private static TextureRegion monsterTextureRegion;
 
     //Buttons
     private static TextureRegionDrawable backButtonTextureRegion;
@@ -135,10 +137,24 @@ public class Graphics {
         return menuButtonTextureRegion;
     }
 
+    public static Texture getMenuBackgroundTexture() {
+        if(menuBackgroundTexture == null)
+            menuBackgroundTexture = new Texture(Gdx.files.internal("menu_background.png"));
+
+        return menuBackgroundTexture;
+    }
+
     public static TextureRegionDrawable getMenuBackgroundTextureRegion() {
         if(menuBackgroundTextureRegion == null)
-            menuBackgroundTextureRegion = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("menu_background.png"))));
+            menuBackgroundTextureRegion = new TextureRegionDrawable(new TextureRegion(getMenuBackgroundTexture()));
 
         return menuBackgroundTextureRegion;
+    }
+
+    public static TextureRegion getMonsterTextureRegion() {
+        if(monsterTextureRegion == null)
+            monsterTextureRegion = new TextureRegion(getGameTileset(), 0, 4*GAME_TEXTURE_SIZE, 2*GAME_TEXTURE_SIZE, 2*GAME_TEXTURE_SIZE);
+
+        return monsterTextureRegion;
     }
 }

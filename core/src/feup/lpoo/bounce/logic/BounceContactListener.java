@@ -35,8 +35,13 @@ public class BounceContactListener implements ContactListener {
         //handles its consequences
         if(entityA == Bounce.EntityType.BALL) {
             switch (entityB) {
-                case BARBED_WIRE:
                 case SPIKE:
+                    if(contact.getWorldManifold().getNormal().angle() > 0 &&
+                            contact.getWorldManifold().getNormal().angle() < 180)
+                        game.over();
+                    break;
+                case MONSTER:
+                case BARBED_WIRE:
                     game.over();
                     break;
                 case RING:
@@ -55,8 +60,13 @@ public class BounceContactListener implements ContactListener {
             }
         } else if (entityB == Bounce.EntityType.BALL) {
             switch (entityA) {
-                case BARBED_WIRE:
                 case SPIKE:
+                    if(contact.getWorldManifold().getNormal().angle() > 0 &&
+                            contact.getWorldManifold().getNormal().angle() < 180)
+                        game.over();
+                    break;
+                case MONSTER:
+                case BARBED_WIRE:
                     game.over();
                     break;
                 case RING:

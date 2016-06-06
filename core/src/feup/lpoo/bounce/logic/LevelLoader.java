@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 import java.util.ArrayList;
 
@@ -33,10 +34,12 @@ public class LevelLoader {
     private final static int RINGS_LAYER = 5;
     private final static int GEMS_LAYER = 6;
     private final static int BARBED_WIRE_LAYER = 7;
-    
+    private final static int MONSTER_LAYER = 8;
+
     private Body ball;
     private ArrayList<Body> rings;
     private ArrayList<Body> gems;
+    private ArrayList<Monster> monsters;
 
     private int mapWidth;
     private int mapHeight;
@@ -52,6 +55,7 @@ public class LevelLoader {
 
         rings = new ArrayList<Body>();
         gems = new ArrayList<Body>();
+        monsters = new ArrayList<Monster>();
 
         BodyDef bodyDef = new BodyDef();
 
@@ -70,7 +74,7 @@ public class LevelLoader {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = ballShape;
-        fixtureDef.restitution = 0.3f;
+        fixtureDef.restitution = 0.2f;
         fixtureDef.density = 1;
 
         ball = world.createBody(bodyDef);
@@ -209,6 +213,48 @@ public class LevelLoader {
             e.printStackTrace();
             Gdx.app.log("LevelLoader", "No barbed wire layer in map.");
         }
+
+        try {
+            for(MapObject object : map.getLayers().get(MONSTER_LAYER).getObjects()) {
+                Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyDef.BodyType.KinematicBody;
+                bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
+
+                PolygonShape polygonShape = new PolygonShape();
+                polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
+
+                Body body = world.createBody(bodyDef);
+                body.createFixture(polygonShape, 1);
+                body.setUserData(Bounce.EntityType.MONSTER);
+
+                int movementHeight;
+
+                try {
+                    movementHeight = Integer.parseInt(object.getProperties().get("movementHeight", String.class));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    movementHeight = 0;
+                }
+
+                int movementWidth;
+
+                try {
+                    movementWidth = Integer.parseInt(object.getProperties().get("movementWidth", String.class));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    movementWidth = 0;
+                }
+
+                monsters.add(new Monster(body, movementWidth, movementHeight));
+
+                polygonShape.dispose();
+            }
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            Gdx.app.log("LevelLoader", "No monster layer in map.");
+        }
     }
 
     /**
@@ -233,6 +279,14 @@ public class LevelLoader {
      */
     public ArrayList<Body> getGems() {
         return gems;
+    }
+
+    /**
+     * Gets the monsters
+     * @return Monsters
+     */
+    public ArrayList<Monster> getMonsters() {
+        return monsters;
     }
 
     /**

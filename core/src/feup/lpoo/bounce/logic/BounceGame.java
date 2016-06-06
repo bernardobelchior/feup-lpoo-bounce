@@ -55,6 +55,7 @@ public class BounceGame extends Game {
 
     private ArrayList<Body> rings;
     private ArrayList<Body> gems;
+    private ArrayList<Monster> monsters;
 
     private Integer level;
     private int highscore;
@@ -123,6 +124,7 @@ public class BounceGame extends Game {
         ball = levelLoader.getBall();
         rings = levelLoader.getRings();
         gems = levelLoader.getGems();
+        monsters = levelLoader.getMonsters();
         mapHeight = levelLoader.getMapHeight();
         mapWidth = levelLoader.getMapWidth();
 
@@ -163,6 +165,10 @@ public class BounceGame extends Game {
         }
 
         destroyNextUpdate.clear();
+
+        for(Monster monster : monsters) {
+            monster.move();
+        }
 
         float horizontalAcceleration = Gdx.input.getAccelerometerY();
 
@@ -412,5 +418,13 @@ public class BounceGame extends Game {
      */
     public int getHighscore() {
         return highscore;
+    }
+
+    /**
+     * Gets the monsters array
+     * @return monsters
+     */
+    public ArrayList<Monster> getMonsters() {
+        return monsters;
     }
 }
