@@ -29,6 +29,7 @@ public class Graphics {
     //Background
     private static Texture menuBackgroundTexture;
     private static TextureRegionDrawable menuBackgroundTextureRegion;
+    private static TextureRegion pausedGameBackgroundTextureRegion;
 
     //Game sprites
     private static TextureRegion ballTextureRegion;
@@ -156,5 +157,12 @@ public class Graphics {
             monsterTextureRegion = new TextureRegion(getGameTileset(), 0, 4*GAME_TEXTURE_SIZE, 2*GAME_TEXTURE_SIZE, 2*GAME_TEXTURE_SIZE);
 
         return monsterTextureRegion;
+    }
+
+    public static TextureRegion getPausedGameBackgroundTextureRegion() {
+        if(pausedGameBackgroundTextureRegion == null)
+            pausedGameBackgroundTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("paused_game_background.png")));
+
+        return pausedGameBackgroundTextureRegion;
     }
 }

@@ -11,10 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.sun.corba.se.impl.orbutil.graph.Graph;
 
 import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.Utils;
@@ -28,6 +30,7 @@ public class GamePausedScreen implements Screen {
     private Bounce bounce;
     private GameScreen gameScreen;
 
+    private Table table;
     private Stage stage;
     private FitViewport viewport;
     private SpriteBatch spriteBatch;
@@ -53,19 +56,19 @@ public class GamePausedScreen implements Screen {
         messageLabel.setAlignment(Align.center);
 
         Label scoreTextLabel = new Label("Score:", labelStyle);
-        scoreTextLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
+        scoreTextLabel.setFontScale(Graphics.BITMAP_FONT_SCALING*0.75f);
         scoreTextLabel.setAlignment(Align.center);
 
         Label scoreLabel = new Label(String.format("%06d", game.getScore()), labelStyle);
-        scoreLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
+        scoreLabel.setFontScale(Graphics.BITMAP_FONT_SCALING*0.75f);
         scoreLabel.setAlignment(Align.center);
 
         Label highscoreTextLabel = new Label("Highscore:", labelStyle);
-        highscoreTextLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
+        highscoreTextLabel.setFontScale(Graphics.BITMAP_FONT_SCALING*0.75f);
         highscoreTextLabel.setAlignment(Align.center);
 
         Label highscoreLabel = new Label(String.format("%06d", game.getHighscore()), labelStyle);
-        highscoreLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
+        highscoreLabel.setFontScale(Graphics.BITMAP_FONT_SCALING*0.75f);
         highscoreLabel.setAlignment(Align.center);
 
         final ImageButton levelSelectionMenuButton = Utils.createButtonWithImage(new TextureRegionDrawable(Graphics.getBackButtonTextureRegionDrawable()));
@@ -101,14 +104,13 @@ public class GamePausedScreen implements Screen {
             }
         });
 
-        Table table = new Table();
+        table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+        //table.setDebug(true);
         table.center();
-        //table.setBackground(GamePausedBackground);
 
-        table.pad(Gdx.graphics.getHeight()/6f, Gdx.graphics.getWidth()/8f,
-                Gdx.graphics.getHeight()/6f, Gdx.graphics.getWidth()/8f);
+        table.pad(Gdx.graphics.getHeight()/6f, Gdx.graphics.getWidth()/5f,
+                Gdx.graphics.getHeight()/6f, Gdx.graphics.getWidth()/5f);
 
         //First row
         table.add(messageLabel).colspan(3).expand();
@@ -116,19 +118,19 @@ public class GamePausedScreen implements Screen {
         //Second row
         table.row().expand();
 
-        table.add(scoreTextLabel);
-        table.add(scoreLabel).colspan(2);
+        table.add(scoreTextLabel).expandX().colspan(2);
+        table.add(scoreLabel).expandX().left();
 
         //Third row
         table.row().expand();
 
-        table.add(highscoreTextLabel);
-        table.add(highscoreLabel).colspan(2);
+        table.add(highscoreTextLabel).expandX().colspan(2);
+        table.add(highscoreLabel).expandX().left();
 
         //Fourth row
         table.row().expand();
 
-        table.add(levelSelectionMenuButton).uniform();
+        table.add(levelSelectionMenuButton).uniform().padBottom(Gdx.graphics.getHeight()/40f);
         table.add(retryButton).uniform();
         table.add(resumeButton).uniform();
         return table;
@@ -145,10 +147,12 @@ public class GamePausedScreen implements Screen {
 
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
 
-        stage.draw();
         spriteBatch.begin();
-
+        spriteBatch.draw(Graphics.getPausedGameBackgroundTextureRegion(), table.getX() + table.getPadLeft(), table.getY() + table.getPadTop(),
+                table.getWidth() - table.getPadX(), table.getHeight() - table.getPadY());
         spriteBatch.end();
+
+        stage.draw();
     }
 
     @Override
