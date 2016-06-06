@@ -23,10 +23,10 @@ public class Bounce extends ApplicationAdapter{
     //Global enumerations
 	public enum ProgramState { MAIN_MENU, LEVEL_SELECTION, GAME, GAME_OVER, GAME_PAUSED }
     public enum GameState { PAUSED, RUNNING, LOSS, WIN }
-    public enum EntityType { WALL, BALL, SPIKE, GEM, RING }
+    public enum EntityType { WALL, BALL, SPIKE, GEM, BARBED_WIRE, RING }
 
     //Global variables
-    public static final int NUMBER_OF_LEVELS = 2;
+    public static final int NUMBER_OF_LEVELS = 6;
     public static final String LOSS_MESSAGE = "Try again...";
     public static final String WIN_MESSAGE = "You won!";
     public static final String PAUSED_MESSAGE = "Paused";

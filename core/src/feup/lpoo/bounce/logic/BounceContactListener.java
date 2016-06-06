@@ -35,6 +35,7 @@ public class BounceContactListener implements ContactListener {
         //handles its consequences
         if(entityA == Bounce.EntityType.BALL) {
             switch (entityB) {
+                case BARBED_WIRE:
                 case SPIKE:
                     game.over();
                     break;
@@ -54,6 +55,7 @@ public class BounceContactListener implements ContactListener {
             }
         } else if (entityB == Bounce.EntityType.BALL) {
             switch (entityA) {
+                case BARBED_WIRE:
                 case SPIKE:
                     game.over();
                     break;

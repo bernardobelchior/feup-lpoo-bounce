@@ -35,7 +35,7 @@ public class BounceGame extends Game {
     //Movement modifiers
     private final static int HORIZONTAL_MOVEMENT_MODIFIER = 1000000;
     private final static int ATTRITION_MODIFIER = 10000;
-    private final static int JUMP_HEIGHT_MODIFIER = 1400000;
+    private final static int JUMP_HEIGHT_MODIFIER = 2100000;
 
     //Score that the objects below yield for the player
     private static final int GEM_SCORE = 5;
