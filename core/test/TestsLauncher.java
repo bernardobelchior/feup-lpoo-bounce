@@ -2,7 +2,6 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
-import com.badlogic.gdx.backends.headless.mock.graphics.MockGraphics;
 import com.badlogic.gdx.graphics.GL20;
 
 import org.junit.runner.notification.RunNotifier;
@@ -14,6 +13,9 @@ import static org.mockito.Mockito.mock;
 
 /**
  * Created by Bernardo on 06-06-2016.
+ *
+ * Test launcher based on this repository by Tom Grill.
+ * https://github.com/TomGrill/gdx-testing
  */
 public class TestsLauncher extends BlockJUnit4ClassRunner implements ApplicationListener {
     public TestsLauncher(Class<?> klass) throws InitializationError {

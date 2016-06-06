@@ -1,12 +1,10 @@
 package feup.lpoo.bounce.GUI;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -45,15 +43,21 @@ public class OptionsScreen implements Screen {
 
         Label soundLabel = new Label(SOUND_LABEL, labelStyle);
 
-        final ImageButton soundButton =  Utils.createButtonWithImage(Graphics.getMusicOffButtonTextureRegion());
+        final ImageButton soundButton;
+
+        if(GameSound.soundMuted)
+            soundButton =  Utils.createButtonWithImage(Graphics.getMusicOffButtonTextureRegion());
+        else
+            soundButton =  Utils.createButtonWithImage(Graphics.getMusicOnButtonTextureRegion());
+
         final Image image = soundButton.getImage();
 
+        //FIXME: Image not changing
         soundButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(soundButton.isPressed()) {
                     GameSound.soundMuted = !GameSound.soundMuted;
-                    //image.setDrawable(Graphics.getMusicOffButtonTextureRegion());
 
                     if(GameSound.soundMuted)
                         image.setDrawable(Graphics.getMusicOffButtonTextureRegion());
@@ -72,9 +76,9 @@ public class OptionsScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(musicButton.isPressed()) {
-                    GameSound.musicMuted = !GameSound.musicMuted;
+                    GameSound.setMusicMuted(!GameSound.getMusicMuted());
 
-                    if(GameSound.musicMuted)
+                    if(GameSound.getMusicMuted())
                         musicButton.getImage().setDrawable(Graphics.getMusicOffButtonTextureRegion());
                     else
                         musicButton.getImage().setDrawable(Graphics.getMusicOnButtonTextureRegion());

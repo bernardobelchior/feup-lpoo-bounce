@@ -1,9 +1,3 @@
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -11,7 +5,6 @@ import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.logic.BounceGame;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.mockito.Mockito.mock;
 
 
 /**
