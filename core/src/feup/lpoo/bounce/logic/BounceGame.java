@@ -37,7 +37,7 @@ public class BounceGame extends Game {
     //Movement modifiers
     private final static float HORIZONTAL_MOVEMENT_MODIFIER = 2f;
     private final static float ATTRITION_MODIFIER = 1.5f;
-    private final static float JUMP_HEIGHT_MODIFIER = 40;
+    private final static float JUMP_HEIGHT_MODIFIER = 42;
 
     //Score that the objects below yield for the player
     public static final int GEM_SCORE = 5;
