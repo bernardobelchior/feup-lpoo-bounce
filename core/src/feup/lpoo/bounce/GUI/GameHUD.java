@@ -7,12 +7,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -25,10 +27,8 @@ import feup.lpoo.bounce.logic.BounceGame;
 /**
  * Created by Bernardo on 02-06-2016.
  */
-public class GameHUD extends Stage implements InputProcessor {
+public class GameHUD {
     public static final float RING_SPRITE_SCALING = 0.5f;
-
-    private SpriteBatch spriteBatch;
 
     private Sprite ringSprite;
 
@@ -37,27 +37,26 @@ public class GameHUD extends Stage implements InputProcessor {
     private Label ringsLabel;
     private Table table;
 
+    private FitViewport viewport;
+    private SpriteBatch spriteBatch;
+    private Stage stage;
+
     private BounceGame game;
     private Bounce bounce;
 
     public GameHUD(Bounce bounce, final BounceGame game) {
-        super(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera()), new SpriteBatch());
         this.bounce = bounce;
         this.game = game;
 
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         spriteBatch = new SpriteBatch();
+        stage = new Stage(viewport, spriteBatch);
 
-        addActor(createHUD());
-        Gdx.input.setInputProcessor(this);
+        Gdx.input.setInputProcessor(stage);
+        createHUD();
     }
 
-    //FIXME: LISTENER NOT WORKING
-    private void pauseButtonClicked() {
-        game.pauseGame();
-        bounce.setProgramState(ProgramState.GAME_PAUSED);
-    }
-
-    private Table createHUD() {
+    private void createHUD() {
         ringSprite = new Sprite(Graphics.getTrimmedRingTextureRegion());
         ringSprite.scale(RING_SPRITE_SCALING);
 
@@ -85,7 +84,7 @@ public class GameHUD extends Stage implements InputProcessor {
 
         table = new Table();
         table.setFillParent(true);
-        //table.setDebug(true);
+        table.setDebug(true);
         table.padTop(Gdx.graphics.getHeight()/44f);
         table.top();
 
@@ -94,63 +93,23 @@ public class GameHUD extends Stage implements InputProcessor {
         table.add(scoreLabel).align(Align.center).expandX().center();
         table.add(pauseButton).padRight(Gdx.graphics.getWidth()/44f).align(Align.right).uniform().center();
 
-        return table;
+        stage.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!pauseButton.isPressed()) {
+                    GameSound.playJumpingSound();
+                    game.ballJump();
+                }
+            }
+        });
+
+        stage.addActor(table);
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if(!super.touchDown(screenX, screenY, pointer, button)) {
-            GameSound.playJumpingSound();
-            game.ballJump();
-            return true;
-        }
-        else if(pauseButton.isPressed()) {
-            //FIXME: LISTENER NOT WORKING
-            pauseButtonClicked();
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;    }
-
-    @Override
     public void draw() {
-        super.draw();
         scoreLabel.setText(String.format("%06d", game.getScore()));
         ringsLabel.setText(String.format("%02d", game.getRingsLeft()));
+
+        stage.draw();
     }
 }

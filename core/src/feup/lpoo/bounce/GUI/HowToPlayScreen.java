@@ -84,8 +84,7 @@ public class HowToPlayScreen implements Screen{
         table.setFillParent(true);
         table.setBackground(Graphics.getMenuBackgroundTextureRegion());
         table.align(Align.center);
-        table.setDebug(true);
-        table.pad(Gdx.graphics.getHeight()/3f, Gdx.graphics.getWidth()/7f,
+        table.pad(Gdx.graphics.getHeight()/3.25f, Gdx.graphics.getWidth()/7f,
                 Gdx.graphics.getHeight()/3.5f, Gdx.graphics.getWidth()/7f);
 
         table.add(howToPlayStack).expandX().fill(true, false);
