@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import feup.lpoo.bounce.Bounce;
+import feup.lpoo.bounce.Bounce.BallType;
 import feup.lpoo.bounce.Bounce.ProgramState;
 import feup.lpoo.bounce.GameSound;
 import feup.lpoo.bounce.Utils;
@@ -32,6 +33,7 @@ public class OptionsScreen implements Screen {
     private static final String MUSIC_LABEL = "Music";
     private static final String BACK_LABEL = "Back";
     private static final String RESET_HIGHSCORES_LABEL = "Reset highscores";
+    private static final String BALL_LABEL = "Ball:";
 
     private Stage stage;
     private FitViewport viewport;
@@ -129,6 +131,35 @@ public class OptionsScreen implements Screen {
             }
         });
 
+        Label ballLabel = new Label(BALL_LABEL, labelStyle);
+        ballLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
+        ballLabel.setAlignment(Align.center);
+
+        imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.pressedOffsetX = 2;
+        imageButtonStyle.pressedOffsetY = -2;
+        imageButtonStyle.imageDown = Graphics.getBallDrawable();
+        imageButtonStyle.imageUp = Graphics.getBallDrawable();
+
+        final ImageButton ballButton = new ImageButton(imageButtonStyle);
+
+        ballButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(ballButton.isPressed()) {
+                    if(Bounce.currentBall == BallType.RED)
+                        Bounce.currentBall = BallType.BLUE;
+                    else
+                        Bounce.currentBall = BallType.RED;
+
+                    ballButton.getStyle().imageDown = Graphics.getBallDrawable();
+                    ballButton.getStyle().imageUp = Graphics.getBallDrawable();
+                }
+            }
+        });
+
+        Stack ballStack = new Stack(new Image(Graphics.getEmptyButtonTextureRegionDrawable()), ballButton);
+
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = Graphics.getFont();
         textButtonStyle.pressedOffsetX = 2;
@@ -168,11 +199,14 @@ public class OptionsScreen implements Screen {
         table.setFillParent(true);
         table.setBackground(Graphics.getMenuBackgroundTextureRegion());
 
-        table.add(soundLabel).padBottom(Gdx.graphics.getHeight()/20f);
-        table.add(soundButton).padLeft(Gdx.graphics.getWidth()/20f).padBottom(Gdx.graphics.getHeight()/20f);
+        table.add(soundLabel).padBottom(Gdx.graphics.getHeight()/40f);
+        table.add(soundButton).padLeft(Gdx.graphics.getWidth()/20f).padBottom(Gdx.graphics.getHeight()/40f);
         table.row();
-        table.add(musicLabel).padBottom(Gdx.graphics.getHeight()/10f);
-        table.add(musicButton).padLeft(Gdx.graphics.getWidth()/20f).padBottom(Gdx.graphics.getHeight()/15f);
+        table.add(musicLabel).padBottom(Gdx.graphics.getHeight()/40f);
+        table.add(musicButton).padLeft(Gdx.graphics.getWidth()/20f).padBottom(Gdx.graphics.getHeight()/40f);
+        table.row();
+        table.add(ballLabel).padBottom(Gdx.graphics.getHeight()/40f);
+        table.add(ballStack).padLeft(Gdx.graphics.getWidth()/20f).padBottom(Gdx.graphics.getHeight()/40f);
         table.row();
         table.add(resetStack).center().colspan(2);
 

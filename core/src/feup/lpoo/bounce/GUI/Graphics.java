@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import feup.lpoo.bounce.Bounce;
+import feup.lpoo.bounce.logic.BounceGame;
+
 /**
  * Created by Bernardo on 05-06-2016.
  */
@@ -33,11 +36,14 @@ public class Graphics {
     private static TextureRegion pausedGameBackgroundTextureRegion;
 
     //Game sprites
-    private static TextureRegion ballTextureRegion;
+    private static TextureRegion redBallTextureRegion;
+    private static TextureRegion blueBallTextureRegion;
     private static TextureRegion ringTextureRegion;
     private static TextureRegion trimmedRingTextureRegion;
     private static TextureRegion gemTextureRegion;
     private static TextureRegion monsterTextureRegion;
+    private static TextureRegionDrawable redBallDrawable;
+    private static TextureRegionDrawable blueBallDrawable;
 
     //Buttons
     private static TextureRegionDrawable backButtonTextureRegion;
@@ -73,11 +79,54 @@ public class Graphics {
         return buttonTileset;
     }
 
-    public static TextureRegion getBallTextureRegion() {
-        if(ballTextureRegion == null)
-            ballTextureRegion = new TextureRegion(getGameTileset(), 2*GAME_TEXTURE_SIZE, GAME_TEXTURE_SIZE, GAME_TEXTURE_SIZE, GAME_TEXTURE_SIZE);
+    public static TextureRegionDrawable getBlueBallDrawable() {
+        if(blueBallDrawable == null)
+            blueBallDrawable = new TextureRegionDrawable(getBlueBallTextureRegion());
 
-        return ballTextureRegion;
+        return blueBallDrawable;
+    }
+
+    public static TextureRegion getBallTextureRegion() {
+        switch (Bounce.currentBall) {
+            case RED:
+                return getRedBallTextureRegion();
+            case BLUE:
+                return getBlueBallTextureRegion();
+            default:
+                return getRedBallTextureRegion();
+        }
+    }
+
+    public static TextureRegionDrawable getBallDrawable() {
+        switch (Bounce.currentBall) {
+            case RED:
+                return getRedBallDrawable();
+            case BLUE:
+                return getBlueBallDrawable();
+            default:
+                return getRedBallDrawable();
+        }
+    }
+
+    public static TextureRegion getBlueBallTextureRegion() {
+        if(blueBallTextureRegion == null)
+            blueBallTextureRegion= new TextureRegion(getGameTileset(), 0, 2*GAME_TEXTURE_SIZE, GAME_TEXTURE_SIZE, GAME_TEXTURE_SIZE);
+
+        return blueBallTextureRegion;
+    }
+
+    public static TextureRegionDrawable getRedBallDrawable() {
+        if(redBallDrawable == null)
+            redBallDrawable = new TextureRegionDrawable(getRedBallTextureRegion());
+
+        return redBallDrawable;
+    }
+
+    public static TextureRegion getRedBallTextureRegion() {
+        if(redBallTextureRegion == null)
+            redBallTextureRegion= new TextureRegion(getGameTileset(), 2*GAME_TEXTURE_SIZE, GAME_TEXTURE_SIZE, GAME_TEXTURE_SIZE, GAME_TEXTURE_SIZE);
+
+        return redBallTextureRegion;
     }
 
     public static TextureRegion getRingTextureRegion() {

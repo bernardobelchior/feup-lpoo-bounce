@@ -23,6 +23,7 @@ public class Bounce extends ApplicationAdapter{
 	public enum ProgramState { MAIN_MENU, LEVEL_SELECTION, GAME, GAME_OVER, OPTIONS, HOW_TO_PLAY, GAME_PAUSED }
     public enum GameState { PAUSED, RUNNING, LOSS, WIN }
     public enum EntityType { WALL, BALL, SPIKE, GEM, BARBED_WIRE, MONSTER, INVERTED_SPIKE, RING }
+    public enum BallType { RED, BLUE }
 
     //Global variables
     public static final int NUMBER_OF_LEVELS = 6;
@@ -30,6 +31,7 @@ public class Bounce extends ApplicationAdapter{
     public static final String WIN_MESSAGE = "You won!";
     public static final String PAUSED_MESSAGE = "Paused";
 
+    public static BallType currentBall;
     private Screen currentScreen;
 	private ProgramState programState;
     private BounceGame game;
@@ -40,6 +42,7 @@ public class Bounce extends ApplicationAdapter{
         if(!Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer))
             Gdx.app.exit();
 
+        currentBall = BallType.RED;
         GameSound.setMusicMuted(false);
         setProgramState(ProgramState.MAIN_MENU);
 	}

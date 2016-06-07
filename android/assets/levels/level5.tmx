@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="64" tileheight="64" nextobjectid="162">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="64" tileheight="64" nextobjectid="165">
  <tileset firstgid="1" name="tileset" tilewidth="64" tileheight="64" tilecount="48" columns="8">
   <image source="../tileset.png" trans="53e3ff" width="512" height="384"/>
  </tileset>
@@ -10,7 +10,7 @@
  </layer>
  <layer name="Graphics" width="100" height="15">
   <data encoding="base64" compression="zlib">
-   eJztV01PwzAMTbsCuwy4wDgw4MLH//+FOBqWLPOc2I0HO+xJT5XaxLXz7DiZSynzhWfFK+I18Ya4LUdsFBHQvBFk26uxTR3OCf/JAuuxI94S74j3gflr5/XsZeZaD3WMlW+jiOYX+/xAfCTuiU+N8dpv7zyvX2xPYjLGet8jH+WeEKmP6PpG85X1OBBfiK/Et8Z4vYd553n98tqLQNvUdRPRY+1+UHPh2THOW9MMT09B8NZRD8vPU+fpYs44orWPWf0TYSQOrQda+7/SI5r32b2DewTyPdI/R+r3nOojG608tfSwIL/tU7z77UtdK60HqskMPbLPqB608tRTK5K6/7fyeORsrO2imszQI9LjevuLV9N34gfxk/jl+N8k/O3dPSw9NgWfjVt5Lsdqu9a5L9LPkB4ZvTr7HlNRY+L4rJhQ/SA9eG3lk+H1XdtFNb72PihjaNn1Iuv8JbEruAYt8DfrHKT14PHSd1QXjEg/j6xHL77o/bjiFPcOFJPnDCLXTcaB9Ijc3SJ6eG2ifFsUIzl5SqCYInqgOOUzGp9HD/TfC/+X33qdFL0=
+   eJztV8tuAzEI9CbbxyVtL20i9Xnp4/+/sFgJEkKDgV3U5pCRRivtYgwesL2b1trmwrPiFfGaeEO8bUdsFRHQuDWo9tdzm07UPvn9pmCeKrAeO+Id8Z74kBi/dJznr7LWvBi7jVVva5GtL475kfhE3BMPA3sdd3RcNC72JzEZttH3KEa5J2T6I7u+2XplPV6Jb8R34sfAXu9h0XHRuKL+MtA+OWdGRo+l+0GvhZeAnY7NQ+RMQYj2kYf59NR1OpsjjkD7mPyW7d8leWg90Nr/lR7Zuq86O6Q/K/bM+bmmf8+pP7J4dr6P6tTSw4L8to8GGATH0ddK64F6skKP6jtqh6fHqE4jvSKpz/9RHa+5G2u/qCcr9Miccd7+wpp6enwSv4jfxJ/AfJOId2rjfw9Lj23Dd+NRnUtb7de692XOM6RHxVmtNfX0iKDnxPlZOaH+QXrw2sonI1qP2i/q8aX/gzKHkd8otKYVeuwa7kEL/M26B2k92F7GjvqCkTnPMzXu5RfNX0JrWqEHyimyJtJG5oH0yPy7ZfSI+kT1NitmatJChR4op4weKE/5zOYXmRvNe+H/8he0VhXx
   </data>
  </layer>
  <objectgroup name="Walls">
@@ -139,6 +139,8 @@
  <objectgroup name="BarbedWire">
   <object id="58" x="4398" y="512.667" width="16" height="382"/>
   <object id="59" x="5808" y="256" width="16" height="640"/>
+  <object id="163" x="2368" y="448" width="16" height="448"/>
+  <object id="164" x="3822" y="768" width="16" height="128"/>
  </objectgroup>
  <objectgroup name="Monster">
   <object id="84" x="320" y="768" width="128" height="128">
@@ -160,10 +162,11 @@
  <objectgroup name="InvertedSpikes">
   <object id="151" x="2558.67" y="192" width="64" height="32"/>
   <object id="152" x="2944" y="192" width="64" height="32"/>
-  <object id="153" x="3583.67" y="63.3333" width="512" height="32"/>
+  <object id="153" x="3968" y="64" width="128" height="32"/>
   <object id="154" x="3648" y="576.333" width="64" height="32"/>
   <object id="155" x="3840" y="575.667" width="192" height="32"/>
   <object id="157" x="4095.33" y="512" width="64" height="32"/>
+  <object id="162" x="3584" y="64" width="128" height="32"/>
  </objectgroup>
  <layer name="unseenGraphics" width="100" height="15" visible="0">
   <data encoding="base64" compression="zlib">

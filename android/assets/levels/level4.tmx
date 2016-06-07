@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="64" tileheight="64" nextobjectid="185">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="64" tileheight="64" nextobjectid="186">
  <tileset firstgid="1" name="tileset" tilewidth="64" tileheight="64" tilecount="48" columns="8">
   <image source="../tileset.png" trans="ff00ff" width="512" height="384"/>
  </tileset>
@@ -10,7 +10,7 @@
  </layer>
  <layer name="Graphics" width="100" height="15">
   <data encoding="base64" compression="zlib">
-   eJztWMlqxTAMTNN0uXS5dDm8Lv//lZUPAiG0efSCLx0YCA+PNIkG27x927b9n2XenEDd4454T3wgPm51SJ3VZ0Zf7VvVZN48n+i3uAZ4Hk/EZ+IL8XVCj+o6+qpmxTtVZhmt4Xm8Ed+JH8TPifqeruot0nuoapDaHd1AZZbRGp7HF/Gb+EP8nahv6S4T3ry+Eaoab93wZ2XFOiuqnhiVWUZruG+nvgbPo5Oza8F6v+FPZ2VXGuu5gkpWojXZPJD88jx2pbV6Wb9xds/C8KezIj3I8312Hl3I74HcK7z8dXAIVvtnuZIY/nTOPC06j1lPWjfQvSsx5Dy87Eczl+8S7XPovTTLi8xBJ6sI5Dyq+33mMXrfzhl/qOesFuJvwDo/0KzOzk/OIzsrdNY9jxdn/UDnjNd7U1Yr85fVl/6tXtGeVLnTWrpoj0PvXlH+kPsBWgvxh/aq9s6AnDmM6H4v669C5u9Mb2juOvPw0L1fnY3h73ZbmxUPq/8rRXmAXNm76usPjzsZng==
+   eJztWMtuwzAM89LscdnjsnWHrtv/f+XkgwBBsCRaSpYeRoBACpgWXaqx0KW1tvwT5t0O1DXuiQ/ER+JTwyF1ozozerQuqom8WT6z38UW4DyeiS/EV+LbhD6rq+hRzRFnQrL01nAe78QP4pn4ObG/pUO9eXoLqCazd0XXgWTpreE8vohX4jfxZ2J/S4d68/QWUI217tLGvTK6K1BPDCRLbw3XreyvcVGfz6BuD4zO1/3pXlmUZvSMAOkVb02UR6Z/dR7e/qP63Lt7ofvTfWZ5nM2jCvl9ZOYKq/8qWAXR+lFfSXR/us+2zmPWk9Z1VGclhpcHkrk8i/eOzM6lUb/IPqj0agYyD/SuiDx65+V6mTt+Vc9R/2T8sUf9nO3V2fxkHtFdoX97lkfvvJVZUr+bor1m/Y3mK8+3905CZtqRznvHZWcveV69R2Y+sBDthfjbqhZaO0LmzmF48/0tIPK35+yU7btKHhZuJQ8L3d+p/f0si+Do/0qzXJM8sjbq6xeYIxjE
   </data>
  </layer>
  <objectgroup name="Walls">
@@ -23,7 +23,7 @@
   <object id="18" x="384" y="704" width="128" height="64"/>
   <object id="19" x="768.333" y="576.667" width="63" height="64"/>
   <object id="20" x="960" y="448" width="128" height="64"/>
-  <object id="21" x="1664" y="384" width="127.333" height="64"/>
+  <object id="21" x="1728" y="576" width="128" height="64"/>
   <object id="22" x="2688" y="640" width="256" height="64"/>
   <object id="24" x="3008" y="448.667" width="256" height="64"/>
   <object id="25" x="3520" y="320" width="128" height="64"/>
@@ -40,11 +40,9 @@
   <object id="160" x="4223.33" y="256" width="319.333" height="64"/>
   <object id="161" x="4544" y="320" width="64" height="320"/>
   <object id="169" x="6208" y="0" width="128" height="64"/>
-  <object id="177" x="1408" y="383.333" width="64" height="63"/>
-  <object id="179" x="1471.33" y="512.833" width="64" height="62"/>
-  <object id="180" x="1407" y="641.5" width="64" height="63"/>
-  <object id="181" x="1472" y="768.833" width="64" height="62"/>
+  <object id="180" x="1472" y="704" width="128" height="64"/>
   <object id="182" x="3967.33" y="768" width="64" height="128"/>
+  <object id="185" x="1536" y="384" width="60" height="64"/>
  </objectgroup>
  <objectgroup name="Ball">
   <object id="172" x="64" y="832" width="64" height="64">
@@ -87,9 +85,6 @@
   <object id="143" x="1042.17" y="382.667" width="27" height="64">
    <ellipse/>
   </object>
-  <object id="146" x="1746.5" y="320" width="27" height="64">
-   <ellipse/>
-  </object>
   <object id="147" x="2001.5" y="319.333" width="27" height="64">
    <ellipse/>
   </object>
@@ -107,13 +102,7 @@
   </object>
  </objectgroup>
  <objectgroup name="Gems">
-  <object id="129" x="1802.33" y="830.667" width="42" height="64">
-   <ellipse/>
-  </object>
-  <object id="130" x="1866.33" y="831.333" width="42" height="64">
-   <ellipse/>
-  </object>
-  <object id="131" x="1930" y="832.667" width="42" height="64">
+  <object id="129" x="1545" y="320" width="42" height="64">
    <ellipse/>
   </object>
   <object id="165" x="4489.67" y="385.333" width="42" height="64">
@@ -130,15 +119,14 @@
   </object>
  </objectgroup>
  <objectgroup name="BarbedWire">
-  <object id="59" x="1326" y="255.333" width="16" height="640.667"/>
+  <object id="59" x="1326" y="320" width="16" height="576"/>
   <object id="60" x="3886" y="256.667" width="16" height="639.333"/>
  </objectgroup>
- <objectgroup name="Monsters"/>
+ <objectgroup name="Monster"/>
  <objectgroup name="InvertedSpikes">
   <object id="173" x="1151.33" y="63.6667" width="320" height="32"/>
   <object id="174" x="3647" y="64" width="512" height="32"/>
   <object id="175" x="4863.67" y="-2" width="1344" height="32"/>
-  <object id="176" x="4352.33" y="383.667" width="64" height="32"/>
  </objectgroup>
  <layer name="unseenGraphics" width="100" height="15" visible="0">
   <data encoding="base64" compression="zlib">

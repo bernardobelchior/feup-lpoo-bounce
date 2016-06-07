@@ -181,6 +181,9 @@
    <ellipse/>
   </object>
  </objectgroup>
+ <objectgroup name="BarbedWire"/>
+ <objectgroup name="Monster"/>
+ <objectgroup name="InvertedSpikes"/>
  <layer name="unseenGraphics" width="100" height="15" visible="0">
   <data encoding="base64" compression="zlib">
    eJzt1EEKwCAMBECv2v//txR6CqFWjWQTd6AIgsS6mlKIiMhKe7+V9ZlVZS7KP0fZJyItd21uFrPJyfKOINb8U8vjDB5Z3lQTIwKvTKOYOZ/RNasZ1M64m2Udr/vId0CS7NdIfftEI3lcm/dC33mwn+K6ATcbAWs=
