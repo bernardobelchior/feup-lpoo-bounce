@@ -34,27 +34,33 @@ public class BounceContactListener implements ContactListener {
         //handles its consequences
         if(entityA == Bounce.EntityType.BALL) {
             switch (entityB) {
+                //Checks if the ball hit the spike from above
                 case SPIKE:
                     if(contact.getWorldManifold().getNormal().angle() > 0 &&
                             contact.getWorldManifold().getNormal().angle() < 180)
                         game.over();
                     break;
+                //When a ball hits a monster or a barbed wire, the game ends.
                 case MONSTER:
                 case BARBED_WIRE:
                     game.over();
                     break;
+                //Plays the pickUpSound and destroys the ring in the world
                 case RING:
                     GameSound.playPickUpSound();
                     game.ringDestroyed(contact.getFixtureB().getBody());
                     break;
+                //Plays the pickUpSound and destroys the gem in the world
                 case GEM:
                     GameSound.playPickUpSound();
                     game.gemDestroyed(contact.getFixtureB().getBody());
                     break;
+                //Checks if the ball hit the floor and enables its next jump if true
                 case WALL:
                     if(contact.getWorldManifold().getNormal().angle() == 270)
                         game.enableBallJump();
                     break;
+                //Checks if the ball hit the spike from below
                 case INVERTED_SPIKE:
                     if(contact.getWorldManifold().getNormal().angle() < 360 &&
                             contact.getWorldManifold().getNormal().angle() > 180)
@@ -63,27 +69,33 @@ public class BounceContactListener implements ContactListener {
             }
         } else if (entityB == Bounce.EntityType.BALL) {
             switch (entityA) {
+                //Checks if the ball hit the spike from above
                 case SPIKE:
                     if(contact.getWorldManifold().getNormal().angle() > 0 &&
                             contact.getWorldManifold().getNormal().angle() < 180)
                         game.over();
                     break;
+                //When a ball hits a monster or a barbed wire, the game ends.
                 case MONSTER:
                 case BARBED_WIRE:
                     game.over();
                     break;
+                //Plays the pickUpSound and destroys the ring in the world
                 case RING:
                     GameSound.playPickUpSound();
                     game.ringDestroyed(contact.getFixtureA().getBody());
                     break;
+                //Plays the pickUpSound and destroys the gem in the world
                 case GEM:
                     GameSound.playPickUpSound();
                     game.gemDestroyed(contact.getFixtureA().getBody());
                     break;
+                //Checks if the ball hit the floor and enables its next jump if true
                 case WALL:
                     if(contact.getWorldManifold().getNormal().angle() == 90)
                         game.enableBallJump();
                     break;
+                //Checks if the ball hit the spike from below
                 case INVERTED_SPIKE:
                     if(contact.getWorldManifold().getNormal().angle() < 360 &&
                             contact.getWorldManifold().getNormal().angle() > 180)
