@@ -41,6 +41,10 @@ public class BounceGame extends Game {
     public static final int GEM_SCORE = 5;
     public static final int RING_SCORE = 1;
 
+    //Highscore filenames
+    public static final String HIGHSCORE_FILE_NAME = "highscore";
+    public static final String HIGHSCORE_FILE_EXTENSION = ".dat";
+
     //Map dimensions
     private int mapWidth;
     private int mapHeight;
@@ -59,10 +63,7 @@ public class BounceGame extends Game {
 
     private Integer level;
     private int highscore;
-    private boolean canBallJump;
-
-    private static final String HIGHSCORE_FILE_NAME = "highscore";
-    private static final String HIGHSCORE_FILE_EXTENSION = ".dat";
+    private volatile boolean canBallJump;
 
     private ArrayList<Body> destroyNextUpdate;
 
@@ -349,7 +350,7 @@ public class BounceGame extends Game {
             return false;
 
         level++;
-        map = new TmxMapLoader().load("level" + level + ".tmx");
+        map = new TmxMapLoader().load("levels/level" + level + ".tmx");
 
         restart();
 

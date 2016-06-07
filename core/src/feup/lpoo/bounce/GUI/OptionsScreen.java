@@ -23,6 +23,7 @@ import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.Bounce.ProgramState;
 import feup.lpoo.bounce.GameSound;
 import feup.lpoo.bounce.Utils;
+import feup.lpoo.bounce.logic.BounceGame;
 
 /**
  * Created by Bernardo on 06/06/2016.
@@ -31,6 +32,7 @@ public class OptionsScreen implements Screen {
     private static final String SOUND_LABEL = "Sound";
     private static final String MUSIC_LABEL = "Music";
     private static final String BACK_LABEL = "Back";
+    private static final String RESET_HIGHSCORES_LABEL = "Reset highscores";
 
     private Stage stage;
     private FitViewport viewport;
@@ -133,6 +135,23 @@ public class OptionsScreen implements Screen {
         textButtonStyle.pressedOffsetX = 2;
         textButtonStyle.pressedOffsetY = -2;
 
+        final TextButton resetHighscoresButton = new TextButton(RESET_HIGHSCORES_LABEL, textButtonStyle);
+        resetHighscoresButton.getLabel().setAlignment(Align.center);
+        resetHighscoresButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING*Graphics.BACK_LABEL_SCALING*0.75f);
+
+        resetHighscoresButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(resetHighscoresButton.isPressed()) {
+                    for(int i = 1; i <= Bounce.NUMBER_OF_LEVELS; i++) {
+                        Gdx.files.local(BounceGame.HIGHSCORE_FILE_NAME + i + BounceGame.HIGHSCORE_FILE_EXTENSION).delete();
+                    }
+                }
+            }
+        });
+
+        Stack resetStack = new Stack(new Image(Graphics.getMenuButtonTextureRegion()), resetHighscoresButton);
+
         final TextButton backButton =  new TextButton(BACK_LABEL, textButtonStyle);
         backButton.getLabel().setAlignment(Align.center);
         backButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING*Graphics.BACK_LABEL_SCALING);
@@ -158,7 +177,9 @@ public class OptionsScreen implements Screen {
         table.add(soundButton).padLeft(Gdx.graphics.getWidth()/20f).padBottom(Gdx.graphics.getHeight()/20f);
         table.row();
         table.add(musicLabel);
-        table.add(musicButton).padLeft(Gdx.graphics.getWidth()/20f);
+        table.add(musicButton).padLeft(Gdx.graphics.getWidth()/20f).padBottom(Gdx.graphics.getHeight()/20f);
+        table.row();
+        table.add(resetStack).center().colspan(2);
 
         Table backTable = new Table();
         backTable.setFillParent(true);

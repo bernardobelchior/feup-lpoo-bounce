@@ -1,5 +1,6 @@
 package feup.lpoo.bounce.logic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -53,9 +54,9 @@ public class BounceContactListener implements ContactListener {
                     game.gemDestroyed(contact.getFixtureB().getBody());
                     break;
                 case WALL:
-                    if(Math.abs(contact.getWorldManifold().getNormal().x) < CONTACT_X_TOLERANCE &&
-                            contact.getWorldManifold().getNormal().y < 0)
+                    if(contact.getWorldManifold().getNormal().angle() == 270)
                         game.enableBallJump();
+                    
                     break;
             }
         } else if (entityB == Bounce.EntityType.BALL) {
@@ -78,9 +79,9 @@ public class BounceContactListener implements ContactListener {
                     game.gemDestroyed(contact.getFixtureA().getBody());
                     break;
                 case WALL:
-                    if(Math.abs(contact.getWorldManifold().getNormal().x) < CONTACT_X_TOLERANCE &&
-                            contact.getWorldManifold().getNormal().y > 0)
+                    if(contact.getWorldManifold().getNormal().angle() == 90)
                         game.enableBallJump();
+
                     break;
             }
         }

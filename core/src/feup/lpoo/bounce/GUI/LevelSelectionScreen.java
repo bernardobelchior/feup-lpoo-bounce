@@ -43,7 +43,7 @@ public class LevelSelectionScreen implements Screen {
     }
 
     private void createMenu() {
-        Label.LabelStyle labelStyle = new Label.LabelStyle(Graphics.getFont(), Color.GOLD);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(Graphics.getFont(), Color.WHITE);
 
         Label selectLevel = new Label("Select a level", labelStyle);
         selectLevel.setAlignment(Align.center);
