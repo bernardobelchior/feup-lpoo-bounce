@@ -45,6 +45,8 @@ public class Graphics {
     private static TextureRegionDrawable pauseButtonTextureRegion;
     private static TextureRegionDrawable emptyButtonTextureRegion;
     private static TextureRegionDrawable menuButtonTextureRegion;
+    private static TextureRegionDrawable musicOnButtonTextureRegion;
+    private static TextureRegionDrawable musicOffButtonTextureRegion;
 
 
     public static BitmapFont getFont() {
@@ -160,9 +162,23 @@ public class Graphics {
     }
 
     public static TextureRegion getPausedGameBackgroundTextureRegion() {
-        if(pausedGameBackgroundTextureRegion == null)
+        if (pausedGameBackgroundTextureRegion == null)
             pausedGameBackgroundTextureRegion = new TextureRegion(new Texture(Gdx.files.internal("paused_game_background.png")));
 
         return pausedGameBackgroundTextureRegion;
+    }
+
+    public static TextureRegionDrawable getMusicOffButtonTextureRegion() {
+        if(musicOffButtonTextureRegion == null)
+            musicOffButtonTextureRegion = new TextureRegionDrawable(new TextureRegion(getButtonTileset(), BUTTON_TEXTURE_SIZE, 2*BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE));
+
+        return musicOffButtonTextureRegion;
+    }
+
+    public static TextureRegionDrawable getMusicOnButtonTextureRegion() {
+        if(musicOnButtonTextureRegion == null)
+            musicOnButtonTextureRegion = new TextureRegionDrawable(new TextureRegion(getButtonTileset(), 0, 2*BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE));
+
+        return musicOnButtonTextureRegion;
     }
 }

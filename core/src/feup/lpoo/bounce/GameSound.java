@@ -12,13 +12,15 @@ public class GameSound {
     private static Sound winSound;
     private static Sound jumpingSound;
     private static Sound pickUpSound;
-    public static boolean muted = true;
+    private static Sound music;
+    public static boolean soundMuted = false;
+    private static boolean musicMuted = false;
 
     /**
-     * Plays the loss sound if the game is not muted
+     * Plays the loss sound if the sound is not muted
      */
     public static void playLossSound() {
-        if(muted)
+        if(soundMuted)
             return;
 
         if(lossSound == null)
@@ -28,10 +30,10 @@ public class GameSound {
     }
 
     /**
-     * Plays the win sound if the game is not muted
+     * Plays the win sound if the sound is not muted
      */
     public static void playWinSound() {
-        if(muted)
+        if(soundMuted)
             return;
 
         if(winSound == null)
@@ -41,10 +43,10 @@ public class GameSound {
     }
 
     /**
-     * Plays the jumping sound if the game is not muted
+     * Plays the jumping sound if the sound is not muted
      */
     public static void playJumpingSound() {
-        if(muted)
+        if(soundMuted)
             return;
 
         if(jumpingSound == null)
@@ -54,15 +56,55 @@ public class GameSound {
     }
 
     /**
-     * Plays the pick up sound if the game is not muted
+     * Plays the pick up sound if the sound is not muted
      */
     public static void playPickUpSound() {
-        if(muted)
+        if(soundMuted)
             return;
 
         if(pickUpSound == null)
             pickUpSound = Gdx.audio.newSound(Gdx.files.internal("sounds/pick_up_items.mp3"));
 
         pickUpSound.play();
+    }
+
+    private static long playMusic() {
+        if(musicMuted)
+            return -1;
+
+        music.loop();
+        return music.play();
+    }
+
+    private static void stopMusic() {
+        music.stop();
+    }
+
+    public static boolean getMusicMuted() {
+        return musicMuted;
+    }
+
+    public static void setMusicMuted(boolean musicMuted) {
+        GameSound.musicMuted = musicMuted;
+
+        if(music == null)
+            music = Gdx.audio.newSound(Gdx.files.internal("sounds/menu_music_1.mp3"));
+
+        if(musicMuted)
+            stopMusic();
+        else
+            playMusic();
+    }
+
+    public static void waitForMusic() {
+        music = Gdx.audio.newSound(Gdx.files.internal("sounds/menu_music_1.mp3"));
+        music.loop();
+
+        while(music.play() != -1)
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
     }
 }

@@ -3,17 +3,17 @@ package feup.lpoo.bounce;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.TimeUtils;
 
+import feup.lpoo.bounce.GUI.GameOverScreen;
 import feup.lpoo.bounce.GUI.GamePausedScreen;
 import feup.lpoo.bounce.GUI.GameScreen;
-import feup.lpoo.bounce.GUI.GameOverScreen;
 import feup.lpoo.bounce.GUI.LevelSelectionScreen;
 import feup.lpoo.bounce.GUI.MainMenuScreen;
+import feup.lpoo.bounce.GUI.OptionsScreen;
 import feup.lpoo.bounce.logic.BounceGame;
 
 /**
@@ -21,7 +21,7 @@ import feup.lpoo.bounce.logic.BounceGame;
  */
 public class Bounce extends ApplicationAdapter{
     //Global enumerations
-	public enum ProgramState { MAIN_MENU, LEVEL_SELECTION, GAME, GAME_OVER, GAME_PAUSED }
+	public enum ProgramState { MAIN_MENU, LEVEL_SELECTION, GAME, GAME_OVER, OPTIONS, HOW_TO_PLAY, GAME_PAUSED }
     public enum GameState { PAUSED, RUNNING, LOSS, WIN }
     public enum EntityType { WALL, BALL, SPIKE, GEM, BARBED_WIRE, MONSTER, RING }
 
@@ -38,16 +38,17 @@ public class Bounce extends ApplicationAdapter{
 
     @Override
 	public void create () {
-        //programState = ProgramState.MAIN_MENU;
+        //FIXME: Sound not playing immediately.
+        GameSound.waitForMusic();
+        GameSound.setMusicMuted(false);
         setProgramState(ProgramState.MAIN_MENU);
 	}
 
-	@Override
+    @Override
 	public void render () {
 		update();
 		long currentTime = TimeUtils.millis();
-        if(currentScreen != null)
-		    currentScreen.render(lastUpdateTime - currentTime);
+        currentScreen.render(lastUpdateTime - currentTime);
 		lastUpdateTime = currentTime;
 	}
 
@@ -80,7 +81,8 @@ public class Bounce extends ApplicationAdapter{
     public void launchGame(int level) {
         if(game == null || game.getLevel() != level) {
             game = new BounceGame(level);
-            GameSound.muted = false;
+            GameSound.soundMuted = false;
+            GameSound.setMusicMuted(false);
             game.start();
         } else
             game.restart();
@@ -111,6 +113,9 @@ public class Bounce extends ApplicationAdapter{
                 break;
             case GAME_PAUSED:
                 currentScreen = new GamePausedScreen(this, game);
+                break;
+            case OPTIONS:
+                currentScreen = new OptionsScreen(this);
                 break;
         }
     }
