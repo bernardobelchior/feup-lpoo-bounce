@@ -57,11 +57,6 @@ public class OptionsScreen implements Screen {
 
         final ImageButton soundButton;
 
-        /*if(GameSound.soundMuted)
-            soundButton =  Utils.createButtonWithImage(Graphics.getMusicOffButtonTextureRegion());
-        else
-            soundButton =  Utils.createButtonWithImage(Graphics.getMusicOnButtonTextureRegion());*/
-
         ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
         imageButtonStyle.pressedOffsetX = 2;
         imageButtonStyle.pressedOffsetY = -2;
@@ -76,7 +71,6 @@ public class OptionsScreen implements Screen {
 
         soundButton = new ImageButton(imageButtonStyle);
 
-        //FIXME: Image not changing
         soundButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -90,6 +84,8 @@ public class OptionsScreen implements Screen {
                         soundButton.getStyle().imageDown = Graphics.getMusicOnButtonTextureRegion();
                         soundButton.getStyle().imageUp = Graphics.getMusicOnButtonTextureRegion();
                     }
+
+                    GameSound.playButtonClickSound();
                 }
 
             }
@@ -118,6 +114,7 @@ public class OptionsScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 if(musicButton.isPressed()) {
                     GameSound.setMusicMuted(!GameSound.getMusicMuted());
+                    GameSound.playButtonClickSound();
 
                     if(GameSound.getMusicMuted()) {
                         musicButton.getStyle().imageDown = Graphics.getMusicOffButtonTextureRegion();
@@ -145,6 +142,7 @@ public class OptionsScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 if(backButton.isPressed()) {
                     bounce.setProgramState(ProgramState.MAIN_MENU);
+                    GameSound.playButtonClickSound();
                 }
 
             }
@@ -161,9 +159,6 @@ public class OptionsScreen implements Screen {
         table.row();
         table.add(musicLabel);
         table.add(musicButton).padLeft(Gdx.graphics.getWidth()/20f);
-
-        //table.row();
-        //table.add(backStack).colspan(2).padTop(Gdx.graphics.getHeight()/15f);
 
         Table backTable = new Table();
         backTable.setFillParent(true);

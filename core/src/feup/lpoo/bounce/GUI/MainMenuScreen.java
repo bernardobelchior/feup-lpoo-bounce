@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.Bounce.ProgramState;
+import feup.lpoo.bounce.GameSound;
 
 /**
  * Created by Bernardo on 04-06-2016.
@@ -67,6 +68,7 @@ public class MainMenuScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 if(playButton.isPressed()) {
                     bounce.setProgramState(ProgramState.LEVEL_SELECTION);
+                    GameSound.playButtonClickSound();
                 }
             }
         });
@@ -78,8 +80,10 @@ public class MainMenuScreen implements Screen {
         optionsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(optionsButton.isPressed())
+                if(optionsButton.isPressed()) {
                     bounce.setProgramState(ProgramState.OPTIONS);
+                    GameSound.playButtonClickSound();
+                }
             }
         });
 
@@ -92,26 +96,14 @@ public class MainMenuScreen implements Screen {
         howToPlayButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(howToPlayButton.isPressed())
+                if(howToPlayButton.isPressed()) {
                     bounce.setProgramState(ProgramState.HOW_TO_PLAY);
+                    GameSound.playButtonClickSound();
+                }
             }
         });
 
         Stack howToPlayStack = new Stack(new Image(buttonTexture), howToPlayButton);
-
-   /*     final TextButton highscoreButton = new TextButton(HOW_TO_PLAY_LABEL, textButtonStyle);
-        highscoreButton.getLabel().setAlignment(Align.center);
-        highscoreButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING);
-
-        highscoreButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(highscoreButton.isPressed())
-                    bounce.setProgramState(ProgramState.HIGHSCORE);
-            }
-        });
-
-        Stack highscoreStack = new Stack(new Image(buttonTexture), highscoreButton);*/
 
         final TextButton exitButton = new TextButton(EXIT_LABEL, textButtonStyle);
         exitButton.getLabel().setAlignment(Align.center);
@@ -123,6 +115,7 @@ public class MainMenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(exitButton.isPressed()) {
+                    GameSound.playButtonClickSound();
                     Gdx.app.exit();
                 }
             }
@@ -139,14 +132,6 @@ public class MainMenuScreen implements Screen {
         buttonsTable.add(exitStack).expand();
 
         stage.addActor(buttonsTable);
-
-     /*   Table exitTable = new Table();
-        exitTable.align(Align.bottomRight);
-        exitTable.setFillParent(true);
-        exitTable.add(exitStack);
-        exitTable.padRight(Gdx.graphics.getWidth()/25f).padBottom(Gdx.graphics.getHeight()/15f);
-
-        stage.addActor(exitTable);*/
     }
 
     @Override

@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.sun.corba.se.impl.orbutil.graph.Graph;
 
 import feup.lpoo.bounce.Bounce;
+import feup.lpoo.bounce.GameSound;
 import feup.lpoo.bounce.Utils;
 import feup.lpoo.bounce.logic.BounceGame;
 
@@ -78,6 +79,7 @@ public class GamePausedScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 if(levelSelectionMenuButton.isPressed()) {
                     bounce.setProgramState(Bounce.ProgramState.LEVEL_SELECTION);
+                    GameSound.playButtonClickSound();
                 }
             }
         });
@@ -88,6 +90,7 @@ public class GamePausedScreen implements Screen {
                 if(retryButton.isPressed()) {
                     game.restart();
                     bounce.setProgramState(Bounce.ProgramState.GAME);
+                    GameSound.playButtonClickSound();
                 }
             }
         });
@@ -98,6 +101,7 @@ public class GamePausedScreen implements Screen {
                 if(resumeButton.isPressed()) {
                     game.start();
                     bounce.setProgramState(Bounce.ProgramState.GAME);
+                    GameSound.playButtonClickSound();
                 }
             }
         });

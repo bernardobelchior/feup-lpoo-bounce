@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import feup.lpoo.bounce.Bounce;
+import feup.lpoo.bounce.GameSound;
 
 /**
  * Created by Bernardo on 03-06-2016.
@@ -72,6 +73,7 @@ public class LevelSelectionScreen implements Screen {
                 public void changed(ChangeEvent event, Actor actor) {
                     if(levelTextButton.isPressed()) {
                         bounce.launchGame((Integer) levelTextButton.getUserObject());
+                        GameSound.playButtonClickSound();
                     }
                 }
             });
@@ -89,8 +91,10 @@ public class LevelSelectionScreen implements Screen {
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(backButton.isPressed())
+                if(backButton.isPressed()) {
                     bounce.setProgramState(Bounce.ProgramState.MAIN_MENU);
+                    GameSound.playButtonClickSound();
+                }
             }
         });
 

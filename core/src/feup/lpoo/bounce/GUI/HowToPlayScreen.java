@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import feup.lpoo.bounce.Bounce;
+import feup.lpoo.bounce.GameSound;
 
 /**
  * Created by Bernardo on 07-06-2016.
@@ -73,6 +74,7 @@ public class HowToPlayScreen implements Screen{
             public void changed(ChangeEvent event, Actor actor) {
                 if(backButton.isPressed()) {
                     bounce.setProgramState(Bounce.ProgramState.MAIN_MENU);
+                    GameSound.playButtonClickSound();
                 }
 
             }

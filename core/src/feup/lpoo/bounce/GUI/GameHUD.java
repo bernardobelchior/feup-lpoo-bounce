@@ -71,10 +71,10 @@ public class GameHUD {
         pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.log("Listener", "CALLED!!!!!");
                 if(pauseButton.isPressed()) {
                     game.pauseGame();
                     bounce.setProgramState(ProgramState.GAME_PAUSED);
+                    GameSound.playButtonClickSound();
                 }
             }
         });

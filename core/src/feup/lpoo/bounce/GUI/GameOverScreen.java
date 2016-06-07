@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.Bounce.GameState;
 import feup.lpoo.bounce.Bounce.ProgramState;
+import feup.lpoo.bounce.GameSound;
 import feup.lpoo.bounce.Utils;
 import feup.lpoo.bounce.logic.BounceGame;
 
@@ -95,6 +96,7 @@ public class GameOverScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 if(levelSelectionMenuButton.isPressed()) {
                     bounce.setProgramState(ProgramState.LEVEL_SELECTION);
+                    GameSound.playButtonClickSound();
                 }
             }
         });
@@ -105,6 +107,7 @@ public class GameOverScreen implements Screen {
                 if(retryButton.isPressed()) {
                     game.restart();
                     bounce.setProgramState(Bounce.ProgramState.GAME);
+                    GameSound.playButtonClickSound();
                 }
             }
         });
@@ -115,6 +118,7 @@ public class GameOverScreen implements Screen {
                 if(nextLevelButton.isPressed()) {
                     game.nextLevel();
                     bounce.setProgramState(Bounce.ProgramState.GAME);
+                    GameSound.playButtonClickSound();
                 }
             }
         });

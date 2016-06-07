@@ -13,6 +13,7 @@ public class GameSound {
     private static Sound winSound;
     private static Sound jumpingSound;
     private static Sound pickUpSound;
+    private static Sound buttonClickSound;
     private static Music music;
     public static boolean soundMuted = false;
     private static boolean musicMuted = false;
@@ -69,6 +70,19 @@ public class GameSound {
         pickUpSound.play();
     }
 
+    /**
+     * Plays the button click sound if the sound is not muted
+     */
+    public static void playButtonClickSound() {
+        if(soundMuted)
+            return;
+
+        if(buttonClickSound == null)
+            buttonClickSound = Gdx.audio.newSound(Gdx.files.internal("sounds/click_button.mp3"));
+
+        buttonClickSound.play();
+    }
+
     private static void playMusic() {
         if(musicMuted)
             return;
@@ -90,9 +104,6 @@ public class GameSound {
 
         if(music == null)
             music = Gdx.audio.newMusic(Gdx.files.internal("sounds/menu_music_1.wav"));
-
-//        if(music == null)
-  //          music = Gdx.audio.newSound(Gdx.files.internal("sounds/menu_music_1.mp3"));
 
         if(musicMuted) {
             stopMusic();
