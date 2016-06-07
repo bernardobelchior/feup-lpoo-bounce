@@ -1,6 +1,7 @@
 package feup.lpoo.bounce;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 
 /**
@@ -12,7 +13,7 @@ public class GameSound {
     private static Sound winSound;
     private static Sound jumpingSound;
     private static Sound pickUpSound;
-    private static Sound music;
+    private static Music music;
     public static boolean soundMuted = false;
     private static boolean musicMuted = false;
 
@@ -68,16 +69,16 @@ public class GameSound {
         pickUpSound.play();
     }
 
-    private static long playMusic() {
+    private static void playMusic() {
         if(musicMuted)
-            return -1;
+            return;
 
-        music.loop();
-        return music.play();
+        music.setLooping(true);
+        music.play();
     }
 
     private static void stopMusic() {
-        music.stop();
+         music.stop();
     }
 
     public static boolean getMusicMuted() {
@@ -88,23 +89,14 @@ public class GameSound {
         GameSound.musicMuted = musicMuted;
 
         if(music == null)
-            music = Gdx.audio.newSound(Gdx.files.internal("sounds/menu_music_1.mp3"));
+            music = Gdx.audio.newMusic(Gdx.files.internal("sounds/menu_music_1.wav"));
 
-        if(musicMuted)
+//        if(music == null)
+  //          music = Gdx.audio.newSound(Gdx.files.internal("sounds/menu_music_1.mp3"));
+
+        if(musicMuted) {
             stopMusic();
-        else
+        } else
             playMusic();
-    }
-
-    public static void waitForMusic() {
-        music = Gdx.audio.newSound(Gdx.files.internal("sounds/menu_music_1.mp3"));
-        music.loop();
-
-        while(music.play() != -1)
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
     }
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 
 import feup.lpoo.bounce.GUI.GameOverScreen;
 import feup.lpoo.bounce.GUI.GamePausedScreen;
@@ -38,8 +39,6 @@ public class Bounce extends ApplicationAdapter{
 
     @Override
 	public void create () {
-        //FIXME: Sound not playing immediately.
-        GameSound.waitForMusic();
         GameSound.setMusicMuted(false);
         setProgramState(ProgramState.MAIN_MENU);
 	}
