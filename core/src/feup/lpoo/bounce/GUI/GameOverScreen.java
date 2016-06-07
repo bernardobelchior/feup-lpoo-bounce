@@ -31,6 +31,7 @@ public class GameOverScreen implements Screen {
     private Stage stage;
     private FitViewport viewport;
     private SpriteBatch spriteBatch;
+    private Table table;
 
     public GameOverScreen(final Bounce bounce, final BounceGame game, GameState gameState) {
         this.bounce = bounce;
@@ -118,39 +119,36 @@ public class GameOverScreen implements Screen {
             }
         });
 
-        //TODO: Add background
         //Create the actual menu layout
-        Table table = new Table();
+        table = new Table();
         table.setFillParent(true);
         table.center();
-        //table.setBackground(GameOverBackground);
 
-        table.pad(Gdx.graphics.getHeight()/6f, Gdx.graphics.getWidth()/8f,
-                Gdx.graphics.getHeight()/6f, Gdx.graphics.getWidth()/8f);
+        table.pad(Gdx.graphics.getHeight()/6f, Gdx.graphics.getWidth()/5f,
+                Gdx.graphics.getHeight()/6f, Gdx.graphics.getWidth()/5f);
 
         //First row
-        table.add(messageLabel).colspan(3).uniform();
+        table.add(messageLabel).colspan(3).expand();
 
         //Second row
         table.row().expand();
 
-        table.add(scoreTextLabel);
-        table.add(scoreLabel).colspan(2);
+        table.add(scoreTextLabel).expandX().colspan(2);
+        table.add(scoreLabel).expandX().left();
 
         //Third row
         table.row().expand();
 
-        table.add(highscoreTextLabel);
-        table.add(highscoreLabel).colspan(2);
+        table.add(highscoreTextLabel).expandX().colspan(2);
+        table.add(highscoreLabel).expandX().left();
 
         //Fourth row
         table.row().expand();
 
-        table.add(levelSelectionMenuButton).uniform();
+        table.add(levelSelectionMenuButton).uniform().padBottom(Gdx.graphics.getHeight()/40f);
         table.add(retryButton).uniform();
         table.add(nextLevelButton).uniform();
 
-        //table.setDebug(true);
         return table;
     }
 
@@ -162,6 +160,13 @@ public class GameOverScreen implements Screen {
     @Override
     public void render(float delta) {
         game.getScreen().render(delta);
+
+        spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
+
+        spriteBatch.begin();
+        spriteBatch.draw(Graphics.getPausedGameBackgroundTextureRegion(), table.getX() + table.getPadLeft(), table.getY() + table.getPadTop(),
+                table.getWidth() - table.getPadX(), table.getHeight() - table.getPadY());
+        spriteBatch.end();
 
         stage.draw();
     }

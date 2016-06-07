@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Timer;
 import feup.lpoo.bounce.GUI.GameOverScreen;
 import feup.lpoo.bounce.GUI.GamePausedScreen;
 import feup.lpoo.bounce.GUI.GameScreen;
+import feup.lpoo.bounce.GUI.HowToPlayScreen;
 import feup.lpoo.bounce.GUI.LevelSelectionScreen;
 import feup.lpoo.bounce.GUI.MainMenuScreen;
 import feup.lpoo.bounce.GUI.OptionsScreen;
@@ -115,6 +116,9 @@ public class Bounce extends ApplicationAdapter{
                 break;
             case OPTIONS:
                 currentScreen = new OptionsScreen(this);
+                break;
+            case HOW_TO_PLAY:
+                currentScreen = new HowToPlayScreen(this);
                 break;
         }
     }

@@ -115,7 +115,7 @@ public class MainMenuScreen implements Screen {
 
         final TextButton exitButton = new TextButton(EXIT_LABEL, textButtonStyle);
         exitButton.getLabel().setAlignment(Align.center);
-        exitButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING*0.75f);
+        exitButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING*Graphics.BACK_LABEL_SCALING);
 
         Stack exitStack = new Stack(new Image(buttonTexture), exitButton);
 
@@ -130,24 +130,23 @@ public class MainMenuScreen implements Screen {
 
         Table buttonsTable = new Table();
         buttonsTable.center().setFillParent(true);
-        buttonsTable.setDebug(true);
-        buttonsTable.pad(Gdx.graphics.getHeight()/2.75f, Gdx.graphics.getWidth()/8f, Gdx.graphics.getHeight()/4f, Gdx.graphics.getWidth()/6f);
+        buttonsTable.pad(Gdx.graphics.getHeight()/2.75f, Gdx.graphics.getWidth()/8f, Gdx.graphics.getHeight()/5f, Gdx.graphics.getWidth()/6f);
 
         buttonsTable.add(playStack).align(Align.center).expand();
         buttonsTable.add(optionsStack).expand();
         buttonsTable.row().uniform();
         buttonsTable.add(howToPlayStack).expand();
-        buttonsTable.add().expand();
+        buttonsTable.add(exitStack).expand();
 
         stage.addActor(buttonsTable);
 
-        Table exitTable = new Table();
+     /*   Table exitTable = new Table();
         exitTable.align(Align.bottomRight);
         exitTable.setFillParent(true);
         exitTable.add(exitStack);
         exitTable.padRight(Gdx.graphics.getWidth()/25f).padBottom(Gdx.graphics.getHeight()/15f);
 
-        stage.addActor(exitTable);
+        stage.addActor(exitTable);*/
     }
 
     @Override

@@ -36,11 +36,12 @@ public class LevelSelectionScreen implements Screen {
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
 
-        Table table = new Table();
-        table.setFillParent(true);
-        table.top().left();
-        table.padBottom(Gdx.graphics.getHeight()/16f).padTop(Gdx.graphics.getHeight()/6f);
+        createMenu();
 
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    private void createMenu() {
         Label.LabelStyle labelStyle = new Label.LabelStyle(Graphics.getFont(), Color.GOLD);
 
         Label selectLevel = new Label("Select a level", labelStyle);
@@ -53,8 +54,13 @@ public class LevelSelectionScreen implements Screen {
         textButtonStyle.pressedOffsetY = -2;
         textButtonStyle.pressedOffsetX = 2;
 
-        table.add(selectLevel).expandX().center().colspan(15);
-        table.row();
+        Table levelsTable = new Table();
+        levelsTable.setFillParent(true);
+        levelsTable.setBackground(Graphics.getMenuBackgroundTextureRegion());
+        levelsTable.align(Align.top);
+        levelsTable.padBottom(Gdx.graphics.getHeight()/16f).padTop(Gdx.graphics.getHeight()/6f);
+        levelsTable.add(selectLevel).expandX().center().colspan(15);
+        levelsTable.row();
 
         for(int i = 0; i < Bounce.NUMBER_OF_LEVELS; i++) {
             final TextButton levelTextButton = new TextButton("" + (i+1), textButtonStyle);
@@ -72,18 +78,13 @@ public class LevelSelectionScreen implements Screen {
 
             Stack levelStack = new Stack(new Image(Graphics.getEmptyButtonTextureRegionDrawable()), levelTextButton);
 
-            table.add(levelStack).uniform().padLeft(Gdx.graphics.getWidth()/11).padTop(Gdx.graphics.getHeight()/11f);
+            levelsTable.add(levelStack).uniform().padLeft(Gdx.graphics.getWidth()/11).padTop(Gdx.graphics.getHeight()/11f);
             if((i+1) % 5 == 0)
-                table.row();
+                levelsTable.row();
         }
 
-        table.row().expandY();
-        table.add();
-
-        table.row();
-
         final TextButton backButton = new TextButton("Back", textButtonStyle);
-        backButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING*4/6f);
+        backButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING*Graphics.BACK_LABEL_SCALING);
 
         backButton.addListener(new ChangeListener() {
             @Override
@@ -94,14 +95,14 @@ public class LevelSelectionScreen implements Screen {
         });
 
         Stack backStack = new Stack(new Image(Graphics.getMenuButtonTextureRegion()), backButton);
-        table.add(backStack).expandX().colspan(15).align(Align.right).padRight(Gdx.graphics.getWidth()/18f);
 
-       // table.setDebug(true);
-        table.setBackground(Graphics.getMenuBackgroundTextureRegion());
+        Table backTable = new Table();
+        backTable.align(Align.bottomRight);
+        backTable.setFillParent(true);
+        backTable.add(backStack).padRight(Gdx.graphics.getWidth()/25f).padBottom(Gdx.graphics.getHeight()/15f);
 
-        stage.addActor(table);
-
-        Gdx.input.setInputProcessor(stage);
+        stage.addActor(levelsTable);
+        stage.addActor(backTable);
     }
 
     @Override

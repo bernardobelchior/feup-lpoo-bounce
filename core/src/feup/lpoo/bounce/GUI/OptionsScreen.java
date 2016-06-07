@@ -107,7 +107,7 @@ public class OptionsScreen implements Screen {
 
         final TextButton backButton =  new TextButton(BACK_LABEL, textButtonStyle);
         backButton.getLabel().setAlignment(Align.center);
-        backButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING);
+        backButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING*Graphics.BACK_LABEL_SCALING);
 
         backButton.addListener(new ChangeListener() {
             @Override
@@ -119,7 +119,7 @@ public class OptionsScreen implements Screen {
             }
         });
 
-        Stack exitStack = new Stack(new Image(Graphics.getMenuButtonTextureRegion()), backButton);
+        Stack backStack = new Stack(new Image(Graphics.getMenuButtonTextureRegion()), backButton);
 
         Table table = new Table();
         table.setFillParent(true);
@@ -131,12 +131,19 @@ public class OptionsScreen implements Screen {
         table.row();
         table.add(musicLabel);
         table.add(musicButton).padLeft(Gdx.graphics.getWidth()/20f);
-        table.row();
 
-        table.row();
-        table.add(exitStack).colspan(2).padTop(Gdx.graphics.getHeight()/15f);
+        //table.row();
+        //table.add(backStack).colspan(2).padTop(Gdx.graphics.getHeight()/15f);
+
+        Table backTable = new Table();
+        backTable.setFillParent(true);
+        backTable.align(Align.bottomRight);
+        backTable.padRight(Gdx.graphics.getWidth()/25f).padBottom(Gdx.graphics.getHeight()/15f);
+
+        backTable.add(backStack);
 
         stage.addActor(table);
+        stage.addActor(backTable);
     }
 
     @Override

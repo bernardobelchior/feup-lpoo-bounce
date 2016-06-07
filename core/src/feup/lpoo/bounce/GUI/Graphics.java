@@ -18,6 +18,7 @@ public class Graphics {
     private static final String BUTTON_TILESET_FILENAME = "button_tileset.png";
 
     public static final float BITMAP_FONT_SCALING = 0.75f;
+    public static final float BACK_LABEL_SCALING = 0.66f;
 
     //Program font
     private static BitmapFont font;
