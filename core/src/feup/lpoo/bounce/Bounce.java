@@ -2,6 +2,7 @@ package feup.lpoo.bounce;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SoundLoader;
@@ -40,6 +41,9 @@ public class Bounce extends ApplicationAdapter{
 
     @Override
 	public void create () {
+        if(!Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer))
+            Gdx.app.exit();
+
         GameSound.setMusicMuted(false);
         setProgramState(ProgramState.MAIN_MENU);
 	}

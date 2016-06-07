@@ -38,8 +38,8 @@ public class BounceGame extends Game {
     private final static int JUMP_HEIGHT_MODIFIER = 2100000;
 
     //Score that the objects below yield for the player
-    private static final int GEM_SCORE = 5;
-    private static final int RING_SCORE = 1;
+    public static final int GEM_SCORE = 5;
+    public static final int RING_SCORE = 1;
 
     //Map dimensions
     private int mapWidth;
@@ -71,19 +71,12 @@ public class BounceGame extends Game {
      * @param level level to load
      */
     public BounceGame(int level) {
-        this(new TmxMapLoader().load("level" + level + ".tmx"));
         this.level = level;
-    }
 
-    /**
-     * Game constructor. Uses the map passed as argument.
-     * @param map Map to use
-     */
-    public BounceGame(TiledMap map) {
-        this.map = map;
+        map = new TmxMapLoader().load("levels/level" + level + ".tmx");
 
-        mapWidth = map.getProperties().get("width", Integer.class).intValue()*map.getProperties().get("tilewidth", Integer.class).intValue();
-        mapHeight = map.getProperties().get("height", Integer.class).intValue()*map.getProperties().get("tileheight", Integer.class).intValue();
+        mapWidth = map.getProperties().get("width", Integer.class) * map.getProperties().get("tilewidth", Integer.class);
+        mapHeight = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
 
         gameState = Bounce.GameState.PAUSED;
 
@@ -91,7 +84,6 @@ public class BounceGame extends Game {
         gameTimer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                //FIXME: Actually use the elapsed time
                 update(GAME_UPDATE_RATE);
             }
         }, 0, GAME_UPDATE_RATE);
@@ -127,6 +119,7 @@ public class BounceGame extends Game {
         mapHeight = levelLoader.getMapHeight();
         mapWidth = levelLoader.getMapWidth();
 
+        loadHighscore();
         score = 0;
         canBallJump = true;
         destroyNextUpdate = new ArrayList<Body>();
@@ -142,7 +135,6 @@ public class BounceGame extends Game {
         if(gameState == Bounce.GameState.RUNNING)
             return false;
 
-        loadHighscore();
         gameTimer.start();
         gameState = Bounce.GameState.RUNNING;
 

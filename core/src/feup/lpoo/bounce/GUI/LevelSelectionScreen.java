@@ -59,7 +59,7 @@ public class LevelSelectionScreen implements Screen {
         levelsTable.setFillParent(true);
         levelsTable.setBackground(Graphics.getMenuBackgroundTextureRegion());
         levelsTable.align(Align.top);
-        levelsTable.padBottom(Gdx.graphics.getHeight()/16f).padTop(Gdx.graphics.getHeight()/6f);
+        levelsTable.padBottom(Gdx.graphics.getHeight()/3f).padTop(Gdx.graphics.getHeight()/6f);
         levelsTable.add(selectLevel).expandX().center().colspan(15);
         levelsTable.row();
 

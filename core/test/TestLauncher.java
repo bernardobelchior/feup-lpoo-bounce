@@ -17,8 +17,8 @@ import static org.mockito.Mockito.mock;
  * Test launcher based on this repository by Tom Grill.
  * https://github.com/TomGrill/gdx-testing
  */
-public class TestsLauncher extends BlockJUnit4ClassRunner implements ApplicationListener {
-    public TestsLauncher(Class<?> klass) throws InitializationError {
+public class TestLauncher extends BlockJUnit4ClassRunner implements ApplicationListener {
+    public TestLauncher(Class<?> klass) throws InitializationError {
         super(klass);
 
         HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();

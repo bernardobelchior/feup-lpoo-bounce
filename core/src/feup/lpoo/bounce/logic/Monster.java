@@ -1,5 +1,6 @@
 package feup.lpoo.bounce.logic;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -9,9 +10,8 @@ import com.badlogic.gdx.physics.box2d.Body;
  * Class the handles the Monster's movement.
  */
 public class Monster {
-    private static final float MOVEMENT_SPEED = 100f;
+    public static final float MOVEMENT_SPEED = 100f;
 
-    private Vector2 speed;
     private Vector2 initialPosition;
     private int movementHeight;
     private int movementWidth;
@@ -29,9 +29,8 @@ public class Monster {
         this.movementHeight = movementHeight;
         initialPosition = new Vector2(monster.getPosition().x, monster.getPosition().y);
 
-        speed = new Vector2(movementWidth != 0 ? MOVEMENT_SPEED : 0,
-                movementHeight != 0 ? MOVEMENT_SPEED : 0);
-        monster.setLinearVelocity(speed);
+        monster.setLinearVelocity(new Vector2(movementWidth != 0 ? MOVEMENT_SPEED : 0,
+                movementHeight != 0 ? MOVEMENT_SPEED : 0));
     }
 
     /**
@@ -58,8 +57,10 @@ public class Monster {
         return movementWidth;
     }
 
+    /**
+     * Sets the monster's velocity so it stays in the specified bounds.
+     */
     public void move() {
-
         if((monster.getPosition().x > initialPosition.x + movementWidth && monster.getLinearVelocity().x > 0 )||
                 (monster.getPosition().x < initialPosition.x && monster.getLinearVelocity().x < 0))
             monster.setLinearVelocity(-monster.getLinearVelocity().x , monster.getLinearVelocity().y);
@@ -67,5 +68,13 @@ public class Monster {
         if((monster.getPosition().y > initialPosition.y + movementHeight && monster.getLinearVelocity().y > 0) ||
                 (monster.getPosition().y < initialPosition.y && monster.getLinearVelocity().y < 0))
             monster.setLinearVelocity(monster.getLinearVelocity().x, -monster.getLinearVelocity().y);
+    }
+
+    /**
+     * Gets the body associated with the monster
+     * @return monster
+     */
+    public Body getBody() {
+        return monster;
     }
 }

@@ -84,7 +84,6 @@ public class GameHUD {
 
         table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
         table.padTop(Gdx.graphics.getHeight()/44f);
         table.top();
 

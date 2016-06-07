@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="15" tilewidth="64" tileheight="64" nextobjectid="236">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="15" tilewidth="64" tileheight="64" nextobjectid="249">
  <tileset firstgid="1" name="tileset" tilewidth="64" tileheight="64" tilecount="48" columns="8">
-  <image source="tileset.png" trans="53e3ff" width="512" height="384"/>
+  <image source="../tileset.png" trans="53e3ff" width="512" height="384"/>
  </tileset>
  <tileset firstgid="49" name="tileset" tilewidth="64" tileheight="64" tilecount="48" columns="8">
-  <image source="tileset.png" trans="53e3ff" width="512" height="384"/>
+  <image source="../tileset.png" trans="53e3ff" width="512" height="384"/>
  </tileset>
  <layer name="Background" width="150" height="15">
   <data encoding="base64" compression="zlib">
@@ -13,7 +13,7 @@
  </layer>
  <layer name="Graphics" width="150" height="15">
   <data encoding="base64" compression="zlib">
-   eJztmNluAyEMRVHaH8pIXV66SEm3NF3+/2sKUqy41vWCmUn7kCtZDZQBYw7gmVUpZXW2sy1gV9Wuq91Umw51nuhZJN7fbbV9oL+5NZXjXOaw9/J7Tpr2JRa/iP4ibhnJ9aaY3VW7r/ZQ5uGK9/dY9PhIf6KKPDeBunW1bTn6vlHqkOScNEW5iszB4iobuyUkY0OxfKr2XO2lzMMV7++16PGJrlXmOcQVqXEk+UF1SDxG3EiIK1SWe5n0xsoWVz2xW5pPud4Uk49qn9W+is8V+UH3DBLv77vo85L+ZOeBhHxra7YL1JHkPRhRlCu5l8mX9nvDypp6YjcXn5rkeqMzB9VdHoz7gbji7bi0eUl/ooo8J31ra0Rz2x38RHXcRrjiMUQxlnsZMWWdn5G9q+WKXNm9bUmOI+OM2pEfxJXWjsvaLxd9LofFuVriXYcr8i4k28tyD1NIKMZrxbiye9u6P6PnFa8jP9B5ZeVcc8i6s6S8teTycozMeaXlT8gX/r6QYYrGPaWs+zPDVW9dVN7aamep1ofk3vLLyzF6uWrjovyJ/q5Amea0LfG9Q8965+kS747W/Yl8oLOSfGlCuTw6U0e4staWM0V3Bop9zxnB5eUYkitrHYkr71yX5SxbkbtuJDfXmLTyO2//N1E+6fHC114qckZrayuZ8tgiofxKk5djtL4aV5H9TlxxIY5keYQtTyO5ec93O5IV7zm/aUW4QmurMaWxxcfpOa88TcB6/t/DlWRrDmVz86Yok1Guer5pef1lckqPKcQWHwfd0VlRbJsy7+K9XHl3yCkVZTLKFddou16uokxJtqxxRrga2e9o7AhX/4mtiDJcnTUu+b1V+/4qTX6r9dr3WKTf7Ng/LRhyxg==
+   eJztmNtOwzAMhqPBU/AWq8ThhoO0cRob8P5PQyLVmrF8+OO2g4v9kgXN2sRxvjhuV6WU1dnOtoBdV7updlttGNsi0bOaeH931fZAf3NrKMe5zGEf5fecLO0LFj9EfxG3jOR6U8zuqz1UeyzzcMX7eyp2fKQ/qJDnBqVtXW1bjr5vjDZNck6WUK6QOXhcZWO3hGRsKJbP1V6qvZZ5uOL9vRU7PuhaZZ7TuCI1jiQ/WpsmHiNuJI0r7VruZdI7u/a46ond0nzK9aaYHKp9VvsqMVfkB50zmnh/38Wel/QnOw9Nmm9tzXZAG0meg4hQruReJl/a/xt2bakndnPxaUmut5ZztLbL0bgfGlf8Pi5rXtIfVMhz0re2RjS33ein1sZtDq54PPnfw/iX9rLGlJc/kb1r1Ypc2b3tSY4j46zdR34QV9Z9XN5+uehzGRbnaol3HS7kXUjeL697mNKkxXhtGFd2b3vnJ5qveBv5oeUrr+aaQ96ZJRWtJVdUY2TylVU/ab7w94UMUzTuKeWdnxmuettQRWtr5VKrjx6uohqjlyuqUWX9ZPnC57Qt+N6hZ6N8usS7o3d+aj5QriRfmrRaXsupU7jy1pYzRWeGFnvve4nnV1RjSK68dSSuKK+XgnGVZQs566bU5haTXn0X7f8mqicjXvjaX4nfkBxtra1kKmKL1JOvohqj9dW4QvY7ceWN7dVn2bzlaUpt3vPdjuTllzm/aSFcaWtrMWWxxcfR6vasBsXQ3616QV5bbGnqnU+2Nm9CmGy+oFz1fNOK+svUlBFTGlt8HO2Mzopi25R5F+/lKjpDTimUSZQrrqn39XKFMiXZ8saZwtWU/a6NjXD1n9hClOHqrOmS31ut76/S5Lfa6P4eQ/rNjv0DAfxxlQ==
   </data>
  </layer>
  <objectgroup name="Walls">
@@ -24,41 +24,38 @@
   <object id="6" x="576" y="384" width="128" height="512"/>
   <object id="7" x="896" y="64" width="128" height="512"/>
   <object id="10" x="1216" y="384" width="128" height="512.121"/>
-  <object id="34" x="2370" y="896">
-   <polygon points="0,0 446,-450 894,0"/>
-  </object>
   <object id="35" x="64" y="896" width="5696" height="64"/>
   <object id="39" x="4928" y="192" width="320" height="64"/>
-  <object id="40" x="4928" y="576" width="320" height="64"/>
+  <object id="40" x="4928" y="576" width="320" height="63"/>
   <object id="42" x="5696" y="192" width="64" height="704"/>
-  <object id="43" x="5825" y="512" width="62" height="64"/>
-  <object id="44" x="6081" y="512" width="62" height="64"/>
+  <object id="43" x="5825.33" y="320" width="62" height="64"/>
+  <object id="44" x="6080.67" y="319.667" width="62" height="64"/>
   <object id="45" x="5952" y="192" width="64" height="768"/>
-  <object id="47" x="6656" y="254">
-   <polyline points="0,0 -256,254 -2,514 0,450 -190,256 -4,72 0,6"/>
-  </object>
   <object id="48" x="6976" y="896" width="1152" height="64"/>
   <object id="49" x="7168" y="512" width="384" height="64"/>
   <object id="50" x="7616" y="320" width="384" height="64"/>
   <object id="51" x="8384" y="896" width="320" height="66"/>
   <object id="52" x="8960" y="896" width="576" height="64"/>
   <object id="134" x="3454" y="64" width="64" height="702"/>
-  <object id="136" x="3518.67" y="512" width="64" height="64"/>
+  <object id="136" x="3518.67" y="576" width="64" height="64"/>
   <object id="138" x="3520" y="64" width="1216" height="64"/>
   <object id="139" x="3647" y="383.333" width="1344" height="64"/>
   <object id="140" x="3712" y="447.333" width="64" height="448"/>
-  <object id="141" x="3646.67" y="639.333" width="64" height="64"/>
+  <object id="141" x="3646.67" y="703.333" width="64" height="64"/>
   <object id="142" x="4544" y="256" width="192" height="128"/>
   <object id="143" x="4672" y="448.667" width="64" height="320"/>
-  <object id="145" x="4736" y="704" width="256" height="64"/>
-  <object id="147" x="5182.67" y="702.667" width="320" height="64"/>
+  <object id="145" x="4736" y="705" width="256" height="63"/>
+  <object id="147" x="5182.67" y="703.667" width="320" height="63"/>
   <object id="148" x="5184" y="383.333" width="320" height="64"/>
   <object id="149" x="5440.67" y="64" width="64" height="320"/>
-  <object id="150" x="5504.67" y="320" width="64" height="64"/>
+  <object id="150" x="5504.67" y="512" width="64" height="64"/>
   <object id="151" x="5440.67" y="447.333" width="64" height="256"/>
-  <object id="153" x="5632.67" y="576" width="64" height="64"/>
+  <object id="153" x="5632.67" y="704" width="64" height="64"/>
   <object id="155" x="6209.33" y="192" width="64" height="768"/>
   <object id="156" x="6270.67" y="898.667" width="386" height="64"/>
+  <object id="244" x="5631" y="320.667" width="64" height="64"/>
+  <object id="245" x="6976" y="704" width="128" height="64"/>
+  <object id="247" x="9279.33" y="703.667" width="64" height="64"/>
  </objectgroup>
  <objectgroup name="Ball">
   <object id="235" x="64" y="832" width="64" height="64">
@@ -66,19 +63,13 @@
   </object>
  </objectgroup>
  <objectgroup name="Spikes">
-  <object id="12" x="256" y="576" width="128" height="32"/>
   <object id="13" x="576" y="352" width="128" height="32"/>
-  <object id="15" x="896" y="576" width="128" height="32"/>
   <object id="16" x="1216" y="352" width="128" height="32"/>
-  <object id="53" x="3776" y="128" width="64" height="32"/>
-  <object id="54" x="4096" y="128" width="64" height="32"/>
   <object id="55" x="3968" y="352" width="64" height="32"/>
   <object id="56" x="4288" y="352" width="256" height="32"/>
   <object id="57" x="5760" y="928" width="192" height="32"/>
   <object id="58" x="6016" y="928" width="192" height="32"/>
   <object id="59" x="6656" y="928" width="320" height="32"/>
-  <object id="60" x="7168" y="576" width="384" height="32"/>
-  <object id="61" x="7616" y="384" width="384" height="32"/>
   <object id="62" x="8128" y="928" width="256" height="32"/>
   <object id="63" x="8704" y="928" width="256" height="32"/>
  </objectgroup>
@@ -220,13 +211,13 @@
   </object>
  </objectgroup>
  <objectgroup name="Gems">
-  <object id="207" x="74.3333" y="64" width="42" height="64">
+  <object id="207" x="74.3333" y="130" width="42" height="64">
    <ellipse/>
   </object>
-  <object id="208" x="138.333" y="62.6667" width="42" height="64">
+  <object id="208" x="138.333" y="128.667" width="42" height="64">
    <ellipse/>
   </object>
-  <object id="209" x="201.667" y="63.3333" width="42" height="64">
+  <object id="209" x="201.667" y="129.333" width="42" height="64">
    <ellipse/>
   </object>
   <object id="210" x="2762.33" y="128" width="42" height="64">
@@ -280,10 +271,10 @@
   <object id="226" x="5322.67" y="639.667" width="42" height="64">
    <ellipse/>
   </object>
-  <object id="227" x="5834" y="446.333" width="42" height="64">
+  <object id="227" x="5834" y="256.666" width="42" height="64">
    <ellipse/>
   </object>
-  <object id="228" x="6091" y="447.333" width="42" height="64">
+  <object id="228" x="6090.67" y="255.333" width="42" height="64">
    <ellipse/>
   </object>
   <object id="229" x="7690" y="256" width="42" height="64">
@@ -294,18 +285,18 @@
   </object>
  </objectgroup>
  <objectgroup name="BarbedWire">
-  <object id="31" x="1632" y="64" width="32" height="384"/>
-  <object id="32" x="1632" y="640" width="32" height="256"/>
-  <object id="118" x="3296" y="704" width="32" height="192"/>
-  <object id="119" x="4736" y="64" width="32" height="64"/>
-  <object id="120" x="4736" y="256" width="32" height="128"/>
-  <object id="121" x="4736" y="448" width="32" height="256"/>
-  <object id="122" x="5408" y="64" width="32" height="320"/>
-  <object id="123" x="5408" y="448" width="32" height="256"/>
-  <object id="124" x="6624" y="64" width="32" height="192"/>
-  <object id="125" x="7328" y="320" width="32" height="192"/>
-  <object id="126" x="7776" y="192" width="32" height="128"/>
-  <object id="127" x="9376" y="576" width="32" height="320"/>
+  <object id="31" x="1647" y="64" width="16" height="384"/>
+  <object id="32" x="1647" y="640" width="16" height="256"/>
+  <object id="118" x="3311" y="704" width="16" height="192"/>
+  <object id="119" x="4736" y="64" width="16" height="64"/>
+  <object id="120" x="4736" y="256" width="16" height="128"/>
+  <object id="121" x="4736" y="448" width="16" height="256"/>
+  <object id="122" x="5424" y="64" width="16" height="320"/>
+  <object id="123" x="5424" y="448" width="16" height="256"/>
+  <object id="124" x="6639" y="64" width="16" height="192"/>
+  <object id="125" x="7343" y="320" width="16" height="192"/>
+  <object id="126" x="7791" y="192" width="16" height="128"/>
+  <object id="127" x="9390" y="576" width="16" height="320"/>
  </objectgroup>
  <objectgroup name="Monster">
   <object id="231" x="1920" y="768" width="128" height="128">
@@ -324,9 +315,18 @@
    </properties>
   </object>
  </objectgroup>
- <layer name="unseenGraphics" width="150" height="15" visible="0">
+ <objectgroup name="InvertedSpikes">
+  <object id="236" x="255.667" y="576" width="128" height="32"/>
+  <object id="237" x="896" y="575.667" width="128" height="32"/>
+  <object id="239" x="3775.67" y="128.333" width="64" height="32"/>
+  <object id="240" x="4096.67" y="127.333" width="64" height="32"/>
+  <object id="241" x="3455.33" y="766" width="64" height="32"/>
+  <object id="242" x="7167.33" y="576.333" width="384" height="32"/>
+  <object id="243" x="7615.67" y="384" width="384" height="32"/>
+ </objectgroup>
+ <layer name="unseenGraphics" width="150" height="15">
   <data encoding="base64" compression="zlib">
-   eJztmEEOwyAMBDn10LwIftHe0v8/pBxaqUFNMcTgbbwjWQkSEeuwcohDIGQMKcf1FYR4I1kLKIid82pjL8Qgy1067wizveV1zz2BVq9GouXntHNPtli+m9raWtpYI4k2sz3Ve0YkOJT1bER969n/2jOxuJ6Fb/kg5Niq4VIZW7KXC/9dZaSPQMRy36Qe+ndvSXsbLRzxlYdzu/Sb16pRs1c1o5/VCnq9eoPgLa15M7nluFuL+AG6vhJEvYvBmmuOh8G6UtD1laDoRaxh5Dw8AY1DEy8=
+   eJztmEEOwyAMBDn10L4IftHe2v8/pLlUSlEAm1h4AzuSJVCIWIeVIYRACCHX4b4LZJK3gIzYOa7VX4UYZLlLx51htLdWXfOVQKtXWvL9oLY/WPk5FdrkH89v05rbShtrJLFmtKd6z4hkfmKh3fN+7fls3jrKByFHrYZbo+9JKRf+u8pIu0DEc92kHrq6t6R3GxrO+GqFc7t0z9NqtLyrGnGfpQW9Xv1A8JbVuJE8t3h5i6iAri8HUe/DYc73Fh+HeaWg68tB0YtYw8g8fAEwHxKf
   </data>
  </layer>
 </map>
