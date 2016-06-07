@@ -50,8 +50,6 @@ public class MainMenuScreen implements Screen {
     }
 
     public void createMenu() {
-        TextureRegionDrawable buttonTexture = new TextureRegionDrawable(new TextureRegion(new Texture("menu_button.png")));
-
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.pressedOffsetX = 2;
         textButtonStyle.pressedOffsetY = -2;
@@ -61,7 +59,7 @@ public class MainMenuScreen implements Screen {
         playButton.getLabel().setAlignment(Align.center);
         playButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING*0.75f);
 
-        Stack playStack = new Stack(new Image(buttonTexture), playButton);
+        Stack playStack = new Stack(new Image(Graphics.getMenuButtonTextureRegion()), playButton);
 
         playButton.addListener(new ChangeListener() {
             @Override
@@ -87,7 +85,7 @@ public class MainMenuScreen implements Screen {
             }
         });
 
-        Stack optionsStack = new Stack(new Image(buttonTexture), optionsButton);
+        Stack optionsStack = new Stack(new Image(Graphics.getMenuButtonTextureRegion()), optionsButton);
 
         final TextButton howToPlayButton = new TextButton(HOW_TO_PLAY_LABEL, textButtonStyle);
         howToPlayButton.getLabel().setAlignment(Align.center);
@@ -103,13 +101,13 @@ public class MainMenuScreen implements Screen {
             }
         });
 
-        Stack howToPlayStack = new Stack(new Image(buttonTexture), howToPlayButton);
+        Stack howToPlayStack = new Stack(new Image(Graphics.getMenuButtonTextureRegion()), howToPlayButton);
 
         final TextButton exitButton = new TextButton(EXIT_LABEL, textButtonStyle);
         exitButton.getLabel().setAlignment(Align.center);
         exitButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING*Graphics.BACK_LABEL_SCALING);
 
-        Stack exitStack = new Stack(new Image(buttonTexture), exitButton);
+        Stack exitStack = new Stack(new Image(Graphics.getMenuButtonTextureRegion()), exitButton);
 
         exitButton.addListener(new ChangeListener() {
             @Override
@@ -122,6 +120,7 @@ public class MainMenuScreen implements Screen {
         });
 
         Table buttonsTable = new Table();
+        buttonsTable.setBackground(Graphics.getMainMenuBackgroundTextureRegion());
         buttonsTable.center().setFillParent(true);
         buttonsTable.pad(Gdx.graphics.getHeight()/2.75f, Gdx.graphics.getWidth()/8f, Gdx.graphics.getHeight()/5f, Gdx.graphics.getWidth()/6f);
 
@@ -143,11 +142,6 @@ public class MainMenuScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        spriteBatch.setProjectionMatrix(stage.getCamera().combined);
-        spriteBatch.begin();
-        spriteBatch.draw(Graphics.getMenuBackgroundTexture(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        spriteBatch.end();
 
         stage.draw();
     }

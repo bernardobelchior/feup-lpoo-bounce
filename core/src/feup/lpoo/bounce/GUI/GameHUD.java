@@ -96,7 +96,6 @@ public class GameHUD {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(!pauseButton.isPressed()) {
-                    GameSound.playJumpingSound();
                     game.ballJump();
                 }
             }

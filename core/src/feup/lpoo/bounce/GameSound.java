@@ -88,6 +88,7 @@ public class GameSound {
             return;
 
         music.setLooping(true);
+        music.setVolume(0.3f);
         music.play();
     }
 
@@ -103,7 +104,7 @@ public class GameSound {
         GameSound.musicMuted = musicMuted;
 
         if(music == null)
-            music = Gdx.audio.newMusic(Gdx.files.internal("sounds/menu_music_1.wav"));
+            music = Gdx.audio.newMusic(Gdx.files.internal("sounds/menu_music_1.mp3"));
 
         if(musicMuted) {
             stopMusic();

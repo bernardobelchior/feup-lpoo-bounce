@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.GameSound;
+import feup.lpoo.bounce.Utils;
 
 /**
  * Created by Bernardo on 07-06-2016.
@@ -60,14 +62,7 @@ public class HowToPlayScreen implements Screen{
 
         Stack howToPlayStack = new Stack(new Image(Graphics.getPausedGameBackgroundTextureRegion()), howToPlayLabel);
 
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = Graphics.getFont();
-        textButtonStyle.pressedOffsetX = 2;
-        textButtonStyle.pressedOffsetY = -2;
-
-        final TextButton backButton =  new TextButton(BACK_LABEL, textButtonStyle);
-        backButton.getLabel().setAlignment(Align.center);
-        backButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING*Graphics.BACK_LABEL_SCALING);
+        final ImageButton backButton = Utils.createButtonWithImage(Graphics.getBackButtonTextureRegionDrawable());
 
         backButton.addListener(new ChangeListener() {
             @Override
@@ -79,8 +74,6 @@ public class HowToPlayScreen implements Screen{
 
             }
         });
-
-        Stack backStack = new Stack(new Image(Graphics.getMenuButtonTextureRegion()), backButton);
 
         table = new Table();
         table.setFillParent(true);
@@ -95,8 +88,7 @@ public class HowToPlayScreen implements Screen{
         backTable.setFillParent(true);
         backTable.align(Align.bottomRight);
         backTable.padRight(Gdx.graphics.getWidth()/25f).padBottom(Gdx.graphics.getHeight()/15f);
-
-        backTable.add(backStack);
+        backTable.add(backButton);
 
         stage.addActor(table);
         stage.addActor(backTable);

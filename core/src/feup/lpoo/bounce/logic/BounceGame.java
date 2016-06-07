@@ -76,6 +76,8 @@ public class BounceGame extends Game {
     public BounceGame(int level) {
         this.level = level;
 
+        loadSounds();
+
         map = new TmxMapLoader().load("levels/level" + level + ".tmx");
 
         gameState = Bounce.GameState.PAUSED;
@@ -89,6 +91,17 @@ public class BounceGame extends Game {
         }, 0, GAME_UPDATE_RATE);
 
         setUpWorld();
+    }
+
+    /**
+     * Loads sounds as they are probably not be ready to be played
+     * when they are needed. As such, we need to load them first
+     */
+    private void loadSounds() {
+        GameSound.playJumpingSound();
+        GameSound.playLossSound();
+        GameSound.playWinSound();
+        GameSound.playPickUpSound();
     }
 
     /**
@@ -206,6 +219,7 @@ public class BounceGame extends Game {
         if(!isRunning() || !canBallJump)
             return false;
 
+        GameSound.playJumpingSound();
         ball.applyForceToCenter(-WORLD_GRAVITY.x, JUMP_HEIGHT_MODIFIER *-WORLD_GRAVITY.y, true);
         canBallJump = false;
         return true;

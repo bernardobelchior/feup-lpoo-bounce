@@ -28,7 +28,7 @@ public class Graphics {
     private static Texture buttonTileset;
 
     //Background
-    private static Texture menuBackgroundTexture;
+    private static TextureRegionDrawable mainMenuBackgroundTextureRegion;
     private static TextureRegionDrawable menuBackgroundTextureRegion;
     private static TextureRegion pausedGameBackgroundTextureRegion;
 
@@ -48,6 +48,8 @@ public class Graphics {
     private static TextureRegionDrawable menuButtonTextureRegion;
     private static TextureRegionDrawable musicOnButtonTextureRegion;
     private static TextureRegionDrawable musicOffButtonTextureRegion;
+    private static TextureRegionDrawable soundOnButtonTextureRegion;
+    private static TextureRegionDrawable soundOffButtonTextureRegion;
 
 
     public static BitmapFont getFont() {
@@ -141,16 +143,9 @@ public class Graphics {
         return menuButtonTextureRegion;
     }
 
-    public static Texture getMenuBackgroundTexture() {
-        if(menuBackgroundTexture == null)
-            menuBackgroundTexture = new Texture(Gdx.files.internal("menu_background.png"));
-
-        return menuBackgroundTexture;
-    }
-
     public static TextureRegionDrawable getMenuBackgroundTextureRegion() {
         if(menuBackgroundTextureRegion == null)
-            menuBackgroundTextureRegion = new TextureRegionDrawable(new TextureRegion(getMenuBackgroundTexture()));
+            menuBackgroundTextureRegion = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("menu_background.png"))));
 
         return menuBackgroundTextureRegion;
     }
@@ -181,5 +176,26 @@ public class Graphics {
             musicOnButtonTextureRegion = new TextureRegionDrawable(new TextureRegion(getButtonTileset(), 0, 2*BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE));
 
         return musicOnButtonTextureRegion;
+    }
+
+    public static TextureRegionDrawable getMainMenuBackgroundTextureRegion() {
+        if(mainMenuBackgroundTextureRegion == null)
+            mainMenuBackgroundTextureRegion = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("main_menu.png"))));
+
+        return mainMenuBackgroundTextureRegion;
+    }
+
+    public static TextureRegionDrawable getSoundOffButtonTextureRegion() {
+        if(soundOffButtonTextureRegion == null)
+            soundOffButtonTextureRegion = new TextureRegionDrawable(new TextureRegion(getButtonTileset(), 0, 4*BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE));
+
+        return soundOffButtonTextureRegion;
+    }
+
+    public static TextureRegionDrawable getSoundOnButtonTextureRegion() {
+        if(soundOnButtonTextureRegion == null)
+            soundOnButtonTextureRegion = new TextureRegionDrawable(new TextureRegion(getButtonTileset(), BUTTON_TEXTURE_SIZE, 4*BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE, BUTTON_TEXTURE_SIZE));
+
+        return soundOnButtonTextureRegion;
     }
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.GameSound;
+import feup.lpoo.bounce.Utils;
 
 /**
  * Created by Bernardo on 03-06-2016.
@@ -60,8 +62,9 @@ public class LevelSelectionScreen implements Screen {
         levelsTable.setBackground(Graphics.getMenuBackgroundTextureRegion());
         levelsTable.align(Align.top);
         levelsTable.padBottom(Gdx.graphics.getHeight()/3f).padTop(Gdx.graphics.getHeight()/6f);
-        levelsTable.add(selectLevel).expandX().center().colspan(15);
-        levelsTable.row();
+        levelsTable.padLeft(Gdx.graphics.getWidth()/6f).padRight(Gdx.graphics.getWidth()/6f);
+        levelsTable.add(selectLevel).expandX().center().colspan(3);
+        levelsTable.row().center();
 
         for(int i = 0; i < Bounce.NUMBER_OF_LEVELS; i++) {
             final TextButton levelTextButton = new TextButton("" + (i+1), textButtonStyle);
@@ -80,13 +83,12 @@ public class LevelSelectionScreen implements Screen {
 
             Stack levelStack = new Stack(new Image(Graphics.getEmptyButtonTextureRegionDrawable()), levelTextButton);
 
-            levelsTable.add(levelStack).uniform().padLeft(Gdx.graphics.getWidth()/11).padTop(Gdx.graphics.getHeight()/11f);
-            if((i+1) % 5 == 0)
-                levelsTable.row();
+            levelsTable.add(levelStack).uniform().padLeft(Gdx.graphics.getWidth()/22f).padTop(Gdx.graphics.getHeight()/11f).padRight(Gdx.graphics.getWidth()/22f);
+            if((i+1) % 3 == 0)
+                levelsTable.row().center().expandX();
         }
 
-        final TextButton backButton = new TextButton("Back", textButtonStyle);
-        backButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING*Graphics.BACK_LABEL_SCALING);
+        final ImageButton backButton = Utils.createButtonWithImage(Graphics.getBackButtonTextureRegionDrawable());
 
         backButton.addListener(new ChangeListener() {
             @Override
@@ -98,12 +100,10 @@ public class LevelSelectionScreen implements Screen {
             }
         });
 
-        Stack backStack = new Stack(new Image(Graphics.getMenuButtonTextureRegion()), backButton);
-
         Table backTable = new Table();
         backTable.align(Align.bottomRight);
         backTable.setFillParent(true);
-        backTable.add(backStack).padRight(Gdx.graphics.getWidth()/25f).padBottom(Gdx.graphics.getHeight()/15f);
+        backTable.add(backButton).padRight(Gdx.graphics.getWidth()/25f).padBottom(Gdx.graphics.getHeight()/15f);
 
         stage.addActor(levelsTable);
         stage.addActor(backTable);

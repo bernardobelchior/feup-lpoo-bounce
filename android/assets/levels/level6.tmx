@@ -324,7 +324,7 @@
   <object id="242" x="7167.33" y="576.333" width="384" height="32"/>
   <object id="243" x="7615.67" y="384" width="384" height="32"/>
  </objectgroup>
- <layer name="unseenGraphics" width="150" height="15">
+ <layer name="unseenGraphics" width="150" height="15" visible="0">
   <data encoding="base64" compression="zlib">
    eJztmEEOwyAMBDn10L4IftHe2v8/pLlUSlEAm1h4AzuSJVCIWIeVIYRACCHX4b4LZJK3gIzYOa7VX4UYZLlLx51htLdWXfOVQKtXWvL9oLY/WPk5FdrkH89v05rbShtrJLFmtKd6z4hkfmKh3fN+7fls3jrKByFHrYZbo+9JKRf+u8pIu0DEc92kHrq6t6R3GxrO+GqFc7t0z9NqtLyrGnGfpQW9Xv1A8JbVuJE8t3h5i6iAri8HUe/DYc73Fh+HeaWg68tB0YtYw8g8fAEwHxKf
   </data>

@@ -64,11 +64,11 @@ public class OptionsScreen implements Screen {
         imageButtonStyle.pressedOffsetY = -2;
 
         if(GameSound.soundMuted) {
-            imageButtonStyle.imageDown = Graphics.getMusicOffButtonTextureRegion();
-            imageButtonStyle.imageUp = Graphics.getMusicOffButtonTextureRegion();
+            imageButtonStyle.imageDown = Graphics.getSoundOffButtonTextureRegion();
+            imageButtonStyle.imageUp = Graphics.getSoundOffButtonTextureRegion();
         } else {
-            imageButtonStyle.imageDown = Graphics.getMusicOnButtonTextureRegion();
-            imageButtonStyle.imageUp = Graphics.getMusicOnButtonTextureRegion();
+            imageButtonStyle.imageDown = Graphics.getSoundOnButtonTextureRegion();
+            imageButtonStyle.imageUp = Graphics.getSoundOnButtonTextureRegion();
         }
 
         soundButton = new ImageButton(imageButtonStyle);
@@ -80,11 +80,11 @@ public class OptionsScreen implements Screen {
                     GameSound.soundMuted = !GameSound.soundMuted;
 
                     if(GameSound.soundMuted) {
-                        soundButton.getStyle().imageDown = Graphics.getMusicOffButtonTextureRegion();
-                        soundButton.getStyle().imageUp = Graphics.getMusicOffButtonTextureRegion();
+                        soundButton.getStyle().imageDown = Graphics.getSoundOffButtonTextureRegion();
+                        soundButton.getStyle().imageUp = Graphics.getSoundOffButtonTextureRegion();
                     } else {
-                        soundButton.getStyle().imageDown = Graphics.getMusicOnButtonTextureRegion();
-                        soundButton.getStyle().imageUp = Graphics.getMusicOnButtonTextureRegion();
+                        soundButton.getStyle().imageDown = Graphics.getSoundOnButtonTextureRegion();
+                        soundButton.getStyle().imageUp = Graphics.getSoundOnButtonTextureRegion();
                     }
 
                     GameSound.playButtonClickSound();
@@ -142,6 +142,7 @@ public class OptionsScreen implements Screen {
         resetHighscoresButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                GameSound.playButtonClickSound();
                 if(resetHighscoresButton.isPressed()) {
                     for(int i = 1; i <= Bounce.NUMBER_OF_LEVELS; i++) {
                         Gdx.files.local(BounceGame.HIGHSCORE_FILE_NAME + i + BounceGame.HIGHSCORE_FILE_EXTENSION).delete();
@@ -152,22 +153,17 @@ public class OptionsScreen implements Screen {
 
         Stack resetStack = new Stack(new Image(Graphics.getMenuButtonTextureRegion()), resetHighscoresButton);
 
-        final TextButton backButton =  new TextButton(BACK_LABEL, textButtonStyle);
-        backButton.getLabel().setAlignment(Align.center);
-        backButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING*Graphics.BACK_LABEL_SCALING);
+        final ImageButton backButton = Utils.createButtonWithImage(Graphics.getBackButtonTextureRegionDrawable());
 
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(backButton.isPressed()) {
-                    bounce.setProgramState(ProgramState.MAIN_MENU);
-                    GameSound.playButtonClickSound();
+                        bounce.setProgramState(ProgramState.MAIN_MENU);
+                        GameSound.playButtonClickSound();
                 }
-
             }
         });
-
-        Stack backStack = new Stack(new Image(Graphics.getMenuButtonTextureRegion()), backButton);
 
         Table table = new Table();
         table.setFillParent(true);
@@ -186,7 +182,7 @@ public class OptionsScreen implements Screen {
         backTable.align(Align.bottomRight);
         backTable.padRight(Gdx.graphics.getWidth()/25f).padBottom(Gdx.graphics.getHeight()/15f);
 
-        backTable.add(backStack);
+        backTable.add(backButton);
 
         stage.addActor(table);
         stage.addActor(backTable);
