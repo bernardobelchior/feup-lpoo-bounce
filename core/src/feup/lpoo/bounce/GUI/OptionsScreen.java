@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -43,8 +44,8 @@ public class OptionsScreen implements Screen {
         spriteBatch = new SpriteBatch();
         stage = new Stage(viewport, spriteBatch);
 
-        createMenu();
         Gdx.input.setInputProcessor(stage);
+        createMenu();
     }
 
     private void createMenu() {
@@ -56,12 +57,24 @@ public class OptionsScreen implements Screen {
 
         final ImageButton soundButton;
 
-        if(GameSound.soundMuted)
+        /*if(GameSound.soundMuted)
             soundButton =  Utils.createButtonWithImage(Graphics.getMusicOffButtonTextureRegion());
         else
-            soundButton =  Utils.createButtonWithImage(Graphics.getMusicOnButtonTextureRegion());
+            soundButton =  Utils.createButtonWithImage(Graphics.getMusicOnButtonTextureRegion());*/
 
-        final Image image = soundButton.getImage();
+        ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.pressedOffsetX = 2;
+        imageButtonStyle.pressedOffsetY = -2;
+
+        if(GameSound.soundMuted) {
+            imageButtonStyle.imageDown = Graphics.getMusicOffButtonTextureRegion();
+            imageButtonStyle.imageUp = Graphics.getMusicOffButtonTextureRegion();
+        } else {
+            imageButtonStyle.imageDown = Graphics.getMusicOnButtonTextureRegion();
+            imageButtonStyle.imageUp = Graphics.getMusicOnButtonTextureRegion();
+        }
+
+        soundButton = new ImageButton(imageButtonStyle);
 
         //FIXME: Image not changing
         soundButton.addListener(new ChangeListener() {
@@ -70,10 +83,13 @@ public class OptionsScreen implements Screen {
                 if(soundButton.isPressed()) {
                     GameSound.soundMuted = !GameSound.soundMuted;
 
-                    if(GameSound.soundMuted)
-                        image.setDrawable(Graphics.getMusicOffButtonTextureRegion());
-                    else
-                        image.setDrawable(Graphics.getMusicOnButtonTextureRegion());
+                    if(GameSound.soundMuted) {
+                        soundButton.getStyle().imageDown = Graphics.getMusicOffButtonTextureRegion();
+                        soundButton.getStyle().imageUp = Graphics.getMusicOffButtonTextureRegion();
+                    } else {
+                        soundButton.getStyle().imageDown = Graphics.getMusicOnButtonTextureRegion();
+                        soundButton.getStyle().imageUp = Graphics.getMusicOnButtonTextureRegion();
+                    }
                 }
 
             }
@@ -83,7 +99,19 @@ public class OptionsScreen implements Screen {
         musicLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
         musicLabel.setAlignment(Align.center);
 
-        final ImageButton musicButton =  Utils.createButtonWithImage(Graphics.getMusicOffButtonTextureRegion());
+        imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.pressedOffsetX = 2;
+        imageButtonStyle.pressedOffsetY = -2;
+
+        if(GameSound.getMusicMuted()) {
+            imageButtonStyle.imageDown = Graphics.getMusicOffButtonTextureRegion();
+            imageButtonStyle.imageUp = Graphics.getMusicOffButtonTextureRegion();
+        } else {
+            imageButtonStyle.imageDown = Graphics.getMusicOnButtonTextureRegion();
+            imageButtonStyle.imageUp = Graphics.getMusicOnButtonTextureRegion();
+        }
+
+        final ImageButton musicButton = new ImageButton(imageButtonStyle);
 
         musicButton.addListener(new ChangeListener() {
             @Override
@@ -91,10 +119,13 @@ public class OptionsScreen implements Screen {
                 if(musicButton.isPressed()) {
                     GameSound.setMusicMuted(!GameSound.getMusicMuted());
 
-                    if(GameSound.getMusicMuted())
-                        musicButton.getImage().setDrawable(Graphics.getMusicOffButtonTextureRegion());
-                    else
-                        musicButton.getImage().setDrawable(Graphics.getMusicOnButtonTextureRegion());
+                    if(GameSound.getMusicMuted()) {
+                        musicButton.getStyle().imageDown = Graphics.getMusicOffButtonTextureRegion();
+                        musicButton.getStyle().imageUp = Graphics.getMusicOffButtonTextureRegion();
+                    } else {
+                        musicButton.getStyle().imageDown = Graphics.getMusicOnButtonTextureRegion();
+                        musicButton.getStyle().imageUp = Graphics.getMusicOnButtonTextureRegion();
+                    }
                 }
 
             }
@@ -124,7 +155,6 @@ public class OptionsScreen implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         table.setBackground(Graphics.getMenuBackgroundTextureRegion());
-      //  table.setDebug(true);
 
         table.add(soundLabel).padBottom(Gdx.graphics.getHeight()/20f);
         table.add(soundButton).padLeft(Gdx.graphics.getWidth()/20f).padBottom(Gdx.graphics.getHeight()/20f);

@@ -43,11 +43,10 @@ public class GamePausedScreen implements Screen {
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
         Gdx.input.setInputProcessor(stage);
-
-        stage.addActor(createMenu());
+        createMenu();
     }
 
-    private Table createMenu() {
+    private void createMenu() {
         Label.LabelStyle labelStyle = new Label.LabelStyle(Graphics.getFont(), Color.WHITE);
 
         Label messageLabel = new Label(Bounce.PAUSED_MESSAGE, labelStyle);
@@ -105,7 +104,6 @@ public class GamePausedScreen implements Screen {
 
         table = new Table();
         table.setFillParent(true);
-        //table.setDebug(true);
         table.center();
 
         table.pad(Gdx.graphics.getHeight()/6f, Gdx.graphics.getWidth()/5f,
@@ -132,7 +130,8 @@ public class GamePausedScreen implements Screen {
         table.add(levelSelectionMenuButton).uniform().padBottom(Gdx.graphics.getHeight()/40f);
         table.add(retryButton).uniform();
         table.add(resumeButton).uniform();
-        return table;
+
+        stage.addActor(table);
     }
 
     @Override

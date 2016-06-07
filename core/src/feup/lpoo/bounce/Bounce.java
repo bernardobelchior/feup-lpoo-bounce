@@ -81,8 +81,6 @@ public class Bounce extends ApplicationAdapter{
     public void launchGame(int level) {
         if(game == null || game.getLevel() != level) {
             game = new BounceGame(level);
-            GameSound.soundMuted = false;
-            GameSound.setMusicMuted(false);
             game.start();
         } else
             game.restart();
