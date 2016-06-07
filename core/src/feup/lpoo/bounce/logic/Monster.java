@@ -1,13 +1,12 @@
 package feup.lpoo.bounce.logic;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 /**
- * Created by Bernardo on 06-06-2016.
- *
  * Class the handles the Monster's movement.
+ *
+ * Created by Bernardo Belchior & Margarida Viterbo on 06-06-2016.
  */
 public class Monster {
     public static final float MOVEMENT_SPEED = 100f/BounceGame.PIXELS_PER_METER;

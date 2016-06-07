@@ -18,9 +18,9 @@ import feup.lpoo.bounce.Bounce.GameState;
 import feup.lpoo.bounce.GameSound;
 
 /**
- * Created by Bernardo on 30-05-2016.
+ * Class that handles all the game logic.
  *
- * Class that handles all the Bounce Game logic.
+ * Created by Bernardo Belchior & Margarida Viterbo on 30-05-2016.
  */
 public class BounceGame extends Game {
     //World gravity
@@ -37,7 +37,7 @@ public class BounceGame extends Game {
     //Movement modifiers
     private final static float HORIZONTAL_MOVEMENT_MODIFIER = 2f;
     private final static float ATTRITION_MODIFIER = 1.5f;
-    private final static float JUMP_HEIGHT_MODIFIER = 42;
+    private final static float JUMP_HEIGHT_MODIFIER = 36;
 
     //Score that the objects below yield for the player
     public static final int GEM_SCORE = 5;
@@ -70,7 +70,7 @@ public class BounceGame extends Game {
     private ArrayList<Body> destroyNextUpdate;
 
     /**
-     * Game constructor. Uses level to load the map file.
+     * BounceGame constructor. Uses level to load the map file.
      * @param level level to load
      */
     public BounceGame(int level) {

@@ -1,6 +1,5 @@
 package feup.lpoo.bounce.logic;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -11,16 +10,15 @@ import feup.lpoo.bounce.Bounce.EntityType;
 import feup.lpoo.bounce.GameSound;
 
 /**
- * Created by Bernardo on 01-06-2016.
- *
  * Class used to handle the contacts that occur in the BounceGame world.
+ *
+ * Created by Bernardo Belchior & Margarida Viterbo on 01-06-2016.
  */
 public class BounceContactListener implements ContactListener {
-    public static final float CONTACT_X_TOLERANCE = 2;
     private BounceGame game;
 
     /**
-     * Bounce contact listener constuctor
+     * BounceContactListener constuctor
      * @param game Game in which the contact will happen
      */
     public BounceContactListener(BounceGame game) {
@@ -56,7 +54,11 @@ public class BounceContactListener implements ContactListener {
                 case WALL:
                     if(contact.getWorldManifold().getNormal().angle() == 270)
                         game.enableBallJump();
-                    
+                    break;
+                case INVERTED_SPIKE:
+                    if(contact.getWorldManifold().getNormal().angle() < 360 &&
+                            contact.getWorldManifold().getNormal().angle() > 180)
+                        game.over();
                     break;
             }
         } else if (entityB == Bounce.EntityType.BALL) {
@@ -81,7 +83,11 @@ public class BounceContactListener implements ContactListener {
                 case WALL:
                     if(contact.getWorldManifold().getNormal().angle() == 90)
                         game.enableBallJump();
-
+                    break;
+                case INVERTED_SPIKE:
+                    if(contact.getWorldManifold().getNormal().angle() < 360 &&
+                            contact.getWorldManifold().getNormal().angle() > 180)
+                        game.over();
                     break;
             }
         }

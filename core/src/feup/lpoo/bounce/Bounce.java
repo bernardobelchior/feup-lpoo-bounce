@@ -4,11 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.SoundLoader;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.badlogic.gdx.utils.Timer;
 
 import feup.lpoo.bounce.GUI.GameOverScreen;
 import feup.lpoo.bounce.GUI.GamePausedScreen;
@@ -26,7 +22,7 @@ public class Bounce extends ApplicationAdapter{
     //Global enumerations
 	public enum ProgramState { MAIN_MENU, LEVEL_SELECTION, GAME, GAME_OVER, OPTIONS, HOW_TO_PLAY, GAME_PAUSED }
     public enum GameState { PAUSED, RUNNING, LOSS, WIN }
-    public enum EntityType { WALL, BALL, SPIKE, GEM, BARBED_WIRE, MONSTER, RING }
+    public enum EntityType { WALL, BALL, SPIKE, GEM, BARBED_WIRE, MONSTER, INVERTED_SPIKE, RING }
 
     //Global variables
     public static final int NUMBER_OF_LEVELS = 6;

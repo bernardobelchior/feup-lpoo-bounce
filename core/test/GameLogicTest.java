@@ -1,13 +1,10 @@
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import feup.lpoo.bounce.Bounce;
 import feup.lpoo.bounce.logic.BounceGame;
-import feup.lpoo.bounce.logic.Monster;
 
 import static junit.framework.TestCase.assertEquals;
 

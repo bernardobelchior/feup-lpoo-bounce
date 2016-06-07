@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import feup.lpoo.bounce.Bounce;
 
 /**
- * Created by Bernardo on 01-06-2016.
- *
  * Class used to load the TiledMap passed as argument to a World.
+ *
+ * Created by Bernardo on 01-06-2016.
  */
 public class LevelLoader {
     //Map layers definition
@@ -32,6 +32,7 @@ public class LevelLoader {
     private final static int GEMS_LAYER = 6;
     private final static int BARBED_WIRE_LAYER = 7;
     private final static int MONSTER_LAYER = 8;
+    private final static int INVERTED_SPIKE_LAYER = 9;
 
     private Body ball;
     private ArrayList<Body> rings;
@@ -245,6 +246,26 @@ public class LevelLoader {
             }
         } catch (IndexOutOfBoundsException e) {
             Gdx.app.log("LevelLoader", "No monster layer in map.");
+        }
+
+        try {
+            for(MapObject object : map.getLayers().get(INVERTED_SPIKE_LAYER).getObjects()) {
+                Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+
+                bodyDef = new BodyDef();
+                bodyDef.type = BodyDef.BodyType.StaticBody;
+                bodyDef.position.set(rectangle.getX()/BounceGame.PIXELS_PER_METER+rectangle.getWidth()/2/BounceGame.PIXELS_PER_METER, rectangle.getY()/BounceGame.PIXELS_PER_METER+rectangle.getHeight()/2/BounceGame.PIXELS_PER_METER);
+
+                PolygonShape polygonShape = new PolygonShape();
+                polygonShape.setAsBox(rectangle.getWidth()/2/BounceGame.PIXELS_PER_METER, rectangle.getHeight()/2/BounceGame.PIXELS_PER_METER);
+
+                Body body = world.createBody(bodyDef);
+                body.createFixture(polygonShape, 1);
+                body.setUserData(Bounce.EntityType.INVERTED_SPIKE);
+                polygonShape.dispose();
+            }
+        } catch (IndexOutOfBoundsException e) {
+            Gdx.app.log("LevelLoader", "No inverted spikes layer in map.");
         }
     }
 
