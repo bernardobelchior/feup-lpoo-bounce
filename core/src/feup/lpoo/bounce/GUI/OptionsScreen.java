@@ -11,11 +11,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import feup.lpoo.bounce.Bounce;
+import feup.lpoo.bounce.Bounce.ProgramState;
 import feup.lpoo.bounce.GameSound;
 import feup.lpoo.bounce.Utils;
 
@@ -23,13 +27,18 @@ import feup.lpoo.bounce.Utils;
  * Created by Bernardo on 06/06/2016.
  */
 public class OptionsScreen implements Screen {
-    public static final String SOUND_LABEL = "Sound";
-    public static final String MUSIC_LABEL = "Music";
+    private static final String SOUND_LABEL = "Sound";
+    private static final String MUSIC_LABEL = "Music";
+    private static final String BACK_LABEL = "Back";
+
     private Stage stage;
     private FitViewport viewport;
     private SpriteBatch spriteBatch;
+    private Bounce bounce;
 
     public OptionsScreen(Bounce bounce) {
+        this.bounce = bounce;
+
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         spriteBatch = new SpriteBatch();
         stage = new Stage(viewport, spriteBatch);
@@ -42,6 +51,8 @@ public class OptionsScreen implements Screen {
         Label.LabelStyle labelStyle = new Label.LabelStyle(Graphics.getFont(), Color.WHITE);
 
         Label soundLabel = new Label(SOUND_LABEL, labelStyle);
+        soundLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
+        soundLabel.setAlignment(Align.center);
 
         final ImageButton soundButton;
 
@@ -69,6 +80,8 @@ public class OptionsScreen implements Screen {
         });
 
         Label musicLabel = new Label(MUSIC_LABEL, labelStyle);
+        musicLabel.setFontScale(Graphics.BITMAP_FONT_SCALING);
+        musicLabel.setAlignment(Align.center);
 
         final ImageButton musicButton =  Utils.createButtonWithImage(Graphics.getMusicOffButtonTextureRegion());
 
@@ -87,17 +100,41 @@ public class OptionsScreen implements Screen {
             }
         });
 
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.font = Graphics.getFont();
+        textButtonStyle.pressedOffsetX = 2;
+        textButtonStyle.pressedOffsetY = -2;
+
+        final TextButton backButton =  new TextButton(BACK_LABEL, textButtonStyle);
+        backButton.getLabel().setAlignment(Align.center);
+        backButton.getLabel().setFontScale(Graphics.BITMAP_FONT_SCALING);
+
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(backButton.isPressed()) {
+                    bounce.setProgramState(ProgramState.MAIN_MENU);
+                }
+
+            }
+        });
+
+        Stack exitStack = new Stack(new Image(Graphics.getMenuButtonTextureRegion()), backButton);
+
         Table table = new Table();
         table.setFillParent(true);
         table.setBackground(Graphics.getMenuBackgroundTextureRegion());
-        table.setDebug(true);
+      //  table.setDebug(true);
 
-        table.add(soundLabel);
-        table.add(soundButton);
+        table.add(soundLabel).padBottom(Gdx.graphics.getHeight()/20f);
+        table.add(soundButton).padLeft(Gdx.graphics.getWidth()/20f).padBottom(Gdx.graphics.getHeight()/20f);
         table.row();
         table.add(musicLabel);
-        table.add(musicButton);
+        table.add(musicButton).padLeft(Gdx.graphics.getWidth()/20f);
         table.row();
+
+        table.row();
+        table.add(exitStack).colspan(2).padTop(Gdx.graphics.getHeight()/15f);
 
         stage.addActor(table);
     }
