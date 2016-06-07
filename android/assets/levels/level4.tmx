@@ -133,6 +133,7 @@
   <object id="59" x="1326" y="255.333" width="16" height="640.667"/>
   <object id="60" x="3886" y="256.667" width="16" height="639.333"/>
  </objectgroup>
+ <objectgroup name="Monsters"/>
  <objectgroup name="InvertedSpikes">
   <object id="173" x="1151.33" y="63.6667" width="320" height="32"/>
   <object id="174" x="3647" y="64" width="512" height="32"/>

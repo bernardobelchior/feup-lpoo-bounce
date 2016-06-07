@@ -156,6 +156,8 @@
    <ellipse/>
   </object>
  </objectgroup>
+ <objectgroup name="BarbedWire"/>
+ <objectgroup name="Monster"/>
  <objectgroup name="InvertedSpikes">
   <object id="131" x="4993.67" y="-0.333333" width="445.333" height="32"/>
  </objectgroup>
