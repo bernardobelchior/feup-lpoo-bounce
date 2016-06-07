@@ -10,11 +10,11 @@ import com.badlogic.gdx.physics.box2d.Body;
  * Class the handles the Monster's movement.
  */
 public class Monster {
-    public static final float MOVEMENT_SPEED = 100f;
+    public static final float MOVEMENT_SPEED = 100f/BounceGame.PIXELS_PER_METER;
 
     private Vector2 initialPosition;
-    private int movementHeight;
-    private int movementWidth;
+    private float movementHeight;
+    private float movementWidth;
     private Body monster;
 
     /**
@@ -23,7 +23,7 @@ public class Monster {
      * @param movementWidth Movement delta from the initial position in the x axis
      * @param movementHeight Movement delta from the initial position in the y axis
      */
-    public Monster(Body monster, int movementWidth, int movementHeight) {
+    public Monster(Body monster, float movementWidth, float movementHeight) {
         this.monster = monster;
         this.movementWidth = movementWidth;
         this.movementHeight = movementHeight;
@@ -45,7 +45,7 @@ public class Monster {
      * Gets the movement height
      * @return movementHeight
      */
-    public int getMovementHeight() {
+    public float getMovementHeight() {
         return movementHeight;
     }
 
@@ -53,7 +53,7 @@ public class Monster {
      * Gets the movement width
      * @return movementWidth
      */
-    public int getMovementWidth() {
+    public float getMovementWidth() {
         return movementWidth;
     }
 

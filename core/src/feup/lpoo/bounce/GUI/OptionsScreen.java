@@ -176,8 +176,8 @@ public class OptionsScreen implements Screen {
         table.add(soundLabel).padBottom(Gdx.graphics.getHeight()/20f);
         table.add(soundButton).padLeft(Gdx.graphics.getWidth()/20f).padBottom(Gdx.graphics.getHeight()/20f);
         table.row();
-        table.add(musicLabel);
-        table.add(musicButton).padLeft(Gdx.graphics.getWidth()/20f).padBottom(Gdx.graphics.getHeight()/20f);
+        table.add(musicLabel).padBottom(Gdx.graphics.getHeight()/10f);
+        table.add(musicButton).padLeft(Gdx.graphics.getWidth()/20f).padBottom(Gdx.graphics.getHeight()/15f);
         table.row();
         table.add(resetStack).center().colspan(2);
 

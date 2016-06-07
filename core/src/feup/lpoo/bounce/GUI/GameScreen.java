@@ -36,7 +36,7 @@ public class GameScreen implements Screen {
         spriteBatch = new SpriteBatch();
 
         camera = new OrthographicCamera();
-        viewport = new FitViewport(game.getMapHeight() *(float)Gdx.graphics.getWidth()/Gdx.graphics.getHeight(), game.getMapHeight(), camera);
+        viewport = new FitViewport(game.getMapHeight() *(float)Gdx.graphics.getWidth()/Gdx.graphics.getHeight()*BounceGame.PIXELS_PER_METER, game.getMapHeight()*BounceGame.PIXELS_PER_METER, camera);
         renderer = new OrthogonalTiledMapRenderer(game.getMap(), 1);
         b2dr = new Box2DDebugRenderer();
         gameHUD = new GameHUD(bounce, game);
@@ -57,12 +57,12 @@ public class GameScreen implements Screen {
         //Sets the camera x coordinate so it follows the ball
         //The below if statements are to make sure that no black
         //bars appear on the right nor on the left.'
-        float cameraX = game.getBall().getPosition().x - Graphics.GAME_TEXTURE_SIZE /2;
+        float cameraX = game.getBall().getPosition().x*BounceGame.PIXELS_PER_METER - Graphics.GAME_TEXTURE_SIZE /2;
 
         if(cameraX < viewport.getWorldWidth()/2)
             cameraX = viewport.getWorldWidth()/2;
-        else if(cameraX > game.getMapWidth() - viewport.getWorldWidth()/2)
-            cameraX = game.getMapWidth() - viewport.getWorldWidth()/2;
+        else if(cameraX > game.getMapWidth()*BounceGame.PIXELS_PER_METER - viewport.getWorldWidth()/2)
+            cameraX = game.getMapWidth()*BounceGame.PIXELS_PER_METER - viewport.getWorldWidth()/2;
 
         camera.position.set(cameraX, viewport.getWorldHeight()/2, 0);
 
@@ -70,14 +70,14 @@ public class GameScreen implements Screen {
         camera.update();
         renderer.setView(camera);
         renderer.render();
-        b2dr.render(game.getWorld(), camera.combined);
+        //b2dr.render(game.getWorld(), camera.combined);
 
         //Draws the ball on its position
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
         spriteBatch.draw(Graphics.getBallTextureRegion(),
-                game.getBall().getPosition().x - Graphics.GAME_TEXTURE_SIZE/2, //x coordinate
-                game.getBall().getPosition().y - Graphics.GAME_TEXTURE_SIZE/2, //y coordinate
+                game.getBall().getPosition().x*BounceGame.PIXELS_PER_METER  - Graphics.GAME_TEXTURE_SIZE/2, //x coordinate
+                game.getBall().getPosition().y*BounceGame.PIXELS_PER_METER  - Graphics.GAME_TEXTURE_SIZE/2, //y coordinate
                 Graphics.GAME_TEXTURE_SIZE/2, Graphics.GAME_TEXTURE_SIZE/2, //origin coordinates
                 Graphics.GAME_TEXTURE_SIZE, Graphics.GAME_TEXTURE_SIZE, //texture size
                 1, 1, //scaling
@@ -85,20 +85,20 @@ public class GameScreen implements Screen {
 
         //Draws all the rings in the correct position
         for(Body ring : game.getRings()) {
-            spriteBatch.draw(Graphics.getRingTextureRegion(), ring.getPosition().x - Graphics.GAME_TEXTURE_SIZE /2,
-                    ring.getPosition().y - Graphics.GAME_TEXTURE_SIZE /2);
+            spriteBatch.draw(Graphics.getRingTextureRegion(), ring.getPosition().x*BounceGame.PIXELS_PER_METER  - Graphics.GAME_TEXTURE_SIZE /2,
+                    ring.getPosition().y*BounceGame.PIXELS_PER_METER - Graphics.GAME_TEXTURE_SIZE /2);
         }
 
         //Draws all the gems in the correct position
         for(Body gem : game.getGems()) {
-            spriteBatch.draw(Graphics.getGemTextureRegion(), gem.getPosition().x - Graphics.GAME_TEXTURE_SIZE /2,
-                    gem.getPosition().y - Graphics.GAME_TEXTURE_SIZE /2);
+            spriteBatch.draw(Graphics.getGemTextureRegion(), gem.getPosition().x*BounceGame.PIXELS_PER_METER  - Graphics.GAME_TEXTURE_SIZE /2,
+                    gem.getPosition().y*BounceGame.PIXELS_PER_METER  - Graphics.GAME_TEXTURE_SIZE /2);
         }
 
         //Draws all the monsters in the correct position
         for(Monster monster : game.getMonsters()) {
-            spriteBatch.draw(Graphics.getMonsterTextureRegion(), monster.getPosition().x - Graphics.GAME_TEXTURE_SIZE,
-                    monster.getPosition().y - Graphics.GAME_TEXTURE_SIZE);
+            spriteBatch.draw(Graphics.getMonsterTextureRegion(), (monster.getPosition().x*BounceGame.PIXELS_PER_METER - Graphics.GAME_TEXTURE_SIZE),
+                    monster.getPosition().y*BounceGame.PIXELS_PER_METER  - Graphics.GAME_TEXTURE_SIZE);
         }
 
         spriteBatch.end();

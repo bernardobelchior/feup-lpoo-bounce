@@ -47,8 +47,8 @@ public class LevelLoader {
      * @param world World
      */
     public void load(TiledMap map, World world) {
-        mapWidth = map.getProperties().get("width", Integer.class).intValue()*map.getProperties().get("tilewidth", Integer.class).intValue();
-        mapHeight = map.getProperties().get("height", Integer.class).intValue()*map.getProperties().get("tileheight", Integer.class).intValue();
+        mapWidth = map.getProperties().get("width", Integer.class);
+        mapHeight = map.getProperties().get("height", Integer.class);
 
         rings = new ArrayList<Body>();
         gems = new ArrayList<Body>();
@@ -57,17 +57,17 @@ public class LevelLoader {
         BodyDef bodyDef = new BodyDef();
 
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(96, mapHeight/2-32);
+        bodyDef.position.set(96/BounceGame.PIXELS_PER_METER, (mapHeight/2-32/BounceGame.PIXELS_PER_METER));
 
         try {
             Ellipse circle = ((EllipseMapObject) map.getLayers().get(BALL_LAYER).getObjects().get(0)).getEllipse();
-            bodyDef.position.set(circle.x + 32, circle.y + 32);
+            bodyDef.position.set((circle.x + 32)/BounceGame.PIXELS_PER_METER, (circle.y + 32)/BounceGame.PIXELS_PER_METER);
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
 
         CircleShape ballShape = new CircleShape();
-        ballShape.setRadius(32);
+        ballShape.setRadius(32/BounceGame.PIXELS_PER_METER);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = ballShape;
@@ -85,10 +85,10 @@ public class LevelLoader {
 
                 bodyDef = new BodyDef();
                 bodyDef.type = BodyDef.BodyType.StaticBody;
-                bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
+                bodyDef.position.set(rectangle.getX()/BounceGame.PIXELS_PER_METER+rectangle.getWidth()/2/BounceGame.PIXELS_PER_METER, rectangle.getY()/BounceGame.PIXELS_PER_METER+rectangle.getHeight()/2/BounceGame.PIXELS_PER_METER);
 
                 PolygonShape polygonShape = new PolygonShape();
-                polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
+                polygonShape.setAsBox(rectangle.getWidth()/2/BounceGame.PIXELS_PER_METER, rectangle.getHeight()/2/BounceGame.PIXELS_PER_METER);
 
                 Body body = world.createBody(bodyDef);
                 body.createFixture(polygonShape, 1);
@@ -106,10 +106,10 @@ public class LevelLoader {
 
                 bodyDef = new BodyDef();
                 bodyDef.type = BodyDef.BodyType.StaticBody;
-                bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
+                bodyDef.position.set(rectangle.getX()/BounceGame.PIXELS_PER_METER+rectangle.getWidth()/2/BounceGame.PIXELS_PER_METER, rectangle.getY()/BounceGame.PIXELS_PER_METER+rectangle.getHeight()/2/BounceGame.PIXELS_PER_METER);
 
                 PolygonShape polygonShape = new PolygonShape();
-                polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
+                polygonShape.setAsBox(rectangle.getWidth()/2/BounceGame.PIXELS_PER_METER, rectangle.getHeight()/2/BounceGame.PIXELS_PER_METER);
 
                 Body body = world.createBody(bodyDef);
                 body.createFixture(polygonShape, 1);
@@ -127,15 +127,15 @@ public class LevelLoader {
 
                 bodyDef = new BodyDef();
                 bodyDef.type = BodyDef.BodyType.KinematicBody;
-                bodyDef.position.set(ellipse.x + ellipse.width/2, ellipse.y + ellipse.height/2);
+                bodyDef.position.set(ellipse.x/BounceGame.PIXELS_PER_METER + ellipse.width/2/BounceGame.PIXELS_PER_METER, ellipse.y/BounceGame.PIXELS_PER_METER + ellipse.height/2/BounceGame.PIXELS_PER_METER);
 
                 CircleShape ellipseShape = new CircleShape();
 
                 float radius;
                 if(ellipse.height < ellipse.width)
-                    radius = ellipse.height/2;
+                    radius = ellipse.height/2/BounceGame.PIXELS_PER_METER;
                 else
-                    radius = ellipse.width/2;
+                    radius = ellipse.width/2/BounceGame.PIXELS_PER_METER;
 
                 ellipseShape.setRadius(radius);
 
@@ -160,13 +160,13 @@ public class LevelLoader {
 
                 bodyDef = new BodyDef();
                 bodyDef.type = BodyDef.BodyType.KinematicBody;
-                bodyDef.position.set(ellipse.x + ellipse.width/2, ellipse.y + ellipse.height/2);
+                bodyDef.position.set((ellipse.x + ellipse.width/2)/BounceGame.PIXELS_PER_METER, (ellipse.y + ellipse.height/2)/BounceGame.PIXELS_PER_METER);
 
                 float radius;
                 if(ellipse.height < ellipse.width)
-                    radius = ellipse.height/2;
+                    radius = ellipse.height/2/BounceGame.PIXELS_PER_METER;
                 else
-                    radius = ellipse.width/2;
+                    radius = ellipse.width/2/BounceGame.PIXELS_PER_METER;
 
                 CircleShape ellipseShape = new CircleShape();
                 ellipseShape.setRadius(radius);
@@ -192,10 +192,10 @@ public class LevelLoader {
 
                 bodyDef = new BodyDef();
                 bodyDef.type = BodyDef.BodyType.StaticBody;
-                bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
+                bodyDef.position.set((rectangle.getX()+rectangle.getWidth()/2)/BounceGame.PIXELS_PER_METER, (rectangle.getY()+rectangle.getHeight()/2)/BounceGame.PIXELS_PER_METER);
 
                 PolygonShape polygonShape = new PolygonShape();
-                polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
+                polygonShape.setAsBox(rectangle.getWidth()/2/BounceGame.PIXELS_PER_METER, rectangle.getHeight()/2/BounceGame.PIXELS_PER_METER);
 
                 Body body = world.createBody(bodyDef);
                 body.createFixture(polygonShape, 1);
@@ -212,10 +212,10 @@ public class LevelLoader {
 
                 bodyDef = new BodyDef();
                 bodyDef.type = BodyDef.BodyType.KinematicBody;
-                bodyDef.position.set(rectangle.getX()+rectangle.getWidth()/2, rectangle.getY()+rectangle.getHeight()/2);
+                bodyDef.position.set((rectangle.getX()+rectangle.getWidth()/2)/BounceGame.PIXELS_PER_METER, (rectangle.getY()+rectangle.getHeight()/2)/BounceGame.PIXELS_PER_METER);
 
                 PolygonShape polygonShape = new PolygonShape();
-                polygonShape.setAsBox(rectangle.getWidth()/2, rectangle.getHeight()/2);
+                polygonShape.setAsBox(rectangle.getWidth()/2/BounceGame.PIXELS_PER_METER, rectangle.getHeight()/2/BounceGame.PIXELS_PER_METER);
 
                 Body body = world.createBody(bodyDef);
                 body.createFixture(polygonShape, 1);
@@ -239,7 +239,7 @@ public class LevelLoader {
                     movementWidth = 0;
                 }
 
-                monsters.add(new Monster(body, movementWidth, movementHeight));
+                monsters.add(new Monster(body, movementWidth/BounceGame.PIXELS_PER_METER, movementHeight/BounceGame.PIXELS_PER_METER));
 
                 polygonShape.dispose();
             }

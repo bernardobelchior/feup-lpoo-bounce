@@ -24,22 +24,24 @@ import feup.lpoo.bounce.GameSound;
  */
 public class BounceGame extends Game {
     //World gravity
-    private final static Vector2 WORLD_GRAVITY = new Vector2(0, -800);
+    private final static Vector2 WORLD_GRAVITY = new Vector2(0, -10);
 
     //Game update rate in seconds
-    private final static float GAME_UPDATE_RATE = 1/300f;
+    private final static float GAME_UPDATE_RATE = 1/60f;
 
     //Used to check if the phone is relatively standing still
     private final static float HORIZONTAL_ACCELERATION_TOLERANCE = 1f;
 
+    public final static float PIXELS_PER_METER = 64;
+
     //Movement modifiers
-    private final static int HORIZONTAL_MOVEMENT_MODIFIER = 1000000;
-    private final static int ATTRITION_MODIFIER = 10000;
-    private final static int JUMP_HEIGHT_MODIFIER = 2100000;
+    private final static float HORIZONTAL_MOVEMENT_MODIFIER = 2f;
+    private final static float ATTRITION_MODIFIER = 1.5f;
+    private final static float JUMP_HEIGHT_MODIFIER = 40;
 
     //Score that the objects below yield for the player
     public static final int GEM_SCORE = 5;
-    public static final int RING_SCORE = 1;
+    public static final int RING_SCORE = 3;
 
     //Highscore filenames
     public static final String HIGHSCORE_FILE_NAME = "highscore";
@@ -75,9 +77,6 @@ public class BounceGame extends Game {
         this.level = level;
 
         map = new TmxMapLoader().load("levels/level" + level + ".tmx");
-
-        mapWidth = map.getProperties().get("width", Integer.class) * map.getProperties().get("tilewidth", Integer.class);
-        mapHeight = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
 
         gameState = Bounce.GameState.PAUSED;
 

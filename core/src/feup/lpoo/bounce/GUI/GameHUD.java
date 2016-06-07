@@ -87,8 +87,8 @@ public class GameHUD {
         table.padTop(Gdx.graphics.getHeight()/44f);
         table.top();
 
-        table.add(ringsImage).padLeft(Gdx.graphics.getWidth()/20f).center();
-        table.add(ringsLabel).padLeft(Gdx.graphics.getWidth()/120f).center();
+        table.add(ringsImage).padLeft(Gdx.graphics.getWidth()/40f).center();
+        table.add(ringsLabel).padLeft(Gdx.graphics.getWidth()/240f).center();
         table.add(scoreLabel).align(Align.center).expandX().center();
         table.add(pauseButton).padRight(Gdx.graphics.getWidth()/44f).align(Align.right).uniform().center();
 
